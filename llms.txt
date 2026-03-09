@@ -1,0 +1,30 @@
+# onyszko.pl
+
+> Personal website about creating software and Local AI
+
+- [Page not found](/404/): The page you're looking for doesn’t exist or has moved. Check the URL, use the navigation to browse sections, or return to the homepage.
+- [Privacy Policy](/privacy/): Learn how we collect, use, and protect your personal data, what rights you have over your information, and how to contact us with questions.
+- [Blog](/blog/): Read product updates, release highlights, and practical tips that explain what’s new, why it matters, and how to get the most value from this project.
+- [Documentation](/docs/): Browse guides and reference documentation that explain how to use this site's features, configure Doks, and publish clear, user-focused content.
+
+## Blog
+
+> Read product updates, release highlights, and practical tips that explain what’s new, why it matters, and how to get the most value from this project.
+
+
+## Documentation
+
+> Browse guides and reference documentation that explain how to use this site's features, configure Doks, and publish clear, user-focused content.
+
+- [Local LLM Guide](/docs/guides/): A comprehensive series on setting up and using local LLMs for software development.
+
+### Local LLM Guide
+
+> A comprehensive series on setting up and using local LLMs for software development.
+
+- [Setup](/docs/guides/local-ai/01-setup/): A comprehensive series on setting up and using local LLMs for software development.
+- [OpenCode Environment](/docs/guides/local-ai/02-opencode-environment/): A comprehensive series on setting up and using local LLMs for software development.
+- [Agents & Skills](/docs/guides/local-ai/03-agents-and-skills/): A comprehensive series on setting up and using local LLMs for software development.
+- [Workflow](/docs/guides/local-ai/04-workflow/): A comprehensive series on setting up and using local LLMs for software development.
+- [Assessment](/docs/guides/local-ai/05-assesment/): An honest assessment of local AI development workflows—what works well in production, where they fall short, and when to choose local vs cloud.
+

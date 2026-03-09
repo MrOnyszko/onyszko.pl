@@ -1,0 +1,5 @@
+# onyszko.pl
+
+> Personal website about creating software and Local AI
+
+
