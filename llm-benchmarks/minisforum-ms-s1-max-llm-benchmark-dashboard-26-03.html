@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LLM Benchmark — Minisforum MS-S1 MAX · Strix Halo 128GB</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #0a0c0f;
+    --surface: #111418;
+    --surface2: #181c22;
+    --border: #252b34;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --accent: #22d3ee;
+    --accent2: #f59e0b;
+    --accent3: #a78bfa;
+    --green: #4ade80;
+    --red: #f87171;
+    --orange: #fb923c;
+
+    /* Model colors */
+    --c1: #22d3ee;
+    --c2: #0e9fbf;
+    --c3: #4ade80;
+    --c4: #16a34a;
+    --c5: #f59e0b;
+    --c6: #d97706;
+    --c7: #a78bfa;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 28px 40px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    background: linear-gradient(180deg, #0d1117 0%, var(--bg) 100%);
+  }
+  .hw-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -.01em;
+    color: #f1f5f9;
+  }
+  h1 span { color: var(--accent); }
+  .meta {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    text-align: right;
+  }
+  .meta b { color: var(--text); }
+
+  /* ── Layout ── */
+  main { padding: 32px 40px; max-width: 1400px; margin: 0 auto; }
+
+  section { margin-bottom: 40px; }
+  .section-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  /* ── Rating cards ── */
+  .rating-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+
+  .rating-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  .rating-card:hover { border-color: #374151; }
+  .rating-card.winner { border-color: rgba(34,211,238,.3); }
+  .rating-card.winner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+  }
+  .model-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .model-meta {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .score-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 12px;
+    min-width: 52px;
+    flex-shrink: 0;
+  }
+  .score-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1;
+  }
+  .score-label { font-size: 9px; color: var(--muted); letter-spacing: .06em; margin-top: 2px; }
+
+  .score-A { color: var(--green); }
+  .score-B { color: var(--accent); }
+  .score-C { color: var(--accent2); }
+  .score-D { color: var(--orange); }
+  .score-F { color: var(--red); }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .stat-box {
+    background: var(--surface2);
+    border-radius: 4px;
+    padding: 8px 10px;
+  }
+  .stat-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1;
+  }
+  .stat-lbl { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+  /* context bar */
+  .ctx-bar-wrap { margin-bottom: 12px; }
+  .ctx-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--muted);
+    margin-bottom: 4px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .ctx-bar-track {
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .ctx-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 1s cubic-bezier(.4,0,.2,1);
+  }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+  .tag-good { background: rgba(74,222,128,.12); color: var(--green); border: 1px solid rgba(74,222,128,.2); }
+  .tag-warn { background: rgba(245,158,11,.12); color: var(--accent2); border: 1px solid rgba(245,158,11,.2); }
+  .tag-bad  { background: rgba(248,113,113,.12); color: var(--red); border: 1px solid rgba(248,113,113,.2); }
+  .tag-info { background: rgba(34,211,238,.1); color: var(--accent); border: 1px solid rgba(34,211,238,.2); }
+
+  /* ── Charts ── */
+  .chart-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .chart-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .chart-box.wide { grid-column: 1 / -1; }
+  .chart-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .chart-sub {
+    font-size: 11px;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .chart-wrap { position: relative; }
+
+  /* ── Context limits table ── */
+  .ctx-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .ctx-table th {
+    text-align: left;
+    padding: 8px 14px;
+    font-size: 10px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .ctx-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #1a1f27;
+    font-family: 'IBM Plex Mono', monospace;
+    vertical-align: middle;
+  }
+  .ctx-table tr:last-child td { border-bottom: none; }
+  .ctx-table tr:hover td { background: var(--surface2); }
+
+  .limit-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .limit-green { background: rgba(74,222,128,.15); color: var(--green); }
+  .limit-yellow { background: rgba(245,158,11,.15); color: var(--accent2); }
+  .limit-red { background: rgba(248,113,113,.15); color: var(--red); }
+
+  /* ── Summary callout ── */
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+  }
+  .callout.warn { border-left-color: var(--accent2); }
+  .callout.danger { border-left-color: var(--red); }
+  .callout-title { font-size: 12px; font-weight: 600; margin-bottom: 6px; }
+  .callout p { font-size: 12px; color: var(--muted); line-height: 1.7; }
+  .callout p strong { color: var(--text); }
+
+  /* ── Legend ── */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--muted);
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="hw-tag">⬡ LM Studio Benchmark Report</div>
+    <h1>Minisforum MS-S1 MAX &nbsp;<span>·</span>&nbsp; Strix Halo 128GB</h1>
+  </div>
+  <div class="meta">
+    <b>7 model variants</b> · 49 benchmark runs<br>
+    Context: 131,072 tokens · Flash Attn: ON<br>
+    KV Cache offload: GPU · Batch: 512
+  </div>
+</header>
+
+<main>
+
+<!-- ═══ RATINGS ═══ -->
+<section>
+  <div class="section-title">Model Ratings — Agentic Coding Suitability</div>
+  <div class="rating-grid" id="ratingGrid"></div>
+</section>
+
+<!-- ═══ CONTEXT LIMITS ═══ -->
+<section>
+  <div class="section-title">Practical Context Length Limits</div>
+
+  <div class="callout">
+    <div class="callout-title">🔑 Key Finding: MoE vs Dense Architecture</div>
+    <p>MoE (Mixture-of-Experts) models like <strong>qwen3.5-35b-a3b</strong> and <strong>qwen3.5-122b-a10b</strong> maintain near-constant generation speed across all context lengths because only active parameters scale with context. Dense models like <strong>qwen3.5-27b</strong> degrade severely — TTFT at 75% fill reaches <strong>707–784 seconds</strong>, making them impractical beyond ~25k tokens on this hardware.</p>
+  </div>
+  <div class="callout warn">
+    <div class="callout-title">⚠ The TTFT Paradox at 90–95% Fill</div>
+    <p>Counterintuitively, TTFT <em>drops</em> at 90–95% fill vs 75% fill for most models. This is a <strong>KV cache paging / chunked prefill artifact</strong>: at very high fill ratios, the scheduler processes fewer new tokens per step, so individual step latency looks lower even though the total work is similar. Don't be fooled — absolute latency is still high.</p>
+  </div>
+
+  <table class="ctx-table">
+    <thead>
+      <tr>
+        <th>Model</th>
+        <th>Comfortable (&lt;30s TTFT)</th>
+        <th>Usable (&lt;120s TTFT)</th>
+        <th>Marginal (&lt;5 min TTFT)</th>
+        <th>Gen TPS @ 5%</th>
+        <th>Gen TPS @ 75%</th>
+        <th>TPS Retention</th>
+      </tr>
+    </thead>
+    <tbody id="ctxTableBody"></tbody>
+  </table>
+</section>
+
+<!-- ═══ CHARTS ═══ -->
+<section>
+  <div class="section-title">Performance Charts</div>
+
+  <div class="legend" id="legend"></div>
+
+  <div class="chart-grid">
+    <div class="chart-box wide">
+      <div class="chart-title">Generation Speed vs Context Fill Ratio</div>
+      <div class="chart-sub">Tokens/sec for output generation — lower context = faster; MoE models hold steady</div>
+      <div class="chart-wrap"><canvas id="tpsChart" height="90"></canvas></div>
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-title">Time to First Token (TTFT) vs Context Fill</div>
+      <div class="chart-sub">Seconds until first output token — critical for interactive feel</div>
+      <div class="chart-wrap"><canvas id="ttftChart" height="160"></canvas></div>
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-title">Prompt Processing Speed vs Context Fill</div>
+      <div class="chart-sub">Prompt ingestion rate (tok/s) — shows GPU utilization efficiency</div>
+      <div class="chart-wrap"><canvas id="promptChart" height="160"></canvas></div>
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-title">Peak Generation Speed Comparison</div>
+      <div class="chart-sub">TPS at 5% fill (best case) per model variant</div>
+      <div class="chart-wrap"><canvas id="barChart" height="160"></canvas></div>
+    </div>
+
+    <div class="chart-box">
+      <div class="chart-title">Model Size vs Avg Generation Speed</div>
+      <div class="chart-sub">GB on disk vs average TPS across all fill ratios</div>
+      <div class="chart-wrap"><canvas id="scatterChart" height="160"></canvas></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+const RAW = [{"model_id":"qwen3-coder-next@q4_k_m","quantization":"Q4_K_M","size_gb":45.2,"fill_ratio":0.05,"load_time_seconds":24.961,"input_tokens":6360.0,"ttft_seconds":10.287,"prompt_processing_tps":618.27,"tokens_per_second":42.71},{"model_id":"qwen3-coder-next@q4_k_m","quantization":"Q4_K_M","size_gb":45.2,"fill_ratio":0.1,"load_time_seconds":24.961,"input_tokens":12914.0,"ttft_seconds":11.674,"prompt_processing_tps":1106.2,"tokens_per_second":41.53},{"model_id":"qwen3-coder-next@q4_k_m","quantization":"Q4_K_M","size_gb":45.2,"fill_ratio":0.25,"load_time_seconds":24.961,"input_tokens":32574.0,"ttft_seconds":37.421,"prompt_processing_tps":870.47,"tokens_per_second":37.63},{"model_id":"qwen3-coder-next@q4_k_m","quantization":"Q4_K_M","size_gb":45.2,"fill_ratio":0.5,"load_time_seconds":24.961,"input_tokens":65340.0,"ttft_seconds":78.372,"prompt_processing_tps":833.71,"tokens_per_second":33.59},{"model_id":"qwen3-coder-next@q4_k_m","quantization":"Q4_K_M","size_gb":45.2,"fill_ratio":0.75,"load_time_seconds":24.961,"input_tokens":98106.0,"ttft_seconds":101.248,"prompt_processing_tps":968.97,"tokens_per_second":30.07},{"model_id":"qwen3-coder-next@q4_k_m","quantization":"Q4_K_M","size_gb":45.2,"fill_ratio":0.9,"load_time_seconds":24.961,"input_tokens":117765.0,"ttft_seconds":74.063,"prompt_processing_tps":1590.07,"tokens_per_second":28.29},{"model_id":"qwen3-coder-next@q4_k_m","quantization":"Q4_K_M","size_gb":45.2,"fill_ratio":0.95,"load_time_seconds":24.961,"input_tokens":124319.0,"ttft_seconds":28.503,"prompt_processing_tps":4361.68,"tokens_per_second":27.44},{"model_id":"qwen3-coder-next@q6_k","quantization":"Q6_K","size_gb":61.27,"fill_ratio":0.05,"load_time_seconds":41.282,"input_tokens":6360.0,"ttft_seconds":13.483,"prompt_processing_tps":471.69,"tokens_per_second":28.87},{"model_id":"qwen3-coder-next@q6_k","quantization":"Q6_K","size_gb":61.27,"fill_ratio":0.1,"load_time_seconds":41.282,"input_tokens":12914.0,"ttft_seconds":14.516,"prompt_processing_tps":889.67,"tokens_per_second":28.34},{"model_id":"qwen3-coder-next@q6_k","quantization":"Q6_K","size_gb":61.27,"fill_ratio":0.25,"load_time_seconds":41.282,"input_tokens":32574.0,"ttft_seconds":45.831,"prompt_processing_tps":710.74,"tokens_per_second":26.46},{"model_id":"qwen3-coder-next@q6_k","quantization":"Q6_K","size_gb":61.27,"fill_ratio":0.5,"load_time_seconds":41.282,"input_tokens":65340.0,"ttft_seconds":92.239,"prompt_processing_tps":708.38,"tokens_per_second":24.22},{"model_id":"qwen3-coder-next@q6_k","quantization":"Q6_K","size_gb":61.27,"fill_ratio":0.75,"load_time_seconds":41.282,"input_tokens":98106.0,"ttft_seconds":114.359,"prompt_processing_tps":857.88,"tokens_per_second":21.8},{"model_id":"qwen3-coder-next@q6_k","quantization":"Q6_K","size_gb":61.27,"fill_ratio":0.9,"load_time_seconds":41.282,"input_tokens":117765.0,"ttft_seconds":84.096,"prompt_processing_tps":1400.36,"tokens_per_second":21.12},{"model_id":"qwen3-coder-next@q6_k","quantization":"Q6_K","size_gb":61.27,"fill_ratio":0.95,"load_time_seconds":41.282,"input_tokens":124319.0,"ttft_seconds":31.979,"prompt_processing_tps":3887.57,"tokens_per_second":20.7},{"model_id":"qwen3.5-35b-a3b@q4_k_m","quantization":"Q4_K_M","size_gb":22.17,"fill_ratio":0.05,"load_time_seconds":10.397,"input_tokens":6360.0,"ttft_seconds":8.009,"prompt_processing_tps":794.11,"tokens_per_second":48.07},{"model_id":"qwen3.5-35b-a3b@q4_k_m","quantization":"Q4_K_M","size_gb":22.17,"fill_ratio":0.1,"load_time_seconds":10.397,"input_tokens":12914.0,"ttft_seconds":9.501,"prompt_processing_tps":1359.21,"tokens_per_second":47.05},{"model_id":"qwen3.5-35b-a3b@q4_k_m","quantization":"Q4_K_M","size_gb":22.17,"fill_ratio":0.25,"load_time_seconds":10.397,"input_tokens":32574.0,"ttft_seconds":30.745,"prompt_processing_tps":1059.5,"tokens_per_second":42.86},{"model_id":"qwen3.5-35b-a3b@q4_k_m","quantization":"Q4_K_M","size_gb":22.17,"fill_ratio":0.5,"load_time_seconds":10.397,"input_tokens":65340.0,"ttft_seconds":66.409,"prompt_processing_tps":983.9,"tokens_per_second":37.86},{"model_id":"qwen3.5-35b-a3b@q4_k_m","quantization":"Q4_K_M","size_gb":22.17,"fill_ratio":0.75,"load_time_seconds":10.397,"input_tokens":98106.0,"ttft_seconds":85.621,"prompt_processing_tps":1145.82,"tokens_per_second":34.19},{"model_id":"qwen3.5-35b-a3b@q4_k_m","quantization":"Q4_K_M","size_gb":22.17,"fill_ratio":0.9,"load_time_seconds":10.397,"input_tokens":117765.0,"ttft_seconds":62.116,"prompt_processing_tps":1895.89,"tokens_per_second":32.29},{"model_id":"qwen3.5-35b-a3b@q4_k_m","quantization":"Q4_K_M","size_gb":22.17,"fill_ratio":0.95,"load_time_seconds":10.397,"input_tokens":124319.0,"ttft_seconds":23.557,"prompt_processing_tps":5277.4,"tokens_per_second":31.74},{"model_id":"qwen3.5-35b-a3b@q8_0","quantization":"Q8_0","size_gb":36.03,"fill_ratio":0.05,"load_time_seconds":15.161,"input_tokens":6360.0,"ttft_seconds":8.58,"prompt_processing_tps":741.27,"tokens_per_second":42.72},{"model_id":"qwen3.5-35b-a3b@q8_0","quantization":"Q8_0","size_gb":36.03,"fill_ratio":0.1,"load_time_seconds":15.161,"input_tokens":12914.0,"ttft_seconds":9.875,"prompt_processing_tps":1307.7,"tokens_per_second":41.62},{"model_id":"qwen3.5-35b-a3b@q8_0","quantization":"Q8_0","size_gb":36.03,"fill_ratio":0.25,"load_time_seconds":15.161,"input_tokens":32574.0,"ttft_seconds":31.987,"prompt_processing_tps":1018.35,"tokens_per_second":38.5},{"model_id":"qwen3.5-35b-a3b@q8_0","quantization":"Q8_0","size_gb":36.03,"fill_ratio":0.5,"load_time_seconds":15.161,"input_tokens":65340.0,"ttft_seconds":67.228,"prompt_processing_tps":971.91,"tokens_per_second":34.33},{"model_id":"qwen3.5-35b-a3b@q8_0","quantization":"Q8_0","size_gb":36.03,"fill_ratio":0.75,"load_time_seconds":15.161,"input_tokens":98106.0,"ttft_seconds":86.937,"prompt_processing_tps":1128.47,"tokens_per_second":31.16},{"model_id":"qwen3.5-35b-a3b@q8_0","quantization":"Q8_0","size_gb":36.03,"fill_ratio":0.9,"load_time_seconds":15.161,"input_tokens":117765.0,"ttft_seconds":62.811,"prompt_processing_tps":1874.92,"tokens_per_second":29.56},{"model_id":"qwen3.5-35b-a3b@q8_0","quantization":"Q8_0","size_gb":36.03,"fill_ratio":0.95,"load_time_seconds":15.161,"input_tokens":124319.0,"ttft_seconds":24.298,"prompt_processing_tps":5116.41,"tokens_per_second":29.06},{"model_id":"qwen3.5-27b@q4_k_m","quantization":"Q4_K_M","size_gb":17.31,"fill_ratio":0.05,"load_time_seconds":8.385,"input_tokens":6360.0,"ttft_seconds":33.525,"prompt_processing_tps":189.71,"tokens_per_second":11.68},{"model_id":"qwen3.5-27b@q4_k_m","quantization":"Q4_K_M","size_gb":17.31,"fill_ratio":0.1,"load_time_seconds":8.385,"input_tokens":12914.0,"ttft_seconds":40.871,"prompt_processing_tps":315.97,"tokens_per_second":10.99},{"model_id":"qwen3.5-27b@q4_k_m","quantization":"Q4_K_M","size_gb":17.31,"fill_ratio":0.25,"load_time_seconds":8.385,"input_tokens":32574.0,"ttft_seconds":144.65,"prompt_processing_tps":225.19,"tokens_per_second":10.71},{"model_id":"qwen3.5-27b@q4_k_m","quantization":"Q4_K_M","size_gb":17.31,"fill_ratio":0.5,"load_time_seconds":8.385,"input_tokens":65340.0,"ttft_seconds":439.12,"prompt_processing_tps":148.8,"tokens_per_second":9.73},{"model_id":"qwen3.5-27b@q4_k_m","quantization":"Q4_K_M","size_gb":17.31,"fill_ratio":0.75,"load_time_seconds":8.385,"input_tokens":98106.0,"ttft_seconds":707.32,"prompt_processing_tps":138.7,"tokens_per_second":8.91},{"model_id":"qwen3.5-27b@q4_k_m","quantization":"Q4_K_M","size_gb":17.31,"fill_ratio":0.9,"load_time_seconds":8.385,"input_tokens":117765.0,"ttft_seconds":562.241,"prompt_processing_tps":209.46,"tokens_per_second":8.5},{"model_id":"qwen3.5-27b@q4_k_m","quantization":"Q4_K_M","size_gb":17.31,"fill_ratio":0.95,"load_time_seconds":8.385,"input_tokens":124319.0,"ttft_seconds":222.464,"prompt_processing_tps":558.83,"tokens_per_second":8.36},{"model_id":"qwen3.5-27b@q8_0","quantization":"Q8_0","size_gb":28.35,"fill_ratio":0.05,"load_time_seconds":14.282,"input_tokens":6360.0,"ttft_seconds":48.372,"prompt_processing_tps":131.48,"tokens_per_second":7.53},{"model_id":"qwen3.5-27b@q8_0","quantization":"Q8_0","size_gb":28.35,"fill_ratio":0.1,"load_time_seconds":14.282,"input_tokens":12914.0,"ttft_seconds":57.369,"prompt_processing_tps":225.1,"tokens_per_second":7.42},{"model_id":"qwen3.5-27b@q8_0","quantization":"Q8_0","size_gb":28.35,"fill_ratio":0.25,"load_time_seconds":14.282,"input_tokens":32574.0,"ttft_seconds":191.58,"prompt_processing_tps":170.03,"tokens_per_second":7.12},{"model_id":"qwen3.5-27b@q8_0","quantization":"Q8_0","size_gb":28.35,"fill_ratio":0.5,"load_time_seconds":14.282,"input_tokens":65340.0,"ttft_seconds":516.328,"prompt_processing_tps":126.55,"tokens_per_second":6.68},{"model_id":"qwen3.5-27b@q8_0","quantization":"Q8_0","size_gb":28.35,"fill_ratio":0.75,"load_time_seconds":14.282,"input_tokens":98106.0,"ttft_seconds":784.312,"prompt_processing_tps":125.09,"tokens_per_second":6.28},{"model_id":"qwen3.5-27b@q8_0","quantization":"Q8_0","size_gb":28.35,"fill_ratio":0.9,"load_time_seconds":14.282,"input_tokens":117765.0,"ttft_seconds":610.534,"prompt_processing_tps":192.89,"tokens_per_second":6.07},{"model_id":"qwen3.5-27b@q8_0","quantization":"Q8_0","size_gb":28.35,"fill_ratio":0.95,"load_time_seconds":14.282,"input_tokens":124319.0,"ttft_seconds":239.566,"prompt_processing_tps":518.94,"tokens_per_second":6.0},{"model_id":"qwen3.5-122b-a10b","quantization":"Q4_K_S","size_gb":68.46,"fill_ratio":0.05,"load_time_seconds":53.675,"input_tokens":6360.0,"ttft_seconds":32.077,"prompt_processing_tps":198.27,"tokens_per_second":12.62},{"model_id":"qwen3.5-122b-a10b","quantization":"Q4_K_S","size_gb":68.46,"fill_ratio":0.1,"load_time_seconds":53.675,"input_tokens":12914.0,"ttft_seconds":36.351,"prompt_processing_tps":355.25,"tokens_per_second":12.01},{"model_id":"qwen3.5-122b-a10b","quantization":"Q4_K_S","size_gb":68.46,"fill_ratio":0.25,"load_time_seconds":53.675,"input_tokens":32574.0,"ttft_seconds":111.831,"prompt_processing_tps":291.28,"tokens_per_second":10.29},{"model_id":"qwen3.5-122b-a10b","quantization":"Q4_K_S","size_gb":68.46,"fill_ratio":0.5,"load_time_seconds":53.675,"input_tokens":65340.0,"ttft_seconds":215.998,"prompt_processing_tps":302.5,"tokens_per_second":7.03},{"model_id":"qwen3.5-122b-a10b","quantization":"Q4_K_S","size_gb":68.46,"fill_ratio":0.75,"load_time_seconds":53.675,"input_tokens":98106.0,"ttft_seconds":287.283,"prompt_processing_tps":341.5,"tokens_per_second":5.42},{"model_id":"qwen3.5-122b-a10b","quantization":"Q4_K_S","size_gb":68.46,"fill_ratio":0.9,"load_time_seconds":53.675,"input_tokens":117765.0,"ttft_seconds":235.732,"prompt_processing_tps":499.57,"tokens_per_second":4.78},{"model_id":"qwen3.5-122b-a10b","quantization":"Q4_K_S","size_gb":68.46,"fill_ratio":0.95,"load_time_seconds":53.675,"input_tokens":124319.0,"ttft_seconds":96.28,"prompt_processing_tps":1291.22,"tokens_per_second":4.65}];
+
+// ── Model palette & metadata ──
+const MODELS = {
+  'qwen3-coder-next@q4_k_m': { color: '#22d3ee', short: 'Coder-Next Q4', arch: 'Dense', type: 'Coder' },
+  'qwen3-coder-next@q6_k':   { color: '#0891b2', short: 'Coder-Next Q6', arch: 'Dense', type: 'Coder' },
+  'qwen3.5-35b-a3b@q4_k_m': { color: '#4ade80', short: '35B-A3B Q4', arch: 'MoE', type: 'General' },
+  'qwen3.5-35b-a3b@q8_0':   { color: '#16a34a', short: '35B-A3B Q8', arch: 'MoE', type: 'General' },
+  'qwen3.5-27b@q4_k_m':     { color: '#f59e0b', short: '27B Q4', arch: 'Dense', type: 'General' },
+  'qwen3.5-27b@q8_0':       { color: '#d97706', short: '27B Q8', arch: 'Dense', type: 'General' },
+  'qwen3.5-122b-a10b':      { color: '#a78bfa', short: '122B-A10B', arch: 'MoE', type: 'General' },
+};
+
+const MODEL_IDS = Object.keys(MODELS);
+const FILLS = [0.05, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95];
+const FILL_LABELS = ['5%','10%','25%','50%','75%','90%','95%'];
+
+// Group data
+const byModel = {};
+MODEL_IDS.forEach(id => {
+  byModel[id] = RAW.filter(r => r.model_id === id).sort((a,b) => a.fill_ratio - b.fill_ratio);
+});
+
+// ── Chart defaults ──
+Chart.defaults.color = '#64748b';
+Chart.defaults.borderColor = '#1e2530';
+Chart.defaults.font.family = "'IBM Plex Mono', monospace";
+Chart.defaults.font.size = 11;
+
+const gridColor = '#1e2530';
+
+// ── Legend ──
+const legendEl = document.getElementById('legend');
+MODEL_IDS.forEach(id => {
+  const m = MODELS[id];
+  legendEl.innerHTML += `<div class="legend-item"><div class="legend-dot" style="background:${m.color}"></div>${m.short} <span style="color:#374151;margin-left:2px">[${m.arch}]</span></div>`;
+});
+
+// ── TPS Chart ──
+new Chart(document.getElementById('tpsChart'), {
+  type: 'line',
+  data: {
+    labels: FILL_LABELS,
+    datasets: MODEL_IDS.map(id => ({
+      label: MODELS[id].short,
+      data: byModel[id].map(r => r.tokens_per_second),
+      borderColor: MODELS[id].color,
+      backgroundColor: MODELS[id].color + '18',
+      borderWidth: 2,
+      pointRadius: 4,
+      pointHoverRadius: 6,
+      tension: 0.3,
+      fill: false,
+    }))
+  },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index', intersect: false },
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: gridColor }, title: { display: true, text: 'Context Fill Ratio', color: '#475569' } },
+      y: { grid: { color: gridColor }, title: { display: true, text: 'Tokens / Second', color: '#475569' }, beginAtZero: true }
+    }
+  }
+});
+
+// ── TTFT Chart ──
+new Chart(document.getElementById('ttftChart'), {
+  type: 'line',
+  data: {
+    labels: FILL_LABELS,
+    datasets: MODEL_IDS.map(id => ({
+      label: MODELS[id].short,
+      data: byModel[id].map(r => r.ttft_seconds),
+      borderColor: MODELS[id].color,
+      backgroundColor: 'transparent',
+      borderWidth: 2,
+      pointRadius: 3,
+      tension: 0.3,
+    }))
+  },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index', intersect: false },
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: gridColor } },
+      y: { grid: { color: gridColor }, title: { display: true, text: 'TTFT (seconds)', color: '#475569' }, beginAtZero: true }
+    }
+  }
+});
+
+// ── Prompt TPS Chart ──
+new Chart(document.getElementById('promptChart'), {
+  type: 'line',
+  data: {
+    labels: FILL_LABELS,
+    datasets: MODEL_IDS.map(id => ({
+      label: MODELS[id].short,
+      data: byModel[id].map(r => r.prompt_processing_tps),
+      borderColor: MODELS[id].color,
+      backgroundColor: 'transparent',
+      borderWidth: 2,
+      pointRadius: 3,
+      tension: 0.3,
+    }))
+  },
+  options: {
+    responsive: true,
+    interaction: { mode: 'index', intersect: false },
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: gridColor } },
+      y: { grid: { color: gridColor }, title: { display: true, text: 'Prompt TPS', color: '#475569' }, beginAtZero: true }
+    }
+  }
+});
+
+// ── Bar Chart (peak TPS) ──
+new Chart(document.getElementById('barChart'), {
+  type: 'bar',
+  data: {
+    labels: MODEL_IDS.map(id => MODELS[id].short),
+    datasets: [{
+      label: 'Peak TPS (5% fill)',
+      data: MODEL_IDS.map(id => byModel[id][0].tokens_per_second),
+      backgroundColor: MODEL_IDS.map(id => MODELS[id].color + 'cc'),
+      borderColor: MODEL_IDS.map(id => MODELS[id].color),
+      borderWidth: 1,
+      borderRadius: 3,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: gridColor }, ticks: { maxRotation: 35 } },
+      y: { grid: { color: gridColor }, title: { display: true, text: 'Tokens / Second', color: '#475569' }, beginAtZero: true }
+    }
+  }
+});
+
+// ── Scatter Chart ──
+new Chart(document.getElementById('scatterChart'), {
+  type: 'scatter',
+  data: {
+    datasets: MODEL_IDS.map(id => {
+      const rows = byModel[id];
+      const avgTps = rows.reduce((a,b) => a + b.tokens_per_second, 0) / rows.length;
+      return {
+        label: MODELS[id].short,
+        data: [{ x: rows[0].size_gb, y: avgTps }],
+        backgroundColor: MODELS[id].color + 'cc',
+        borderColor: MODELS[id].color,
+        borderWidth: 2,
+        pointRadius: 8,
+        pointHoverRadius: 10,
+      };
+    })
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => `${ctx.dataset.label}: ${ctx.parsed.x}GB / ${ctx.parsed.y.toFixed(1)} TPS`
+        }
+      }
+    },
+    scales: {
+      x: { grid: { color: gridColor }, title: { display: true, text: 'Model Size (GB)', color: '#475569' } },
+      y: { grid: { color: gridColor }, title: { display: true, text: 'Avg TPS', color: '#475569' }, beginAtZero: true }
+    }
+  }
+});
+
+// ── Rating cards ──
+const ratings = [
+  {
+    id: 'qwen3.5-35b-a3b@q4_k_m',
+    score: 'A+', grade: 'A',
+    rank: 1,
+    title: 'BEST OVERALL PICK',
+    winner: true,
+    verdict: 'The ideal agentic coding model on this hardware. MoE architecture delivers 48 TPS peak with only 22GB on disk. Maintains >31 TPS even at full context. TTFT stays under 90s for practical workloads. Fast 10s load. The clear winner.',
+    tags: [
+      { text: 'Fastest Peak TPS: 48.1', cls: 'tag-good' },
+      { text: 'MoE: context-resilient', cls: 'tag-good' },
+      { text: 'Smallest footprint (22GB)', cls: 'tag-good' },
+      { text: '10s load time', cls: 'tag-good' },
+    ]
+  },
+  {
+    id: 'qwen3.5-35b-a3b@q8_0',
+    score: 'A', grade: 'A',
+    rank: 2,
+    title: 'HIGH-QUALITY CODING',
+    winner: false,
+    verdict: 'Same MoE architecture as Q4 variant but 63% larger. TPS nearly identical to Q4 (42.7 vs 48 peak) — the extra quantization precision buys quality at minimal speed cost. Worth it if you need better reasoning. 36GB is still comfortable.',
+    tags: [
+      { text: 'Q8 quality', cls: 'tag-good' },
+      { text: 'MoE resilient', cls: 'tag-good' },
+      { text: '+14GB over Q4', cls: 'tag-warn' },
+      { text: '~12% slower than Q4', cls: 'tag-warn' },
+    ]
+  },
+  {
+    id: 'qwen3-coder-next@q4_k_m',
+    score: 'B+', grade: 'B',
+    rank: 3,
+    title: 'SPECIALIZED CODER',
+    winner: false,
+    verdict: 'Purpose-built coder model at 45.2GB. Good 42.7 TPS peak and holds to 27 TPS at full context — dense but efficient. The highest prompt processing speed spikes (4361 TPS at 95%) suggest excellent KV-cache behavior. Choose this if coding-specialized intelligence matters more than raw speed.',
+    tags: [
+      { text: 'Coding-specialized', cls: 'tag-info' },
+      { text: '42.7 TPS peak', cls: 'tag-good' },
+      { text: 'Dense: degrades at ctx', cls: 'tag-warn' },
+      { text: '45GB footprint', cls: 'tag-warn' },
+    ]
+  },
+  {
+    id: 'qwen3-coder-next@q6_k',
+    score: 'B', grade: 'B',
+    rank: 4,
+    title: 'QUALITY CODER',
+    winner: false,
+    verdict: '61GB is the largest dense model tested — squeezes GPU bandwidth hard. Only 28.9 TPS peak vs 42.7 for Q4. Quality gain from Q6 quantization exists but the 32% speed penalty is steep. Acceptable for longer sessions where quality outweighs throughput.',
+    tags: [
+      { text: 'Best quant quality', cls: 'tag-info' },
+      { text: '61GB — large', cls: 'tag-warn' },
+      { text: '28.9 TPS peak only', cls: 'tag-warn' },
+      { text: 'TTFT 114s @ 75%', cls: 'tag-warn' },
+    ]
+  },
+  {
+    id: 'qwen3.5-122b-a10b',
+    score: 'C+', grade: 'C',
+    rank: 5,
+    title: 'LARGE REASONING',
+    winner: false,
+    verdict: 'Biggest model at 68GB. Only 10 active billion parameters (MoE), but the huge weight loading still limits peak to 12.6 TPS. TTFT reaches 287s at 75% fill — problematic for agentic loops. Worthwhile only for genuinely hard reasoning tasks where 35B falls short.',
+    tags: [
+      { text: 'Strongest reasoning', cls: 'tag-info' },
+      { text: '12.6 TPS peak', cls: 'tag-bad' },
+      { text: 'TTFT 287s @ 75%', cls: 'tag-bad' },
+      { text: '68GB model', cls: 'tag-warn' },
+    ]
+  },
+  {
+    id: 'qwen3.5-27b@q4_k_m',
+    score: 'D', grade: 'D',
+    rank: 6,
+    title: 'NOT RECOMMENDED',
+    winner: false,
+    verdict: 'Despite being a modest 17GB, this dense model performs dramatically worse than expected — only 11.7 TPS peak, slower than the 122B MoE. TTFT of 707s at 75% fill is effectively unusable for agentic coding. The architecture likely requires more memory bandwidth than available for efficient dense attention.',
+    tags: [
+      { text: '11.7 TPS — slow', cls: 'tag-bad' },
+      { text: 'TTFT 707s @ 75%', cls: 'tag-bad' },
+      { text: 'Dense penalty severe', cls: 'tag-bad' },
+      { text: 'Avoid for agentic', cls: 'tag-bad' },
+    ]
+  },
+  {
+    id: 'qwen3.5-27b@q8_0',
+    score: 'D-', grade: 'D',
+    rank: 7,
+    title: 'WORST ON THIS HARDWARE',
+    winner: false,
+    verdict: 'Only 7.5 TPS peak — slower than every other model. TTFT hits 784s at 75% fill. Even at 5% fill, TTFT is already 48s which is poor. The Q8 dense 27B hits some bandwidth wall on Strix Halo that makes it non-viable for any real agentic use.',
+    tags: [
+      { text: '7.5 TPS — weakest', cls: 'tag-bad' },
+      { text: 'TTFT 784s @ 75%', cls: 'tag-bad' },
+      { text: '48s TTFT even @ 5%', cls: 'tag-bad' },
+      { text: 'Strictly avoid', cls: 'tag-bad' },
+    ]
+  },
+];
+
+const grid = document.getElementById('ratingGrid');
+ratings.forEach(r => {
+  const m = MODELS[r.id];
+  const rows = byModel[r.id];
+  const peakTps = Math.max(...rows.map(x => x.tokens_per_second)).toFixed(1);
+  const avgTps = (rows.reduce((a,b) => a+b.tokens_per_second,0)/rows.length).toFixed(1);
+  const minTtft = Math.min(...rows.map(x => x.ttft_seconds)).toFixed(1);
+  const comfortCtx = (() => {
+    // find max fill with TTFT < 30s
+    let max = 0;
+    rows.forEach(row => { if (row.ttft_seconds < 30) max = Math.max(max, row.fill_ratio); });
+    return max ? Math.round(max * 131072 / 1000) + 'k' : '< 6k';
+  })();
+
+  const tpsRetention = ((rows[rows.length-1].tokens_per_second / rows[0].tokens_per_second) * 100).toFixed(0);
+
+  const card = document.createElement('div');
+  card.className = 'rating-card' + (r.winner ? ' winner' : '');
+  card.innerHTML = `
+    <div class="card-header">
+      <div>
+        <div class="model-name" style="color:${m.color}">${r.id}</div>
+        <div class="model-meta">${m.arch} · ${m.type} · ${rows[0].size_gb}GB · ${rows[0].quantization}</div>
+        <div class="model-meta" style="color:#475569;margin-top:4px">#${r.rank} — ${r.title}</div>
+      </div>
+      <div class="score-badge">
+        <div class="score-num score-${r.grade}">${r.score}</div>
+        <div class="score-label">RATING</div>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-val">${peakTps}</div>
+        <div class="stat-lbl">Peak TPS</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val">${avgTps}</div>
+        <div class="stat-lbl">Avg TPS</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val">${tpsRetention}%</div>
+        <div class="stat-lbl">TPS Retention</div>
+      </div>
+    </div>
+    <div class="ctx-bar-wrap">
+      <div class="ctx-bar-label">
+        <span>Comfortable context window (&lt;30s TTFT)</span>
+        <span>${comfortCtx}</span>
+      </div>
+      <div class="ctx-bar-track">
+        <div class="ctx-bar-fill" style="width:${Math.min(100, parseInt(comfortCtx) / 1.31)}%"></div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:#94a3b8;line-height:1.65;margin-bottom:12px">${r.verdict}</p>
+    <div class="tag-row">${r.tags.map(t => `<span class="tag ${t.cls}">${t.text}</span>`).join('')}</div>
+  `;
+  grid.appendChild(card);
+});
+
+// ── Context table ──
+const ctxData = [
+  { id: 'qwen3.5-35b-a3b@q4_k_m', comfortable: '~12k',  usable: '~65k', marginal: '131k', tps5: 48.1, tps75: 34.2 },
+  { id: 'qwen3.5-35b-a3b@q8_0',   comfortable: '~12k',  usable: '~65k', marginal: '131k', tps5: 42.7, tps75: 31.2 },
+  { id: 'qwen3-coder-next@q4_k_m',comfortable: '~10k',  usable: '~65k', marginal: '131k', tps5: 42.7, tps75: 30.1 },
+  { id: 'qwen3-coder-next@q6_k',  comfortable: '~10k',  usable: '~65k', marginal: '131k', tps5: 28.9, tps75: 21.8 },
+  { id: 'qwen3.5-122b-a10b',      comfortable: 'none',  usable: '~32k', marginal: '~65k', tps5: 12.6, tps75: 5.4  },
+  { id: 'qwen3.5-27b@q4_k_m',     comfortable: 'none',  usable: 'none', marginal: '~12k', tps5: 11.7, tps75: 8.9  },
+  { id: 'qwen3.5-27b@q8_0',       comfortable: 'none',  usable: 'none', marginal: 'none', tps5: 7.5,  tps75: 6.3  },
+];
+
+const tbody = document.getElementById('ctxTableBody');
+ctxData.forEach(r => {
+  const m = MODELS[r.id];
+  const retention = ((r.tps75 / r.tps5) * 100).toFixed(0);
+  const retCls = retention >= 80 ? 'limit-green' : retention >= 60 ? 'limit-yellow' : 'limit-red';
+
+  const badgeCls = v => {
+    if (v === 'none') return 'limit-red';
+    const n = parseInt(v.replace(/[^0-9]/g,''));
+    if (n >= 65) return 'limit-green';
+    if (n >= 12) return 'limit-yellow';
+    return 'limit-red';
+  };
+
+  tbody.innerHTML += `
+    <tr>
+      <td style="color:${m.color};font-weight:600">${m.short}<br><span style="color:#475569;font-size:10px;font-weight:400">${m.arch}</span></td>
+      <td><span class="limit-badge ${badgeCls(r.comfortable)}">${r.comfortable}</span></td>
+      <td><span class="limit-badge ${badgeCls(r.usable)}">${r.usable}</span></td>
+      <td><span class="limit-badge ${badgeCls(r.marginal)}">${r.marginal}</span></td>
+      <td>${r.tps5}</td>
+      <td>${r.tps75}</td>
+      <td><span class="limit-badge ${retCls}">${retention}%</span></td>
+    </tr>
+  `;
+});
+</script>
+</body>
+</html>
