@@ -11,7 +11,7 @@ open-source tools.&lt;/p&gt;
 &lt;/ol&gt;
 &lt;h2 id="prerequisites"&gt;Prerequisites&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;A computer with 32GB+ RAM&lt;/li&gt;
+&lt;li&gt;A computer with 32GB+ Unified Memory or 24GB+ VRAM&lt;/li&gt;
 &lt;li&gt;Basic familiarity with command line&lt;/li&gt;
 &lt;li&gt;Interest in AI-assisted development&lt;/li&gt;
 &lt;/ul&gt;</description></item><item><title>02 - Getting Started with Local AI</title><link>/docs/guides/local-ai/01-setup/02-getting-started-with-local-ai/</link><pubDate>Wed, 04 Mar 2026 00:00:00 +0000</pubDate><guid>/docs/guides/local-ai/01-setup/02-getting-started-with-local-ai/</guid><description>&lt;p&gt;In this post, I will show you how to set up a local AI environment and run your first model in under 30 minutes.&lt;/p&gt;</description></item><item><title>03 - Choosing Your First Local Model</title><link>/docs/guides/local-ai/01-setup/03-choosing-your-first-local-model/</link><pubDate>Wed, 04 Mar 2026 00:00:00 +0000</pubDate><guid>/docs/guides/local-ai/01-setup/03-choosing-your-first-local-model/</guid><description>&lt;p&gt;I will show you how to pick your first local LLM based on your hardware, without wasting hours downloading models that

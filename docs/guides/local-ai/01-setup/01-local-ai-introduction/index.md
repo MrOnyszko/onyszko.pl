@@ -14,6 +14,6 @@ open-source tools.
 
 ## Prerequisites
 
-- A computer with 32GB+ RAM
+- A computer with 32GB+ Unified Memory or 24GB+ VRAM
 - Basic familiarity with command line
 - Interest in AI-assisted development
