@@ -1,0 +1,1468 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<script 
+  src="/js/color-mode.5c1949ea57ce2075eb442a32bb404b638413499fe06b4610198b84697a0d2a89.js"
+  integrity="sha256-XBlJ6lfOIHXrRCoyu0BLY4QTSZ/ga0YQGYuEaXoNKok=">
+</script>
+
+
+<link rel="stylesheet" href="/main.19600983e5ae8fa82236e066dd225cbc20862127d09947c2a69f305203133d4c51fc56ee9735bdcca8bea86ab5836a50ffe065769406fd24e47c2347f1e7d2db.css" integrity="sha512-GWAJg&#43;Wuj6giNuBm3SJcvCCGISfQmUfCpp8wUgMTPUxR/FbulzW9zKi&#43;qGq1g2pQ/&#43;BldpQG/STkfCNH8efS2w==" crossorigin="anonymous">
+
+<noscript><style>img.lazyload { display: none; }</style></noscript><base href="http://localhost:1313/docs/guides/local-ai/03-experiments/09-prd-creation-experiment/">
+
+  <link rel="canonical" href="http://localhost:1313/docs/guides/local-ai/03-experiments/09-prd-creation-experiment/">
+<link rel="alternate" type="text/markdown" href="http://localhost:1313/docs/guides/local-ai/03-experiments/09-prd-creation-experiment/index.md" title="09 - PRD Creation Experiment | onyszko.pl">
+
+<title>09 - PRD Creation Experiment | onyszko.pl</title>
+<meta name="description" content="Use local AI models to generate Product Requirement Documents that developers can act on directly.">
+
+
+    
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    
+      <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    
+      <link
+        rel="apple-touch-icon"
+        href="/apple-touch-icon.png"
+        sizes="180x180"
+        type="image/png"
+      >
+      <link
+        rel="icon"
+        href="/favicon-192x192.png"
+        sizes="192x192"
+        type="image/png"
+      >
+      <link
+        rel="icon"
+        href="/favicon-512x512.png"
+        sizes="512x512"
+        type="image/png"
+      >
+<link rel="manifest" href="/manifest.webmanifest">
+
+<meta property="og:url" content="http://localhost:1313/docs/guides/local-ai/03-experiments/09-prd-creation-experiment/">
+  <meta property="og:site_name" content="onyszko.pl">
+  <meta property="og:title" content="09 - PRD Creation Experiment">
+  <meta property="og:description" content="Use local AI models to generate Product Requirement Documents that developers can act on directly.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2026-03-11T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-03-11T00:00:00+00:00">
+    <meta property="og:image" content="http://localhost:1313/cover.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/cover.png">
+  <meta name="twitter:title" content="09 - PRD Creation Experiment">
+  <meta name="twitter:description" content="Use local AI models to generate Product Requirement Documents that developers can act on directly.">
+      <meta name="twitter:site" content="@MrOnyszko">
+
+    
+    
+    
+    <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/",
+       "name": "Hi, I'm Sławomir",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/docs/",
+       "name": "Documentation",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/docs/guides/",
+       "name": "Local Llm Guide",
+       "position": 3
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/docs/guides/local-ai/03-experiments/",
+       "name": "Experiments",
+       "position": 4
+     },
+     {
+       "@type": "ListItem",
+       "name": "09 Prd Creation Experiment",
+       "position": 5
+     }
+   ]
+ }
+</script>
+
+
+
+
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-VRE5KD7DFL"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-VRE5KD7DFL');
+        }
+      </script>
+
+
+</head>
+
+  
+  <body class="single section docs" data-bs-spy="scroll" data-bs-target="#toc" data-bs-root-margin="0px 0px -60%" data-bs-smooth-scroll="true" tabindex="0">
+    <div class="sticky-top">
+<header class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+  
+    <a class="navbar-brand me-auto me-lg-3" href="/">onyszko.pl</a>
+
+    
+    
+    
+    <button class="btn btn-link d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavSection" aria-controls="offcanvasNavSection" aria-label="Open section navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+        <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+        <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+      </svg>
+    </button>
+    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNavSection" aria-labelledby="offcanvasNavSectionLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavSectionLabel">Docs</h5>
+        <button type="button" class="btn btn-link nav-link p-0 ms-auto" data-bs-dismiss="offcanvas" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M18 6l-12 12"></path>
+            <path d="M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="offcanvas-body">
+        <aside class="doks-sidebar mt-n3">
+          <nav id="doks-docs-nav" aria-label="Tertiary navigation">
+            
+  
+    
+<nav class="section-nav docs-links">
+  <ul class="list-unstyled">
+
+  <li>
+    <details open>
+      <summary>Local LLM Guide</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+    <details open>
+      <summary>Setup</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/01-local-ai-introduction/">01 - Local AI Introduction</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/02-getting-started-with-local-ai/">02 - Getting Started with Local AI</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/03-choosing-your-first-local-model/">03 - Choosing Your First Local Model</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/04-understanding-llama.cpp/">04 - Understanding llama.cpp</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+    <details open>
+      <summary>OpenCode Environment</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/05-installing-opencode-and-connecting-it-to-lm-studio/">05 - Installing OpenCode and Connecting it to LM Studio</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/06-how-opencode-actually-works/">06 - How OpenCode Actually Works</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/07-configuring-opencode-for-real-work/">07 - Configuring OpenCode for Real Work</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/08-your-first-real-task-with-opencode/">08 - Your First Real Task with OpenCode</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+    <details open>
+      <summary>Experiments</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li class="active" >
+      <a aria-current="page" href="/docs/guides/local-ai/03-experiments/09-prd-creation-experiment/">09 - PRD Creation Experiment</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/04-agents-and-skills/">Agents &amp; Skills</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/05-workflow/">Workflow</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/06-assesment/">Assessment</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+  </ul>
+</nav>
+
+  
+
+          </nav>
+        </aside>
+      </div>
+    </div>
+    
+    <button class="btn btn-link nav-link mx-2 order-3 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavMain" aria-controls="offcanvasNavMain" aria-label="Open main navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <line x1="4" y1="8" x2="20" y2="8"></line>
+        <line x1="4" y1="16" x2="20" y2="16"></line>
+      </svg>
+    </button>
+
+    
+    <div class="offcanvas offcanvas-end h-auto" tabindex="-1" id="offcanvasNavMain" aria-labelledby="offcanvasNavMainLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavMainLabel">onyszko.pl</h5>
+        <button type="button" class="btn btn-link nav-link p-0 ms-auto" data-bs-dismiss="offcanvas" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M18 6l-12 12"></path>
+            <path d="M6 6l12 12"></path>
+         </svg>
+        </button>
+      </div>
+      
+      <div class="offcanvas-body d-flex flex-column flex-lg-row justify-content-between">
+        <ul class="navbar-nav flex-grow-1"><li class="nav-item">
+                <a class="nav-link" href="http://localhost:1313/docs/guides/local-ai/01-setup/01-local-ai-introduction/">Guides</a>
+              </li>
+            </ul>
+
+        
+        
+        
+        
+        
+        <button id="buttonColorMode" class="btn btn-link nav-link mt-3 mt-lg-0 p-0 ms-lg-2 me-lg-1" type="button" aria-label="Toggle theme">
+          <svg data-bs-theme-value="dark" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+          </svg>
+          <svg data-bs-theme-value="light" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0m-5 0h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path>
+          </svg>
+        </button>
+        
+        <ul id="socialMenu" class="nav flex-row order-lg-4">
+          <li class="nav-item">
+              <a class="nav-link social-link" href="https://github.com/MrOnyszko"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path></svg><small class="ms-2 visually-hidden">GitHub</small></a>
+            </li>
+          <li class="nav-item">
+              <a class="nav-link social-link" href="https://www.youtube.com/@mronyszko"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-youtube" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M2 8a4 4 0 0 1 4 -4h12a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-12a4 4 0 0 1 -4 -4v-8z"></path><path d="M10 9l5 3l-5 3z"></path></svg><small class="ms-2 visually-hidden">YouTube</small></a>
+            </li>
+          </ul>
+        
+        </div>
+    </div>
+
+    
+    </div>
+</header>
+</div>
+
+
+    <div class="wrap container-fluid" role="document">
+      <div class="content">
+      
+        
+	<div class="row flex-xl-nowrap">
+		<div class="col-lg-5 col-xl-4 docs-sidebar d-none d-lg-block">
+			
+  
+    
+<nav class="section-nav docs-links">
+  <ul class="list-unstyled">
+
+  <li>
+    <details open>
+      <summary>Local LLM Guide</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+    <details open>
+      <summary>Setup</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/01-local-ai-introduction/">01 - Local AI Introduction</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/02-getting-started-with-local-ai/">02 - Getting Started with Local AI</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/03-choosing-your-first-local-model/">03 - Choosing Your First Local Model</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/04-understanding-llama.cpp/">04 - Understanding llama.cpp</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+    <details open>
+      <summary>OpenCode Environment</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/05-installing-opencode-and-connecting-it-to-lm-studio/">05 - Installing OpenCode and Connecting it to LM Studio</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/06-how-opencode-actually-works/">06 - How OpenCode Actually Works</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/07-configuring-opencode-for-real-work/">07 - Configuring OpenCode for Real Work</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/08-your-first-real-task-with-opencode/">08 - Your First Real Task with OpenCode</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+    <details open>
+      <summary>Experiments</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li class="active" >
+      <a aria-current="page" href="/docs/guides/local-ai/03-experiments/09-prd-creation-experiment/">09 - PRD Creation Experiment</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/04-agents-and-skills/">Agents &amp; Skills</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/05-workflow/">Workflow</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/06-assesment/">Assessment</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+  </ul>
+</nav>
+
+  
+
+		</div>
+		
+			<div class="col container-fw d-lg-flex flex-lg-row justify-content-center mx-auto">
+		
+		<nav class="docs-toc d-none d-xl-block col-xl-3" aria-label="Secondary navigation">
+			<div class="page-links">
+  <h3>On this page</h3>
+    <nav id="toc">
+  <ul>
+    <li><a href="#why">Why</a></li>
+    <li><a href="#how">How</a>
+      <ul>
+        <li><a href="#what-is-a-prd">What is a PRD?</a></li>
+        <li><a href="#why-prd-is-useful">Why PRD is Useful</a></li>
+        <li><a href="#lets-try-creating-one-with-local-llm">Let&rsquo;s Try Creating One with Local LLM</a></li>
+        <li><a href="#lets-compare-local-llm-prds-to-cloud-llm-minimax-m25">Let&rsquo;s Compare Local LLM PRDs to Cloud LLM MiniMax M2.5</a></li>
+        <li><a href="#lets-use-gemini-pro-to-rate-our-prds">Let&rsquo;s Use Gemini Pro to Rate Our PRDs</a></li>
+        <li><a href="#lets-create-an-agent-for-prd-creation">Let&rsquo;s Create an Agent for PRD Creation</a></li>
+        <li><a href="#lets-use-the-prd-agent">Let&rsquo;s Use the PRD Agent</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-points-recap">Key Points Recap</a></li>
+  </ul>
+</nav>
+</div>
+
+		</nav>
+		<main class="docs-content col-lg-11 col-xl-9 mx-xl-auto">
+		<nav class="toc-mobile toc-mobile-sticky d-xl-none" aria-label="Quaternary navigation">
+				<details>
+    <summary>On this page</summary>
+    <div class="page-links">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#why">Why</a></li>
+    <li><a href="#how">How</a>
+      <ul>
+        <li><a href="#what-is-a-prd">What is a PRD?</a></li>
+        <li><a href="#why-prd-is-useful">Why PRD is Useful</a></li>
+        <li><a href="#lets-try-creating-one-with-local-llm">Let&rsquo;s Try Creating One with Local LLM</a></li>
+        <li><a href="#lets-compare-local-llm-prds-to-cloud-llm-minimax-m25">Let&rsquo;s Compare Local LLM PRDs to Cloud LLM MiniMax M2.5</a></li>
+        <li><a href="#lets-use-gemini-pro-to-rate-our-prds">Let&rsquo;s Use Gemini Pro to Rate Our PRDs</a></li>
+        <li><a href="#lets-create-an-agent-for-prd-creation">Let&rsquo;s Create an Agent for PRD Creation</a></li>
+        <li><a href="#lets-use-the-prd-agent">Let&rsquo;s Use the PRD Agent</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-points-recap">Key Points Recap</a></li>
+  </ul>
+</nav>
+    </div>
+  </details>
+
+			</nav>
+			
+			<div class="page-header d-flex flex-row justify-content-between align-items-start">
+				<div>
+					<h1>09 - PRD Creation Experiment</h1>
+					
+				</div>
+				<div>
+					<div id="ai-dropdown" class="dropdown">
+  <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M18 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li>
+      <a class="dropdown-item" href="https://chatgpt.com/?hints=search&q=Read+http%3A%2F%2Flocalhost%3A1313%2Fdocs%2Fguides%2Flocal-ai%2F03-experiments%2F09-prd-creation-experiment%2F%2C+I+want+to+ask+questions+about+it." target="_blank">
+        <svg fill="currentColor" fill-rule="evenodd" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg" class="mb-1 me-1"><title>OpenAI</title><path d="M21.55 10.004a5.416 5.416 0 00-.478-4.501c-1.217-2.09-3.662-3.166-6.05-2.66A5.59 5.59 0 0010.831 1C8.39.995 6.224 2.546 5.473 4.838A5.553 5.553 0 001.76 7.496a5.487 5.487 0 00.691 6.5 5.416 5.416 0 00.477 4.502c1.217 2.09 3.662 3.165 6.05 2.66A5.586 5.586 0 0013.168 23c2.443.006 4.61-1.546 5.361-3.84a5.553 5.553 0 003.715-2.66 5.488 5.488 0 00-.693-6.497v.001zm-8.381 11.558a4.199 4.199 0 01-2.675-.954c.034-.018.093-.05.132-.074l4.44-2.53a.71.71 0 00.364-.623v-6.176l1.877 1.069c.02.01.033.029.036.05v5.115c-.003 2.274-1.87 4.118-4.174 4.123zM4.192 17.78a4.059 4.059 0 01-.498-2.763c.032.02.09.055.131.078l4.44 2.53c.225.13.504.13.73 0l5.42-3.088v2.138a.068.068 0 01-.027.057L9.9 19.288c-1.999 1.136-4.552.46-5.707-1.51h-.001zM3.023 8.216A4.15 4.15 0 015.198 6.41l-.002.151v5.06a.711.711 0 00.364.624l5.42 3.087-1.876 1.07a.067.067 0 01-.063.005l-4.489-2.559c-1.995-1.14-2.679-3.658-1.53-5.63h.001zm15.417 3.54l-5.42-3.088L14.896 7.6a.067.067 0 01.063-.006l4.489 2.557c1.998 1.14 2.683 3.662 1.529 5.633a4.163 4.163 0 01-2.174 1.807V12.38a.71.71 0 00-.363-.623zm1.867-2.773a6.04 6.04 0 00-.132-.078l-4.44-2.53a.731.731 0 00-.729 0l-5.42 3.088V7.325a.068.068 0 01.027-.057L14.1 4.713c2-1.137 4.555-.46 5.707 1.513.487.833.664 1.809.499 2.757h.001zm-11.741 3.81l-1.877-1.068a.065.065 0 01-.036-.051V6.559c.001-2.277 1.873-4.122 4.181-4.12.976 0 1.92.338 2.671.954-.034.018-.092.05-.131.073l-4.44 2.53a.71.71 0 00-.365.623l-.003 6.173v.002zm1.02-2.168L12 9.25l2.414 1.375v2.75L12 14.75l-2.415-1.375v-2.75z"></path></svg>
+        Open in ChatGPT
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item" href="https://claude.ai/new?q=Read+http%3A%2F%2Flocalhost%3A1313%2Fdocs%2Fguides%2Flocal-ai%2F03-experiments%2F09-prd-creation-experiment%2F%2C+I+want+to+ask+questions+about+it." target="_blank">
+        <svg fill="currentColor" fill-rule="evenodd" height="16" viewBox="0 0 256 257" width="16" xmlns="http://www.w3.org/2000/svg" class="mb-1 me-1" preserveAspectRatio="xMidYMid"><title>Anthropic</title><path d="m50.228 170.321 50.357-28.257.843-2.463-.843-1.361h-2.462l-8.426-.518-28.775-.778-24.952-1.037-24.175-1.296-6.092-1.297L0 125.796l.583-3.759 5.12-3.434 7.324.648 16.202 1.101 24.304 1.685 17.629 1.037 26.118 2.722h4.148l.583-1.685-1.426-1.037-1.101-1.037-25.147-17.045-27.22-18.017-14.258-10.37-7.713-5.25-3.888-4.925-1.685-10.758 7-7.713 9.397.649 2.398.648 9.527 7.323 20.35 15.75L94.817 91.9l3.889 3.24 1.555-1.102.195-.777-1.75-2.917-14.453-26.118-15.425-26.572-6.87-11.018-1.814-6.61c-.648-2.723-1.102-4.991-1.102-7.778l7.972-10.823L71.42 0 82.05 1.426l4.472 3.888 6.61 15.101 10.694 23.786 16.591 32.34 4.861 9.592 2.592 8.879.973 2.722h1.685v-1.556l1.36-18.211 2.528-22.36 2.463-28.776.843-8.1 4.018-9.722 7.971-5.25 6.222 2.981 5.12 7.324-.713 4.73-3.046 19.768-5.962 30.98-3.889 20.739h2.268l2.593-2.593 10.499-13.934 17.628-22.036 7.778-8.749 9.073-9.657 5.833-4.601h11.018l8.1 12.055-3.628 12.443-11.342 14.388-9.398 12.184-13.48 18.147-8.426 14.518.778 1.166 2.01-.194 30.46-6.481 16.462-2.982 19.637-3.37 8.88 4.148.971 4.213-3.5 8.62-20.998 5.184-24.628 4.926-36.682 8.685-.454.324.519.648 16.526 1.555 7.065.389h17.304l32.21 2.398 8.426 5.574 5.055 6.805-.843 5.184-12.962 6.611-17.498-4.148-40.83-9.721-14-3.5h-1.944v1.167l11.666 11.406 21.387 19.314 26.767 24.887 1.36 6.157-3.434 4.86-3.63-.518-23.526-17.693-9.073-7.972-20.545-17.304h-1.36v1.814l4.73 6.935 25.017 37.59 1.296 11.536-1.814 3.76-6.481 2.268-7.13-1.297-14.647-20.544-15.1-23.138-12.185-20.739-1.49.843-7.194 77.448-3.37 3.953-7.778 2.981-6.48-4.925-3.436-7.972 3.435-15.749 4.148-20.544 3.37-16.333 3.046-20.285 1.815-6.74-.13-.454-1.49.194-15.295 20.999-23.267 31.433-18.406 19.702-4.407 1.75-7.648-3.954.713-7.064 4.277-6.286 25.47-32.405 15.36-20.092 9.917-11.6-.065-1.686h-.583L44.07 198.125l-12.055 1.555-5.185-4.86.648-7.972 2.463-2.593 20.35-13.999-.064.065Z"></path></svg>
+        Open in Claude
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item" href="https://www.perplexity.ai/search/?q=Read+http%3A%2F%2Flocalhost%3A1313%2Fdocs%2Fguides%2Flocal-ai%2F03-experiments%2F09-prd-creation-experiment%2F%2C+I+want+to+ask+questions+about+it." target="_blank">
+        <svg fill="currentColor" height="16" viewBox="0 0 34 38" width="16" xmlns="http://www.w3.org/2000/svg" class="mb-1 me-1"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.12114 0.0400391L15.919 9.98864V9.98636V0.062995H18.0209V10.0332L28.8671 0.0400391V11.3829H33.3202V27.744H28.8808V37.8442L18.0209 28.303V37.9538H15.919V28.4604L5.13338 37.96V27.744H0.680176V11.3829H5.12114V0.0400391ZM14.3344 13.4592H2.78208V25.6677H5.13074V21.8167L14.3344 13.4592ZM7.23518 22.7379V33.3271L15.919 25.6786V14.8506L7.23518 22.7379ZM18.0814 25.5775V14.8404L26.7677 22.7282V27.744H26.7789V33.219L18.0814 25.5775ZM28.8808 25.6677H31.2183V13.4592H19.752L28.8808 21.7302V25.6677ZM26.7652 11.3829V4.81584L19.6374 11.3829H26.7652ZM14.3507 11.3829H7.22306V4.81584L14.3507 11.3829Z" fill="currentColor"></path></svg>
+        Open in Perplexity
+      </a>
+    </li>
+    <li><hr class="dropdown-divider"></li>
+    <li>
+      <a id="copy-markdown" class="dropdown-item" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg>
+        Copy Markdown
+      </a>
+    </li>
+  </ul>
+</div>
+
+				</div>
+				</div>
+			<p>In this post, I will show you how to use local AI models to generate Product Requirement Documents that developers can
+act on directly.</p>
+<h2 id="why">Why<a href="#why" class="anchor" aria-hidden="true">#</a> </h2>
+<p>Writing good requirements is hard. Writing good requirements consistently is even harder. Most developers skip PRD
+creation entirely and jump straight to coding — then wonder why scope creeps, priorities blur, and features don&rsquo;t quite
+fit together.
+Using AI for PRD creation gives you three things that manual processes don&rsquo;t: discipline (the model forces you to answer
+specific questions), speed (minutes instead of hours), and consistency (each PRD follows the same structure). The local
+LLM aspect means you get this without sending your product ideas to the cloud.</p>
+<h2 id="how">How<a href="#how" class="anchor" aria-hidden="true">#</a> </h2>
+<h3 id="what-is-a-prd">What is a PRD?<a href="#what-is-a-prd" class="anchor" aria-hidden="true">#</a> </h3>
+<p>A Product Requirement Document is a structured artifact that describes what you&rsquo;re building, why you&rsquo;re building it, and
+how you&rsquo;ll know it&rsquo;s done. It&rsquo;s not a spec — it&rsquo;s the contract between product thinking and engineering execution.</p>
+<p>A good PRD answers:</p>
+<ol>
+<li><strong>What</strong> — The feature or product and its core value proposition</li>
+<li><strong>Who</strong> — The target user and their problem</li>
+<li><strong>Why</strong> — The business case and success criteria</li>
+<li><strong>How</strong> — The functional requirements and user flows</li>
+<li><strong>When</strong> — Timeline and milestones</li>
+</ol>
+<blockquote>
+<p>A PRD is not a technical spec. Don&rsquo;t include database schema or API endpoints — save that for later.</p>
+</blockquote>
+<h3 id="why-prd-is-useful">Why PRD is Useful<a href="#why-prd-is-useful" class="anchor" aria-hidden="true">#</a> </h3>
+<p>The discipline of writing a PRD catches problems before you write code:</p>
+<ul>
+<li><strong>Scope clarity</strong> — &ldquo;It should do X&rdquo; becomes &ldquo;It must do X, Y, Z and NOT A, B.&rdquo; That&rsquo;s a 15-minute conversation that
+saves 15 days of rework.</li>
+<li><strong>Dependency mapping</strong> — When you write down what the feature needs, you see what other systems it touches.</li>
+<li><strong>Testable acceptance criteria</strong> — A PRD that says &ldquo;users can create tasks&rdquo; is useless. A PRD that says &ldquo;users can
+create tasks with title, due date, and priority; tasks appear in list sorted by due date&rdquo; gives QA something concrete.</li>
+<li><strong>Onboarding aid</strong> — New developer joins the team? Drop the PRD in Slack and they&rsquo;re up to speed in 10 minutes.</li>
+</ul>
+<h3 id="lets-try-creating-one-with-local-llm">Let&rsquo;s Try Creating One with Local LLM<a href="#lets-try-creating-one-with-local-llm" class="anchor" aria-hidden="true">#</a> </h3>
+<blockquote>
+<p>Do not fret, the post is long because I included many PRDs so you could see real results from different models. I
+limited myself to unsloth Qwen 3.5 family of models for simplicity.</p>
+</blockquote>
+<p>I asked my local Qwen3.5-35B-A3B Q_K_M to create a PRD for adding Tasks functionality to Aily — my existing notes, mood
+tracker, and habits app.</p>
+<p>Here&rsquo;s the prompt I used:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <pre tabindex="0"><code>Create a Product Requirement Document for adding Tasks functionality to an existing mobile app called Aily.
+
+Context:
+- Aily currently has: Notes, Mood Tracker, Habits
+- The app is built with Flutter
+- Target users: individuals who want to track personal daily tasks
+
+Create a PRD with these sections:
+1. Overview (one paragraph)
+2. User Stories (3-5)
+3. Functional Requirements
+4. Non-Functional Requirements
+5. UI/UX Guidelines
+6. Acceptance Criteria
+7. Out of Scope
+
+Make it detailed enough that a developer could implement from it.</code></pre>
+  </figure>
+</div>
+<p>Here&rsquo;s what the local unsloth/Qwen3.5-9B Q8_K_XL produced:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gh"># Product Requirement Document (PRD): Aily Tasks Functionality
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 1. Overview
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">The Aily app is currently a personal wellness companion featuring Notes, a Mood Tracker, and Habit tracking. To provide
+</span></span><span class="line"><span class="cl">a comprehensive solution for personal daily productivity, we are introducing a new core module: <span class="gs">**Tasks**</span>. Unlike &#34;
+</span></span><span class="line"><span class="cl">Habits,&#34; which are binary (done/not done) and recurring, &#34;Tasks&#34; are specific, actionable items that may have unique due
+</span></span><span class="line"><span class="cl">dates, priority levels, and completion status. This feature will integrate seamlessly with the existing Flutter
+</span></span><span class="line"><span class="cl">architecture, utilizing the current state management solution (e.g., BLoC/Riverpod) and database structure, ensuring
+</span></span><span class="line"><span class="cl">that users can manage a dynamic list of daily to-do items while maintaining the app&#39;s minimalist aesthetic and focus on
+</span></span><span class="line"><span class="cl">personal growth.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 2. User Stories
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **US-01:** As a user, I want to create a specific task with a custom title and optional description, so that I can
+</span></span><span class="line"><span class="cl">  break down my daily goals into manageable steps.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*US-02:** As a user, I want to set a specific due date and time for a task, so that the app can remind me or alert me
+</span></span><span class="line"><span class="cl">  if I am running late.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*US-03:** As a user, I want to mark tasks as complete or delete them instantly, so that I can keep my daily list
+</span></span><span class="line"><span class="cl">  clean and focused on active items.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*US-04:** As a user, I want to view all my tasks in a chronological list and filter them by &#34;All,&#34; &#34;Incomplete,&#34; or &#34;
+</span></span><span class="line"><span class="cl">  Complete,&#34; so that I can easily track my daily progress.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*US-05:** As a user, I want tasks to sync across my devices automatically when logged in, so that my productivity
+</span></span><span class="line"><span class="cl">  list is available wherever I am using Aily.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 3. Functional Requirements
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### FR-3.1: Task Creation
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **FR-3.1.1:** Users can add a new task via a floating action button (FAB) or an &#34;Add Task&#34; header button.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **FR-3.1.2:** The creation form must include fields for:
+</span></span><span class="line"><span class="cl">    <span class="k">*</span> **Title:** Mandatory text input.
+</span></span><span class="line"><span class="cl">    <span class="k">*</span> **Description:** Optional text input (supports basic line breaks).
+</span></span><span class="line"><span class="cl">    <span class="k">*</span> **Due Date:** Optional date picker (defaults to current day).
+</span></span><span class="line"><span class="cl">    <span class="k">*</span> **Due Time:** Optional time picker.
+</span></span><span class="line"><span class="cl">    <span class="k">*</span> **Category:** Mandatory dropdown selection (e.g., Work, Personal, Health, Errands).
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **FR-3.1.3:** The app must validate that the &#34;Title&#34; is not empty before saving.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### FR-3.2: Task Management &amp; Editing
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **FR-3.2.1:** Users can tap an existing task to open an edit/view screen.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **FR-3.2.2:** All fields created in FR-3.1 are editable on the task detail screen.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **FR-3.2.3:** Users can toggle the <span class="gs">**Status**</span> (Completed/Incomplete) directly from the list view (via strikethrough
+</span></span><span class="line"><span class="cl">  animation) and the detail view.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*FR-3.2.4:** Users can delete a task via a swipe gesture (if using a swipe-enabled list library) or a three-dot menu.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### FR-3.3: Notification &amp; Reminders
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **FR-3.3.1:** If a &#34;Due Time&#34; is set, the app must request local notification permissions (handled via
+</span></span><span class="line"><span class="cl">  <span class="sb">`flutter_local_notifications`</span>).
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*FR-3.3.2:** A gentle notification should be triggered at the specified due time if the task status is still &#34;
+</span></span><span class="line"><span class="cl">  Incomplete.&#34;
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*FR-3.3.3:** Users must be able to dismiss the notification and optionally mark the task as completed upon opening
+</span></span><span class="line"><span class="cl">  it.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### FR-3.4: Data Persistence &amp; Sync
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **FR-3.4.1:** All tasks must be saved to the local database (Firebase Firestore or Hive/Sqflite depending on current
+</span></span><span class="line"><span class="cl">  Aily architecture).
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*FR-3.4.2:** Tasks must include a <span class="sb">`createdAt`</span> timestamp and an <span class="sb">`updatedAt`</span> timestamp.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*FR-3.4.3:** Changes made on one device must propagate to other devices logged into the same user account within 5
+</span></span><span class="line"><span class="cl">  seconds.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### FR-3.5: Filtering &amp; Sorting
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **FR-3.5.1:** The main list view must include a segmented control or dropdown to filter by: &#34;All,&#34; &#34;Incomplete,&#34; &#34;
+</span></span><span class="line"><span class="cl">  Complete.&#34;
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*FR-3.5.2:** By default, the list should be sorted by &#34;Due Date&#34; (ascending), then by &#34;Created Date.&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 4. Non-Functional Requirements
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **NFR-4.1 Performance:** The task list must load within 1.5 seconds even with 100+ items. Animations for status
+</span></span><span class="line"><span class="cl">  toggling (strikethrough) must be 60fps.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*NFR-4.2 Reliability:** The system must achieve 99.9% uptime for data synchronization. No task data should be lost
+</span></span><span class="line"><span class="cl">  during app crashes or network outages.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*NFR-4.3 Security:** All data in transit must be encrypted using TLS 1.3. Authentication tokens must be stored
+</span></span><span class="line"><span class="cl">  securely.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*NFR-4.4 Battery Efficiency:** Local notifications and polling for task updates must be optimized to avoid
+</span></span><span class="line"><span class="cl">  unnecessary wake locks on the device.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*NFR-4.5 Scalability:** The database schema must support up to 1 million concurrent users without degradation.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 5. UI/UX Guidelines
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Design Language:** The Tasks module must strictly adhere to Aily&#39;s existing design system (colors, typography,
+</span></span><span class="line"><span class="cl">  border radius, spacing).
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*List View:**
+</span></span><span class="line"><span class="cl">    <span class="k">*</span> Use a card-based layout.
+</span></span><span class="line"><span class="cl">    <span class="k">*</span> **Completed Tasks:** Text should have a light gray strikethrough, background should become slightly opaque, and
+</span></span><span class="line"><span class="cl">      the card border should fade.
+</span></span><span class="line"><span class="cl">    <span class="k">*</span> **Incomplete Tasks:** Full color, bold title.
+</span></span><span class="line"><span class="cl">    <span class="k">*</span> **Metadata:** Due date/time and category tag must appear in a small, muted font at the bottom right of the card.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Feedback:**
+</span></span><span class="line"><span class="cl">    <span class="k">*</span> **Success:** A subtle haptic vibration and a checkmark animation when marking a task complete.
+</span></span><span class="line"><span class="cl">    <span class="k">*</span> **Error:** A red text alert and a shaking animation if form validation fails.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Navigation:**
+</span></span><span class="line"><span class="cl">    <span class="k">*</span> Bottom navigation bar should add a new tab: &#34;Tasks&#34; (placed after &#34;Habits&#34;).
+</span></span><span class="line"><span class="cl">    <span class="k">*</span> Swipe gestures: Swipe left to &#34;Complete&#34;, Swipe right to &#34;Delete&#34; (optional, dependent on current gesture library
+</span></span><span class="line"><span class="cl">      implementation).
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Empty State:** If no tasks exist, display an illustration of a checklist with the text: &#34;No tasks yet. Add your
+</span></span><span class="line"><span class="cl">  first goal to stay productive!&#34;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 6. Acceptance Criteria
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Criteria Description | Pass/Fail |
+</span></span><span class="line"><span class="cl">| :--- | :--- | :--- |
+</span></span><span class="line"><span class="cl">| <span class="gs">**AC-1**</span> | User can create a task with only a Title and default date/time. | |
+</span></span><span class="line"><span class="cl">| <span class="gs">**AC-2**</span> | User cannot create a task without a Title; validation message appears. | |
+</span></span><span class="line"><span class="cl">| <span class="gs">**AC-3**</span> | Task list refreshes immediately after marking a task as complete (real-time). | |
+</span></span><span class="line"><span class="cl">| <span class="gs">**AC-4**</span> | Local notification fires exactly at the set due time if task is incomplete. | |
+</span></span><span class="line"><span class="cl">| <span class="gs">**AC-5**</span> | Filtering by &#34;Incomplete&#34; hides all completed tasks correctly. | |
+</span></span><span class="line"><span class="cl">| <span class="gs">**AC-6**</span> | Data created on Mobile Web (if exists) or Mobile App syncs to the other platform. | |
+</span></span><span class="line"><span class="cl">| <span class="gs">**AC-7**</span> | App handles network loss gracefully; data saves locally and syncs once connected. | |
+</span></span><span class="line"><span class="cl">| <span class="gs">**AC-8**</span> | UI matches Figma mockups for Task List, Add Task, and Detail views. | |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 7. Out of Scope
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">The following features are intentionally excluded from this initial release (MVP):
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Sub-tasks:** Breaking a main task into smaller child tasks.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Recurring Tasks:** Automatically creating the same task every day/week (this overlaps with the existing &#34;Habits&#34;
+</span></span><span class="line"><span class="cl">  feature).
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Collaborative Tasks:** Inviting friends or family to a task list.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Attachments:** Adding images or files to a task.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Task Templates:** Saving a task configuration to reuse later.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Dark Mode Specifics:** If Aily is already fully dark-mode compatible, specific new assets are not required, but
+</span></span><span class="line"><span class="cl">  existing components must render correctly in dark mode.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Analytics Dashboard:** Detailed reporting on task completion rates over time.</span></span></code></pre></div>
+  </figure>
+</div>
+<p>Here&rsquo;s what the local unsloth/Qwen3.5-35B-A3B Q4_K_M produced:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gh"># Product Requirement Document (PRD): Aily Task Management Module
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gs">**Product Name:**</span> Aily
+</span></span><span class="line"><span class="cl"><span class="gs">**Feature Name:**</span> Task Management
+</span></span><span class="line"><span class="cl"><span class="gs">**Version:**</span> 1.0.0
+</span></span><span class="line"><span class="cl"><span class="gs">**Platform:**</span> iOS &amp; Android (Flutter)
+</span></span><span class="line"><span class="cl"><span class="gs">**Status:**</span> Draft
+</span></span><span class="line"><span class="cl"><span class="gs">**Date:**</span> October 26, 2023
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 1. Overview
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">The Task Management feature aims to enhance Aily&#39;s existing ecosystem of wellness and productivity tools (Notes, Mood
+</span></span><span class="line"><span class="cl">Tracker, Habits) by providing users with a mechanism to manage specific, deadline-driven action items. Unlike the &#34;
+</span></span><span class="line"><span class="cl">Habits&#34; feature, which focuses on repetitive behaviors, &#34;Tasks&#34; will focus on one-off or time-bound goals. This module
+</span></span><span class="line"><span class="cl">will integrate seamlessly with the current UI design system and allow users to create, prioritize, complete, and track
+</span></span><span class="line"><span class="cl">tasks. The addition of Tasks will provide users with a daily checklist, complementing the longitudinal tracking of
+</span></span><span class="line"><span class="cl">Habits and the retrospective logging of Mood.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 2. User Stories
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">1.</span> <span class="gs">**As a**</span> user, <span class="gs">**I want to**</span> create a new task with a title, description, and due date, <span class="gs">**so that**</span> I can capture
+</span></span><span class="line"><span class="cl">   immediate to-dos before they are forgotten.
+</span></span><span class="line"><span class="cl"><span class="k">2.</span> <span class="gs">**As a**</span> user, <span class="gs">**I want to**</span> mark a task as complete and view it in a &#34;Completed&#34; tab, <span class="gs">**so that**</span> I can feel a sense
+</span></span><span class="line"><span class="cl">   of accomplishment and clear my inbox.
+</span></span><span class="line"><span class="cl"><span class="k">3.</span> <span class="gs">**As a**</span> user, <span class="gs">**I want to**</span> receive a push notification when a task is due, <span class="gs">**so that**</span> I am reminded to complete it
+</span></span><span class="line"><span class="cl">   at the right time.
+</span></span><span class="line"><span class="cl"><span class="k">4.</span> <span class="gs">**As a**</span> user, <span class="gs">**I want to**</span> filter my tasks by &#34;Today&#34; or &#34;Upcoming,&#34; <span class="gs">**so that**</span> I can focus only on what requires
+</span></span><span class="line"><span class="cl">   immediate attention without clutter.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 3. Functional Requirements
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.1. Data Model
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Tasks must adhere to the following JSON structure (stored locally via Hive/SQLite and synced via Firestore/Backend):
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">{
+</span></span><span class="line"><span class="cl">  &#34;taskId&#34;: &#34;uuid_v4&#34;,
+</span></span><span class="line"><span class="cl">  &#34;title&#34;: &#34;string (max 100 chars)&#34;,
+</span></span><span class="line"><span class="cl">  &#34;description&#34;: &#34;string (nullable)&#34;,
+</span></span><span class="line"><span class="cl">  &#34;isCompleted&#34;: &#34;bool&#34;,
+</span></span><span class="line"><span class="cl">  &#34;createdAt&#34;: &#34;timestamp&#34;,
+</span></span><span class="line"><span class="cl">  &#34;dueDate&#34;: &#34;timestamp (nullable)&#34;,
+</span></span><span class="line"><span class="cl">  &#34;priority&#34;: &#34;enum (Low, Medium, High, Critical)&#34;,
+</span></span><span class="line"><span class="cl">  &#34;tags&#34;: [&#34;list of string&#34;],
+</span></span><span class="line"><span class="cl">  &#34;completedAt&#34;: &#34;timestamp (nullable)&#34;,
+</span></span><span class="line"><span class="cl">  &#34;isArchived&#34;: &#34;bool&#34;
+</span></span><span class="line"><span class="cl">}
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.2. Task Creation &amp; Management
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **CRUD Operations:** Users must be able to Create, Read, Update (edit title, date, priority), and Delete (soft delete)
+</span></span><span class="line"><span class="cl">  tasks.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Input Fields:** Task Title is mandatory. Description, Due Date, and Priority are optional.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Due Date:** Can be set to specific time (Time Picker) or All Day. Defaults to &#34;Today&#34;.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Priorities:** Visual distinction required for High (Red) vs. Low (Green/Blue) priority.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Sorting:** Default sort order is <span class="sb">`dueDate ASC`</span>, then <span class="sb">`isCompleted ASC`</span>.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.3. Completion Logic
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Toggle:** Tapping the checkbox marks task as <span class="sb">`completed = true`</span>.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Haptic Feedback:** Trigger a <span class="sb">`success`</span> haptic feedback pattern upon completion.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Animation:** Completed tasks should visually fade out or strike-through before moving to a &#34;Completed&#34; drawer.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.4. Notifications
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Local Notifications:** Triggered via <span class="sb">`flutter_local_notifications`</span> plugin.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Timing:** Notifications must fire 1 hour and 15 minutes before <span class="sb">`dueDate`</span> if the task is not completed.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Permissions:** App must request notification permission on first task creation if not previously granted.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.5. Integration with Existing Modules
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Mood Tracker:** When a task marked <span class="sb">`High`</span> priority is completed, prompt a subtle &#34;Good job&#34; notification (
+</span></span><span class="line"><span class="cl">  non-intrusive).
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Habit Tracker:** If a Habit is linked to a Task (future feature), the Task completion should increment the Habit
+</span></span><span class="line"><span class="cl">  counter.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Navigation:** Add &#34;Tasks&#34; tab to the bottom navigation bar alongside Notes, Habits, and Mood.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 4. Non-Functional Requirements
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Performance:** Task list must render under 16ms per frame on a mid-tier Android device (Flutter Performance). List
+</span></span><span class="line"><span class="cl">  must handle up to 500 items without lag.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Offline First:** Task creation, editing, and completion must work offline. Sync to cloud must be queued and
+</span></span><span class="line"><span class="cl">  processed once connectivity is restored.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Battery Usage:** Notifications must use the system&#39;s batching where possible to avoid battery drain.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Accessibility:** All task items must support TalkBack (Android) and VoiceOver (iOS). Checkbox labels must be
+</span></span><span class="line"><span class="cl">  distinct.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Data Retention:** Completed tasks older than 90 days must be automatically archived (soft delete) unless pinned by
+</span></span><span class="line"><span class="cl">  the user.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 5. UI/UX Guidelines
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Design System:** Reuse existing Aily tokens (Colors, Typography, Spacing).
+</span></span><span class="line"><span class="cl"><span class="k">*</span> *Primary Button:* Aily Primary Purple (<span class="sb">`#6C5CE7`</span>).
+</span></span><span class="line"><span class="cl"><span class="k">*</span> *Background:* Aily Off-White (<span class="sb">`#F8F9FA`</span>).
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **List View:**
+</span></span><span class="line"><span class="cl"><span class="k">*</span> Card-based layout for each task.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> Show Priority Badge on the top-right of the card.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> Show Due Date on the bottom-left (Bold if overdue).
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Overdue State:** If <span class="sb">`dueDate`</span> &lt; <span class="sb">`currentTime`</span> AND <span class="sb">`isCompleted`</span> == <span class="sb">`false`</span>:
+</span></span><span class="line"><span class="cl"><span class="k">*</span> Change border color to Light Red.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> Add &#34;Overdue&#34; text tag.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Empty States:** Display an illustration of a checklist with the text &#34;No tasks today. Go crush some goals!&#34;
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Add Button:** Floating Action Button (FAB) + Bottom Sheet (for mobile) for new task input.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 6. Acceptance Criteria
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">1.</span> <span class="gs">**Creation:**</span> User can tap FAB -&gt; Fill Title -&gt; Save -&gt; Task appears in &#34;Today&#34; list immediately.
+</span></span><span class="line"><span class="cl"><span class="k">2.</span> <span class="gs">**Persistence:**</span> User closes app -&gt; Reopens -&gt; Task remains visible and data matches exactly.
+</span></span><span class="line"><span class="cl"><span class="k">3.</span> <span class="gs">**Completion:**</span> User taps checkbox -&gt; Task visualizes strike-through -&gt; Task moves to bottom of list (or drawer).
+</span></span><span class="line"><span class="cl"><span class="k">4.</span> <span class="gs">**Notification:**</span> If due time is reached, local notification appears (tested on device).
+</span></span><span class="line"><span class="cl"><span class="k">5.</span> <span class="gs">**Editing:**</span> User opens existing task -&gt; Changes priority to &#34;High&#34; -&gt; Saves -&gt; Badge color updates to Red.
+</span></span><span class="line"><span class="cl"><span class="k">6.</span> <span class="gs">**Sync:**</span> User creates task on Device A -&gt; Logs into Device B -&gt; Task appears on Device B.
+</span></span><span class="line"><span class="cl"><span class="k">7.</span> <span class="gs">**Error Handling:**</span> If internet fails during sync, show toast message &#34;Syncing later...&#34; but allow local edit.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 7. Out of Scope
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Sub-tasks/Checklists:** A Task cannot have nested lists of sub-tasks in v1.0.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Collaboration:** Sharing tasks with other users is not supported.
+</span></span><span class="line"><span class="cl"><span class="k">*</span> **Recurring Tasks:** While similar to Habits, the Task module will not handle &#34;Every Day at 8 AM&#34; logic (this remains
+</span></span><span class="line"><span class="cl">  in Habits). Tasks are single-instance or manually repeated.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*Smart Calendar:** Tasks will not appear on a full-month calendar view in this release.
+</span></span><span class="line"><span class="cl"><span class="ge">* *</span>*AI Suggestions:** No automatic task generation based on Mood data yet.</span></span></code></pre></div>
+  </figure>
+</div>
+<p>Here&rsquo;s what the local unsloth/Qwen3.5-122B-A10B Q6_K produced:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gh"># Product Requirement Document (PRD): Aily Tasks Module
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gs">**Project:**</span> Aily Mobile App
+</span></span><span class="line"><span class="cl"><span class="gs">**Feature:**</span> Task Management (Tasks)
+</span></span><span class="line"><span class="cl"><span class="gs">**Version:**</span> 1.0
+</span></span><span class="line"><span class="cl"><span class="gs">**Date:**</span> October 26, 2023
+</span></span><span class="line"><span class="cl"><span class="gs">**Platform:**</span> iOS &amp; Android (Flutter)
+</span></span><span class="line"><span class="cl"><span class="gs">**Author:**</span> Product Team
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 1. Overview
+</span></span></span><span class="line"><span class="cl">Aily currently supports users in tracking their mental state (Mood), routines (Habits), and reflections (Notes). To create a holistic daily planner, we must introduce a <span class="gs">**Tasks**</span> module. This feature bridges the gap between recurring habits (routines) and one-off actions (errands, appointments). The Tasks feature will allow users to create, schedule, prioritize, and complete individual action items with specific due dates. Unlike Habits, which are tracked for streak-based consistency, Tasks are transactional and meant to be checked off once or on a specific timeline. This integration aims to reduce cognitive load by centralizing all actionable items within the Aily wellness ecosystem.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 2. User Stories
+</span></span></span><span class="line"><span class="cl"><span class="k">1.</span>  <span class="gs">**As a user**</span>, I want to create a new task with a title, due date, and priority level so that I can track what needs to be done by a specific time.
+</span></span><span class="line"><span class="cl"><span class="k">2.</span>  <span class="gs">**As a user**</span>, I want to view all my tasks in a list sorted by due date so that I can see what is upcoming or overdue.
+</span></span><span class="line"><span class="cl"><span class="k">3.</span>  <span class="gs">**As a user**</span>, I want to mark a task as complete with a satisfying animation so that I feel a sense of accomplishment.
+</span></span><span class="line"><span class="cl"><span class="k">4.</span>  <span class="gs">**As a user**</span>, I want to receive a push notification before a task is due so that I don&#39;t forget important actions.
+</span></span><span class="line"><span class="cl"><span class="k">5.</span>  <span class="gs">**As a user**</span>, I want to filter my tasks by status (Active, Completed) so that I can focus on pending items without clutter.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 3. Functional Requirements
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.1. Task Creation &amp; Management
+</span></span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-01:**</span> Users must be able to add a task from the Tasks Tab or via a Floating Action Button (FAB) on the Dashboard.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-02:**</span> <span class="gs">**Task Fields:**</span>
+</span></span><span class="line"><span class="cl">    <span class="k">*</span>   <span class="sb">`Title`</span> (String, Required, Max 100 chars)
+</span></span><span class="line"><span class="cl">    <span class="k">*</span>   <span class="sb">`Description`</span> (String, Optional, Max 500 chars)
+</span></span><span class="line"><span class="cl">    <span class="k">*</span>   <span class="sb">`Due Date`</span> (DateTime, Required)
+</span></span><span class="line"><span class="cl">    <span class="k">*</span>   <span class="sb">`Priority`</span> (Enum: Low, Medium, High)
+</span></span><span class="line"><span class="cl">    <span class="k">*</span>   <span class="sb">`Category/Tag`</span> (Optional, String list, Max 3)
+</span></span><span class="line"><span class="cl">    <span class="k">*</span>   <span class="sb">`IsCompleted`</span> (Boolean, Default: false)
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-03:**</span> Users can edit task details (except completion status) at any time before the task is completed.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-04:**</span> Users can delete a task. A &#34;Soft Delete&#34; (confirmation dialog) is required for deletion.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-05:**</span> Users can toggle <span class="sb">`IsCompleted`</span>. Completion time must be logged (<span class="sb">`CompletedAt`</span> timestamp).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.2. Task Display &amp; Sorting
+</span></span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-06:**</span> The main Task List view must group tasks into three sections: <span class="gs">**Overdue**</span> (red accent), <span class="gs">**Today**</span>, and <span class="gs">**Upcoming**</span> (future).
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-07:**</span> Completed tasks should move to a separate &#34;Completed&#34; view or be collapsed at the bottom of the list (configurable in settings).
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-08:**</span> Users can sort the list by <span class="sb">`Due Date`</span> (Default), <span class="sb">`Priority`</span>, or <span class="sb">`Created Date`</span>.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-09:**</span> High Priority tasks must display a visual indicator (e.g., colored dot or border).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.3. Notifications &amp; Reminders
+</span></span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-10:**</span> Users can opt-in to &#34;Due Date Reminders&#34; per task.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-11:**</span> If enabled, the system must schedule a local notification 1 hour before the <span class="sb">`Due Date`</span>.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-12:**</span> Notification permission request must be handled gracefully (prompt on first task creation).
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-13:**</span> Notification sound must match the existing Aily app sound profile.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.4. Integration &amp; Data Sync
+</span></span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-14:**</span> The Tasks Tab must be visible on the bottom navigation bar (between Habits and Notes).
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-15:**</span> The Dashboard must display a widget showing &#34;X tasks pending today.&#34;
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-16:**</span> Data must sync via the existing Aily Backend API to ensure consistency across devices.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**FR-17:**</span> Tasks must be creatable offline and saved locally (using <span class="sb">`Hive`</span> or <span class="sb">`SQLite`</span>), syncing when connectivity is restored.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 4. Non-Functional Requirements
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**NFR-01 (Performance):**</span> Task list scrolling must maintain 60 FPS. Load time for the list should not exceed 1 second on a 3G connection.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**NFR-02 (Battery):**</span> Background scheduling for notifications must not drain more than 2% of battery daily.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**NFR-03 (Security):**</span> All user task data must be encrypted in transit (TLS 1.3) and at rest (using device keychain/secure storage).
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**NFR-04 (Accessibility):**</span> All interactive elements must support TalkBack (Android) and VoiceOver (iOS). Text contrast must meet WCAG AA standards.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**NFR-05 (Offline First):**</span> Core CRUD operations on tasks must work without an internet connection.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**NFR-06 (Tech Stack):**</span> Implementation must utilize the existing Flutter state management solution (e.g., Riverpod/Bloc) and existing UI component library.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 5. UI/UX Guidelines
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 5.1. Design System Consistency
+</span></span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**Color Palette:**</span> Use the existing Aily brand colors. High Priority tasks should use the existing &#34;Alert&#34; color (e.g., Coral/Salmon), Low Priority should use the &#34;Success&#34; or &#34;Neutral&#34; color.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**Typography:**</span> Match the existing font scale (e.g., Roboto or Inter). Task Titles should be <span class="sb">`Body Large`</span>, Details <span class="sb">`Body Small`</span>.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**Spacing:**</span> Maintain the existing 16px content padding. Card elevation should match the existing Note cards (low elevation, rounded corners).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 5.2. Interaction Design
+</span></span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**Completion Animation:**</span> When a user taps a task to complete it, trigger the existing &#34;Checkmark&#34; animation used in the Habit Tracker to maintain mental model consistency.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**Swipe Actions:**</span> Allow users to swipe right to mark as complete, and swipe left to delete (or edit).
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**Empty State:**</span> If no tasks exist, show an illustration and a prompt: &#34;No tasks for today. Time to relax or add something new!&#34;
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**Navigation:**</span> The &#34;Tasks&#34; icon on the Bottom Nav Bar should be a &#34;Checklist&#34; icon, distinct from the &#34;Star&#34; (Habits) and &#34;Pen&#34; (Notes).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 5.3. Differentiation from Habits
+</span></span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**Habit vs. Task:**</span> Visually distinguish tasks from habits. Habits should have a circular progress/streak indicator; Tasks should have a rectangular checkbox indicator.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**Recurrence:**</span> Tasks are single-instance. Do not allow &#34;Repeat Daily&#34; options on Tasks (this belongs in the Habit module).
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 6. Acceptance Criteria
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**AC-01:**</span> A user can successfully add a task with a title and future date. The task appears in the &#34;Upcoming&#34; section.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**AC-02:**</span> A user can mark a task as complete. The checkbox changes state, the task moves to the &#34;Completed&#34; section (or fades out), and the timestamp is recorded.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**AC-03:**</span> A task with a priority of &#34;High&#34; displays a red/orange accent color on the list item.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**AC-04:**</span> If a task is not completed by its due date, it appears in the &#34;Overdue&#34; section the next day.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**AC-05:**</span> A notification triggers 1 hour prior to the due date (device permissions allowed). Tapping the notification opens the Task Detail view.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**AC-06:**</span> Deleting a task removes it from the list and syncs the deletion across other logged-in devices.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**AC-07:**</span> Creating a task without internet saves locally and syncs automatically upon reconnection.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 7. Out of Scope (MVP)
+</span></span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**Subtasks:**</span> Tasks cannot contain nested checklist items.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**Collaboration:**</span> Tasks are private. No sharing or assigning tasks to other users.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**Calendar View:**</span> Tasks will only be viewed in list format, not a monthly calendar grid.
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**Recurring Tasks:**</span> Users cannot set &#34;Every Friday&#34; on a Task. (Must use Habits for recurring items).
+</span></span><span class="line"><span class="cl"><span class="k">*</span>   <span class="gs">**Files/Attachments:**</span> Tasks cannot attach photos or documents (Notes handle this).
+</span></span><span class="line"><span class="cl">*   <span class="gs">**Project Management:**</span> No kanban boards, Gantt charts, or dependencies.</span></span></code></pre></div>
+  </figure>
+</div>
+<p>The model load time was slow and model thought for 59 seconds before generating answer.</p>
+<h3 id="lets-compare-local-llm-prds-to-cloud-llm-minimax-m25">Let&rsquo;s Compare Local LLM PRDs to Cloud LLM MiniMax M2.5<a href="#lets-compare-local-llm-prds-to-cloud-llm-minimax-m25" class="anchor" aria-hidden="true">#</a> </h3>
+<p>I ran the same prompt through MiniMax M2.5 to compare outputs.</p>
+<p><strong>MiniMax M2.5 PRD output:</strong></p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gh"># Product Requirement Document: Tasks Feature for Aily
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gs">**Version:**</span> 1.0  
+</span></span><span class="line"><span class="cl"><span class="gs">**Date:**</span> March 11, 2026  
+</span></span><span class="line"><span class="cl"><span class="gs">**Status:**</span> Draft  
+</span></span><span class="line"><span class="cl"><span class="gs">**Owner:**</span> Product Team
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 1. Overview
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Aily is a personal productivity mobile app designed to help individuals track and manage their daily lives through
+</span></span><span class="line"><span class="cl">Notes, Mood Tracker, and Habits features. This PRD outlines the requirements for adding a new <span class="gs">**Tasks**</span> functionality
+</span></span><span class="line"><span class="cl">that enables users to create, organize, prioritize, and complete personal daily tasks. The Tasks feature will integrate
+</span></span><span class="line"><span class="cl">seamlessly with the existing app ecosystem, providing a unified experience for users to manage both habits and
+</span></span><span class="line"><span class="cl">actionable to-do items. This feature addresses the core user need for explicit task management with due dates,
+</span></span><span class="line"><span class="cl">priorities, and completion tracking—capabilities that are distinct from the recurring habit tracking already present in
+</span></span><span class="line"><span class="cl">the app.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 2. User Stories
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | User Story | Priority |
+</span></span><span class="line"><span class="cl">|----|------------|----------|
+</span></span><span class="line"><span class="cl">| US-1 | <span class="gs">**Quick Task Creation**</span> &lt;br&gt; As a user, I want to quickly add a new task with just a title so that I can capture tasks immediately without friction. | Must Have |
+</span></span><span class="line"><span class="cl">| US-2 | <span class="gs">**Task Details &amp; Due Dates**</span> &lt;br&gt; As a user, I want to set a due date and time for tasks so that I can organize my workload and receive reminders. | Must Have |
+</span></span><span class="line"><span class="cl">| US-3 | <span class="gs">**Task Completion**</span> &lt;br&gt; As a user, I want to mark tasks as complete so that I can track my progress and feel accomplished. | Must Have |
+</span></span><span class="line"><span class="cl">| US-4 | <span class="gs">**Task Organization**</span> &lt;br&gt; As a user, I want to organize tasks into custom lists/categories so that I can group related tasks (e.g., Work, Personal, Shopping). | Should Have |
+</span></span><span class="line"><span class="cl">| US-5 | <span class="gs">**Priority Levels**</span> &lt;br&gt; As a user, I want to assign priority levels (High, Medium, Low) to tasks so that I can focus on what matters most. | Should Have |
+</span></span><span class="line"><span class="cl">| US-6 | <span class="gs">**Task Filtering &amp; Sorting**</span> &lt;br&gt; As a user, I want to filter tasks by status (All, Active, Completed) and sort by due date or priority so that I can quickly find what I need. | Should Have |
+</span></span><span class="line"><span class="cl">| US-7 | <span class="gs">**Task Editing &amp; Deletion**</span> &lt;br&gt; As a user, I want to edit or delete existing tasks so that I can update my task list as priorities change. | Must Have |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 3. Functional Requirements
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.1 Task Management
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Requirement | Description |
+</span></span><span class="line"><span class="cl">|----|-------------|-------------|
+</span></span><span class="line"><span class="cl">| FR-1 | Create Task | Users shall be able to create a new task with a required title (min 1 character, max 200 characters). |
+</span></span><span class="line"><span class="cl">| FR-2 | Edit Task | Users shall be able to edit all task fields: title, description, due date, priority, and list assignment. |
+</span></span><span class="line"><span class="cl">| FR-3 | Delete Task | Users shall be able to delete a task with a confirmation dialog to prevent accidental deletion. |
+</span></span><span class="line"><span class="cl">| FR-4 | Complete Task | Users shall be able to mark a task as complete by tapping a checkbox. Completed tasks shall be visually distinguished (strikethrough, muted color). |
+</span></span><span class="line"><span class="cl">| FR-5 | Uncomplete Task | Users shall be able to mark a completed task as active again. |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.2 Task Properties
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Requirement | Description |
+</span></span><span class="line"><span class="cl">|----|-------------|-------------|
+</span></span><span class="line"><span class="cl">| FR-6 | Title | Required field. String, 1-200 characters. |
+</span></span><span class="line"><span class="cl">| FR-7 | Description | Optional field. Multi-line text, max 1000 characters. |
+</span></span><span class="line"><span class="cl">| FR-8 | Due Date | Optional field. Date picker with time selection (hour:minute). |
+</span></span><span class="line"><span class="cl">| FR-9 field. Enum: None, | Priority | Optional Low, Medium, High. Default: None. |
+</span></span><span class="line"><span class="cl">| FR-10 | List Assignment | Optional field. Default: &#34;Inbox&#34; (uncategorized). Users can assign to custom lists. |
+</span></span><span class="line"><span class="cl">| FR-11 | Created At | Auto-generated timestamp when task is created. |
+</span></span><span class="line"><span class="cl">| FR-12 | Completed At | Auto-generated timestamp when task is marked complete. |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.3 Task Lists
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Requirement | Description |
+</span></span><span class="line"><span class="cl">|----|-------------|-------------|
+</span></span><span class="line"><span class="cl">| FR-12 | Default List | System shall provide a default &#34;Inbox&#34; list for uncategorized tasks. |
+</span></span><span class="line"><span class="cl">| FR-13 | Create List | Users shall be able to create custom lists with a name (required) and optional color/icon. |
+</span></span><span class="line"><span class="cl">| FR-14 | Edit List | Users shall be able to rename lists and change their color/icon. |
+</span></span><span class="line"><span class="cl">| FR-15 | Delete List | Users shall be able to delete custom lists. Tasks in deleted list shall move to Inbox. |
+</span></span><span class="line"><span class="cl">| FR-16 | List Order | Users shall be able to reorder custom lists via drag-and-drop. |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.4 Filtering &amp; Sorting
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Requirement | Description |
+</span></span><span class="line"><span class="cl">|----|-------------|-------------|
+</span></span><span class="line"><span class="cl">| FR-17 | Filter by Status | Users shall be able to filter tasks by: All, Active, Completed. |
+</span></span><span class="line"><span class="cl">| FR-18 | Filter by List | Users shall be able to view tasks for a specific list. |
+</span></span><span class="line"><span class="cl">| FR-19 | Sort Tasks | Users shall be able to sort tasks by: Due Date (ascending/descending), Priority (High to Low), Created Date, Alphabetical. |
+</span></span><span class="line"><span class="cl">| FR-20 | Default View | Default sort shall be: Due Date (ascending), then Priority (High to Low). |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.5 Notifications &amp; Reminders
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Requirement | Description |
+</span></span><span class="line"><span class="cl">|----|-------------|-------------|
+</span></span><span class="line"><span class="cl">| FR-21 | Due Date Reminder | Users shall receive a local notification at the due date/time if the task is not completed. |
+</span></span><span class="line"><span class="cl">| FR-22 | Reminder Customization | Users shall be able to set reminder time: At due time, 15 min before, 1 hour before, 1 day before, Custom. |
+</span></span><span class="line"><span class="cl">| FR-23 | Notification Permission | App shall request notification permission on first task creation with a due date. |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.6 Data Persistence
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Requirement | Description |
+</span></span><span class="line"><span class="cl">|----|-------------|-------------|
+</span></span><span class="line"><span class="cl">| FR-24 | Local Storage | All task data shall be stored locally using SQLite (or equivalent) via Flutter. |
+</span></span><span class="line"><span class="cl">| FR-25 | Offline Support | App shall work fully offline. No network dependency. |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 3.7 Integration with Existing Features
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Requirement | Description |
+</span></span><span class="line"><span class="cl">|----|-------------|-------------|
+</span></span><span class="line"><span class="cl">| FR-26 | Bottom Navigation | Tasks shall appear as a new tab in the bottom navigation bar (alongside Notes, Mood, Habits). |
+</span></span><span class="line"><span class="cl">| FR-27 | Consistent Styling | Tasks UI shall match the existing design language of Aily (colors, typography, spacing). |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 4. Non-Functional Requirements
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 4.1 Performance
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Requirement | Description |
+</span></span><span class="line"><span class="cl">|----|-------------|-------------|
+</span></span><span class="line"><span class="cl">| NFR-1 | App Launch | Tasks screen shall load within 500ms on average device. |
+</span></span><span class="line"><span class="cl">| NFR-2 | Task Operations | Task create/edit/delete shall complete within 200ms. |
+</span></span><span class="line"><span class="cl">| NFR-3 | List Rendering | Rendering 100+ tasks shall maintain 60fps scroll performance. |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 4.2 Usability
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Requirement | Description |
+</span></span><span class="line"><span class="cl">|----|-------------|-------------|
+</span></span><span class="line"><span class="cl">| NFR-4 | Accessibility | App shall support screen readers (TalkBack/VoiceOver) with proper labels. |
+</span></span><span class="line"><span class="cl">| NFR-5 | Touch Targets | All interactive elements shall have minimum 44x44 point touch target. |
+</span></span><span class="line"><span class="cl">| NFR-6 | Error Handling | All error states shall show user-friendly messages, not technical errors. |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 4.3 Technical
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Requirement | Description |
+</span></span><span class="line"><span class="cl">|----|-------------|-------------|
+</span></span><span class="line"><span class="cl">| NFR-7 | Minimum iOS Version | Support iOS 12.0+. |
+</span></span><span class="line"><span class="cl">| NFR-8 | Minimum Android Version | Support Android API 21+ (Android 5.0). |
+</span></span><span class="line"><span class="cl">| NFR-9 | State Management | Use BLoC pattern (consistent with existing app architecture, if applicable). |
+</span></span><span class="line"><span class="cl">| NFR-10 | Testing | Unit tests for business logic, widget tests for UI components. |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 5. UI/UX Guidelines
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 5.1 Layout Structure
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Navigation:** Bottom tab bar with 4 items: Notes, Mood, Habits, Tasks. Tasks icon: checkbox or checklist.
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Tasks Screen:**
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> Top: App bar with title &#34;Tasks&#34; and filter/sort action buttons.
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> Below app bar: Horizontal chip row for quick list filtering (All, Inbox, custom lists).
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> Main content: Scrollable list of task items.
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> Floating Action Button (FAB): Purple primary color, &#34;+&#34; icon to create new task.
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Task Detail Screen:** Full-screen modal or pushed page with form fields.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 5.2 Visual Design
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| Element | Specification |
+</span></span><span class="line"><span class="cl">|---------|---------------|
+</span></span><span class="line"><span class="cl">| Primary Color | Purple (<span class="ni">#6750A4</span>) – matches existing Aily theme |
+</span></span><span class="line"><span class="cl">| Surface Color | White (<span class="ni">#FFFFFF</span>) / Dark: <span class="ni">#1C1B1F</span> |
+</span></span><span class="line"><span class="cl">| Completed Task | Title with strikethrough, opacity 60%, gray checkmark |
+</span></span><span class="line"><span class="cl">| Priority Indicators | High: Red (<span class="ni">#BA1A1A</span>), Medium: Orange (<span class="ni">#FF8B00</span>), Low: Green (<span class="ni">#386A20</span>) |
+</span></span><span class="line"><span class="cl">| List Colors | User-selectable from palette: Red, Orange, Yellow, Green, Blue, Purple, Pink, Gray |
+</span></span><span class="line"><span class="cl">| Typography | Use existing Aily typography scale (Roboto on Android, SF Pro on iOS) |
+</span></span><span class="line"><span class="cl">| Spacing | 8pt grid system. Card padding: 16px. List item vertical padding: 12px. |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 5.3 Component Specifications
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gs">**Task List Item:**</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Leading: Checkbox (circular, 24x24)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Title: Body1 text, max 2 lines with ellipsis
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Subtitle (if applicable): Due date in caption style, colored if overdue
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Trailing: Priority indicator dot (if set)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Swipe actions: Swipe left to delete, swipe right to complete
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gs">**Create/Edit Task Form:**</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Title TextField: Outlined, required, autofocus
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Description TextField: Outlined, multiline (3 lines visible), optional
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Due Date Field: Outlined, tap to open date picker, clear button
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Time Field: Outlined, tap to open time picker, optional
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Priority Selector: Segmented button row (None, Low, Medium, High)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> List Selector: Dropdown with list names + &#34;Create new list&#34; option
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Reminder Selector: Dropdown (None, At due time, 15 min before, 1 hour before, 1 day before, Custom)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Save Button: Filled primary button at bottom
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Cancel: Back navigation or X button
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gs">**Empty States:**</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">-</span> No tasks: Illustration + &#34;No tasks yet&#34; + &#34;Tap + to add your first task&#34; subtext
+</span></span><span class="line"><span class="cl"><span class="k">-</span> No completed tasks: &#34;No completed tasks&#34; message when filtered by Completed
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 5.4 Interactions
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Pull-to-refresh:** Not required (local data), but implement for future cloud sync readiness.
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Swipe gestures:** Left swipe reveals delete (red), right swipe reveals complete (green).
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **Long press:** On task item shows context menu (Edit, Delete, Move to List).
+</span></span><span class="line"><span class="cl"><span class="k">-</span> **FAB:** Tap opens Create Task screen. Long press shows &#34;Quick add&#34; with just title field.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 5.5 Animations
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Task completion: Checkbox fills with checkmark, 200ms ease-out. Title strikethrough animates in.
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Task deletion: Slide out left, 250ms.
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Screen transitions: Standard Material/Cupertino page transitions.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 6. Acceptance Criteria
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 6.1 Core Functionality
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Criterion | Test Scenario |
+</span></span><span class="line"><span class="cl">|----|-----------|---------------|
+</span></span><span class="line"><span class="cl">| AC-1 | Create task with title | User taps FAB → enters title → taps Save → task appears in list |
+</span></span><span class="line"><span class="cl">| AC-2 | Create task with all fields | User creates task with title, description, due date, priority, list → all fields display correctly |
+</span></span><span class="line"><span class="cl">| AC-3 | Edit task | User taps task → modifies fields → saves → changes persist |
+</span></span><span class="line"><span class="cl">| AC-4 | Delete task | User swipes left on task → confirms deletion → task removed from list |
+</span></span><span class="line"><span class="cl">| AC-5 | Complete task | User taps checkbox → task shows completed state → moves to bottom of list |
+</span></span><span class="line"><span class="cl">| AC-6 | Uncomplete task | User taps checkbox on completed task → task returns to active state |
+</span></span><span class="line"><span class="cl">| AC-7 | Filter by status | User taps &#34;Active&#34; filter → only incomplete tasks shown. Taps &#34;Completed&#34; → only completed shown |
+</span></span><span class="line"><span class="cl">| AC-8 | Filter by list | User taps custom list chip → only tasks in that list shown |
+</span></span><span class="line"><span class="cl">| AC-9 | Sort tasks | User changes sort to &#34;Priority&#34; → tasks reorder accordingly |
+</span></span><span class="line"><span class="cl">| AC-10 | Create custom list | User goes to list management → creates &#34;Work&#34; list → list appears in filter chips |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 6.2 Notifications
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Criterion | Test Scenario |
+</span></span><span class="line"><span class="cl">|----|-----------|---------------|
+</span></span><span class="line"><span class="cl">| AC-11 | Reminder notification | User creates task with due date + reminder → notification fires at set time |
+</span></span><span class="line"><span class="cl">| AC-12 | Notification permission | First task with due date triggers permission request → user can allow/deny |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 6.3 Data &amp; Performance
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Criterion | Test Scenario |
+</span></span><span class="line"><span class="cl">|----|-----------|---------------|
+</span></span><span class="line"><span class="cl">| AC-13 | Data persists | User creates task → closes app → reopens app → task still present |
+</span></span><span class="line"><span class="cl">| AC-14 | Large list performance | User creates 100 tasks → scrolls smoothly without jank |
+</span></span><span class="line"><span class="cl">| AC-15 | Works offline | User enables airplane mode → can create, edit, complete, delete tasks |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### 6.4 Visual Checkpoints
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| ID | Checkpoint |
+</span></span><span class="line"><span class="cl">|----|------------|
+</span></span><span class="line"><span class="cl">| VC-1 | Tasks tab visible in bottom navigation with correct icon |
+</span></span><span class="line"><span class="cl">| VC-2 | FAB is purple and positioned bottom-right |
+</span></span><span class="line"><span class="cl">| VC-3 | Completed tasks show strikethrough and muted color |
+</span></span><span class="line"><span class="cl">| VC-4 | Priority dots show correct colors |
+</span></span><span class="line"><span class="cl">| VC-5 | Empty state displays when no tasks exist |
+</span></span><span class="line"><span class="cl">| VC-6 | Form fields follow Aily design system |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## 7. Out of Scope
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">The following features are explicitly <span class="gs">**NOT**</span> in scope for this initial release:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| Feature | Reason |
+</span></span><span class="line"><span class="cl">|---------|--------|
+</span></span><span class="line"><span class="cl">| Subtasks / Checklists | Complex task breakdown; defer to future iteration |
+</span></span><span class="line"><span class="cl">| Task Dependencies | Linking tasks (e.g., &#34;Task B after Task A&#34;); not core to MVP |
+</span></span><span class="line"><span class="cl">| Recurring Tasks | Already handled by Habits feature; duplicating would confuse users |
+</span></span><span class="line"><span class="cl">| Task Comments/Notes | Users can link to Notes feature via description reference |
+</span></span><span class="line"><span class="cl">| Cloud Sync / Cross-Device | Local-only for MVP; sync considered for v2 |
+</span></span><span class="line"><span class="cl">| Task Sharing / Collaboration | Personal productivity app; no sharing required |
+</span></span><span class="line"><span class="cl">| Smart Lists (e.g., &#34;Today&#34;, &#34;This Week&#34;) | Filter by date range can achieve similar results manually |
+</span></span><span class="line"><span class="cl">| Batch Operations (select multiple, bulk delete) | Single-task operations sufficient for MVP |
+</span></span><span class="line"><span class="cl">| Dark Mode Theming | Use system theme; custom dark mode styling deferred |
+</span></span><span class="line"><span class="cl">| Widget Support | Home screen widgets; consider in future if requested |
+</span></span><span class="line"><span class="cl">| Export Tasks (PDF, CSV) | Export functionality out of scope |
+</span></span><span class="line"><span class="cl">| Keyboard Shortcuts | Desktop/tablet-specific; not applicable to mobile-first |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Appendix
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### A. Glossary
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">| Term | Definition |
+</span></span><span class="line"><span class="cl">|------|------------|
+</span></span><span class="line"><span class="cl">| FAB | Floating Action Button |
+</span></span><span class="line"><span class="cl">| Inbox | Default uncategorized task list |
+</span></span><span class="line"><span class="cl">| MVP | Minimum Viable Product |
+</span></span><span class="line"><span class="cl">| PRD | Product Requirement Document |
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### B. Related Documents
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Aily App Architecture (for integration points)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Aily Design System (for color palette, typography specs)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> Flutter Technical Specification (for state management approach)
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">### C. Assumptions
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">1.</span> The existing codebase uses a state management solution (BLoC, Provider, Riverpod, or similar).
+</span></span><span class="line"><span class="cl"><span class="k">2.</span> Local database is already in place or SQLite/Drift will be added.
+</span></span><span class="line"><span class="cl"><span class="k">3.</span> Notification handling is supported via a Flutter package (flutter_local_notifications).
+</span></span><span class="line"><span class="cl"><span class="k">4.</span> The app follows Material Design 3 on Android and adapts to iOS Human Interface Guidelines.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">*End of PRD*</span></span></code></pre></div>
+  </figure>
+</div>
+<h3 id="lets-use-gemini-pro-to-rate-our-prds">Let&rsquo;s Use Gemini Pro to Rate Our PRDs<a href="#lets-use-gemini-pro-to-rate-our-prds" class="anchor" aria-hidden="true">#</a> </h3>
+<p>I fed both PRDs into Gemini Pro and asked it to rate them using a standard PRD evaluation rubric.</p>
+<p><strong>Gemini&rsquo;s rating criteria:</strong></p>
+<ol>
+<li>Clarity (1-5): Is the feature and its value proposition clear?</li>
+<li>Completeness (1-5): Are all required sections present?</li>
+<li>Actionability (1-5): Could a developer implement from this without additional clarification?</li>
+<li>Testability (1-5): Are acceptance criteria specific enough to verify?</li>
+<li>Consistency (1-5): Do requirements align with user stories?</li>
+</ol>
+<p>I used this prompt:</p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">Compare these two Product Requirement Documents (PRD A and PRD B) for the same feature (Tasks functionality for a mobile
+</span></span><span class="line"><span class="cl">app).
+</span></span><span class="line"><span class="cl">Evaluate each PRD using these criteria:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">1.</span> <span class="gs">**Clarity (1-5)**</span>: Is the feature and its value proposition clear? Are terms unambiguous?
+</span></span><span class="line"><span class="cl"><span class="k">2.</span> <span class="gs">**Completeness (1-5)**</span>: Does it include Overview, User Stories, Functional Requirements, Non-Functional Requirements,
+</span></span><span class="line"><span class="cl">   UI/UX Guidelines, Acceptance Criteria, and Out of Scope?
+</span></span><span class="line"><span class="cl"><span class="k">3.</span> <span class="gs">**Actionability (1-5)**</span>: Could a developer implement this without additional clarification? Are requirements specific
+</span></span><span class="line"><span class="cl">   enough?
+</span></span><span class="line"><span class="cl"><span class="k">4.</span> <span class="gs">**Testability (1-5)**</span>: Are acceptance criteria concrete and verifiable? Can QA test against them?
+</span></span><span class="line"><span class="cl"><span class="k">5.</span> <span class="gs">**Consistency (1-5)**</span>: Do user stories align with functional requirements? Do acceptance criteria match requirements?
+</span></span><span class="line"><span class="cl">   For each criterion, give:
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">-</span> A score (1-5)
+</span></span><span class="line"><span class="cl"><span class="k">-</span> A brief explanation citing specific examples from each PRD
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Then calculate totals and declare a winner with reasoning.</span></span></code></pre></div>
+  </figure>
+</div>
+<p><strong>This is Gemini&rsquo;s output:</strong></p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"></code></pre></div>
+  </figure>
+</div>
+<p>I will add that both PRDs have mistakes in UI/UX descriptions as the model didn&rsquo;t have access to Aily projects, and it
+made wrong assumptions for colors et. The PRD A is poorly formatted and ASCI Wireframes are can be easily broken by text
+editors with formatting. Clearly we could pull out best parst from both to create the best template for PRD.</p>
+<h3 id="lets-create-an-agent-for-prd-creation">Let&rsquo;s Create an Agent for PRD Creation<a href="#lets-create-an-agent-for-prd-creation" class="anchor" aria-hidden="true">#</a> </h3>
+<p>Based on the experiments above, I created an OpenCode skill that automates PRD creation. It uses the question tool to
+gather requirements systematically, then generates a structured PRD.</p>
+<p><strong>PRD Agent skill location:</strong> <code>~/.config/opencode/skills/prd-creator/SKILL.md</code></p>
+
+
+
+<div class="expressive-code">
+  <figure class="frame not-content">
+  <figcaption class="header">
+    <span class="title"></span>
+  </figcaption>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl"><span class="gh"># PRD Creator Skill
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">This skill helps you create Product Requirement Documents using local or cloud LLMs.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Instructions
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">You are a Product Manager assistant. Your job is to guide the user through creating a well-structured PRD.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Process
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">1.</span> <span class="gs">**Gather context**</span> - Ask the user about their product/feature:
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> What are you building?
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> Who is it for?
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> Why does it matter?
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> What constraints exist (timeline, tech stack, team size)?
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">2.</span> <span class="gs">**Generate PRD**</span> - Create a structured document with:
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> Overview
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> User Stories
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> Functional Requirements
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> Non-Functional Requirements
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> UI/UX Guidelines
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> Acceptance Criteria
+</span></span><span class="line"><span class="cl">    <span class="k">-</span> Out of Scope
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">3.</span> <span class="gs">**Save output**</span> - Write the PRD to the user&#39;s preferred location.
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="gu">## Output Format
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Use markdown. Be specific and actionable. Include concrete examples where possible.</span></span></code></pre></div>
+  </figure>
+</div>
+<blockquote>
+<p>The skill uses OpenCode&rsquo;s question tool to iteratively gather requirements — the same pattern you&rsquo;d use in a real
+product conversation.</p>
+</blockquote>
+<h3 id="lets-use-the-prd-agent">Let&rsquo;s Use the PRD Agent<a href="#lets-use-the-prd-agent" class="anchor" aria-hidden="true">#</a> </h3>
+<p>[PLACEHOLDER: Demo output showing PRD Agent in action - questions asked and PRD generated]</p>
+<h2 id="key-points-recap">Key Points Recap<a href="#key-points-recap" class="anchor" aria-hidden="true">#</a> </h2>
+<ol>
+<li><strong>PRDs force discipline</strong> — The structured format catches scope ambiguity before code gets written</li>
+<li><strong>Local LLMs generate usable PRDs</strong> — Qwen3.5-35B-A3B produces 80% of the quality at 0% cost</li>
+<li><strong>Cloud models may add polish</strong> — MiniMax M2.5 showed slight improvements in completeness</li>
+<li><strong>External rating reveals blind spots</strong> — Gemini&rsquo;s evaluation caught gaps I missed in my review</li>
+<li><strong>Agents make it repeatable</strong> — The PRD Creator skill turns one-off generation into a reusable workflow</li>
+</ol>
+
+			<div class="page-footer-meta d-flex flex-column flex-md-row justify-content-between">
+				</div>
+			<div class="page-nav d-flex flex-column flex-sm-row">
+	
+	<div class="card text-end w-100">
+			<div class="card-body d-flex justify-content-end">
+				<div class="d-flex flex-column">
+					<div class="text-body-secondary">Next</div>
+					<a href="/docs/guides/local-ai/02-opencode-environment/05-installing-opencode-and-connecting-it-to-lm-studio/" class="stretched-link text-reset text-decoration-none">05 - Installing OpenCode and Connecting it to LM Studio</a>
+				</div>
+				<div class="d-flex flex-column justify-content-center">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-right" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+						<path d="M5 12l14 0"></path>
+						<path d="M13 18l6 -6"></path>
+						<path d="M13 6l6 6"></path>
+					</svg>
+				</div>
+			</div>
+		</div>
+	</div>
+
+			
+		</main>
+		
+			</div>
+		
+	</div>
+
+      
+      </div>
+    </div>
+    
+    
+    <footer class="footer text-muted">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-8 text-lg-start">
+        <ul class="list-inline">
+          <li class="list-inline-item"><a class="text-muted" href="/privacy/">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-8 text-lg-end">
+        <ul class="list-inline">
+          <li class="list-inline-item">Brought to you by <a class="text-muted" href="https://onyszko.pl/">onyszko.pl</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    
+
+<script async
+  src="/js/app.dabdef501f012d9cc214cfd80465c50079f359096a2793f56bb5fae90d005889.js"
+  integrity="sha256-2r3vUB8BLZzCFM/YBGXFAHnzWQlqJ5P1a7X66Q0AWIk=">
+</script>
+
+
+
+
+
+
+
+    
+  </body>
+</html>

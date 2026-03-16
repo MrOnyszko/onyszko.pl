@@ -24,7 +24,8 @@
 
 - [Setup](/docs/guides/local-ai/01-setup/): A comprehensive series on setting up and using local LLMs for software development.
 - [OpenCode Environment](/docs/guides/local-ai/02-opencode-environment/): A comprehensive series on setting up and using local LLMs for software development.
-- [Agents & Skills](/docs/guides/local-ai/03-agents-and-skills/): A comprehensive series on setting up and using local LLMs for software development.
-- [Workflow](/docs/guides/local-ai/04-workflow/): A comprehensive series on setting up and using local LLMs for software development.
-- [Assessment](/docs/guides/local-ai/05-assesment/): An honest assessment of local AI development workflows—what works well in production, where they fall short, and when to choose local vs cloud.
+- [Experiments](/docs/guides/local-ai/03-experiments/)
+- [Agents & Skills](/docs/guides/local-ai/04-agents-and-skills/): A comprehensive series on setting up and using local LLMs for software development.
+- [Workflow](/docs/guides/local-ai/05-workflow/): A comprehensive series on setting up and using local LLMs for software development.
+- [Assessment](/docs/guides/local-ai/06-assesment/): An honest assessment of local AI development workflows—what works well in production, where they fall short, and when to choose local vs cloud.
 
