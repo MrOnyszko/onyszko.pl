@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ideation Skill Experiment on onyszko.pl</title>
+    <link>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</link>
+    <description>Recent content in Ideation Skill Experiment on onyszko.pl</description>
+    <generator>Hugo</generator>
+    <language>en-US</language>
+    <lastBuildDate>Mon, 01 Jan 0001 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title></title>
+      <link>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</guid>
+      <description>&lt;div class=&#34;expressive-code&#34;&gt;&#xD;&#xA;  &lt;figure class=&#34;frame not-content&#34;&gt;&#xD;&#xA;  &lt;figcaption class=&#34;header&#34;&gt;&#xD;&#xA;    &lt;span class=&#34;title&#34;&gt;&lt;/span&gt;&#xD;&#xA;  &lt;/figcaption&gt;&#xD;&#xA;  &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;---&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;description: Let&amp;#39;s start ideation session.&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;---&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;-&lt;/span&gt; Read ideation skill.&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;-&lt;/span&gt; Read ideation reference files.&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;-&lt;/span&gt; ideation/reference/ideation-template.md&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;-&lt;/span&gt; ideation/reference/questions-extended.md&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Let&amp;#39;s start ideation session about: &amp;#34;$ARGUMENTS&amp;#34;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&#xD;&#xA;  &lt;/figure&gt;&#xD;&#xA;&lt;/div&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</guid>
+      <description>&lt;h1 id=&#34;dense-vs-moe--ideation-skill-evaluation-comparison&#34;&gt;Dense vs MoE — Ideation Skill Evaluation Comparison&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Date:&lt;/strong&gt; 2026-03-27&#xA;&lt;strong&gt;Task:&lt;/strong&gt; Run ideation session on &amp;ldquo;Add audio notes using Cactus SDK&amp;rdquo; for Aily app&#xA;&lt;strong&gt;Dense model:&lt;/strong&gt; unsloth/qwen3.5-27b (4 quantization variants)&#xA;&lt;strong&gt;MoE model:&lt;/strong&gt; unsloth/qwen3.5-35b-a3b (4 quantization variants)&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</guid>
+      <description>&lt;h1 id=&#34;ideation-audio-notes-with-cactus&#34;&gt;Ideation: Audio Notes with Cactus&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Date:&lt;/strong&gt; 2026-03-27&#xA;&lt;strong&gt;Status:&lt;/strong&gt; Draft&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;problem&#34;&gt;Problem&lt;/h2&gt;&#xA;&lt;h3 id=&#34;what-problem-are-we-solving&#34;&gt;What problem are we solving?&lt;/h3&gt;&#xA;&lt;p&gt;Users can&amp;rsquo;t capture audio notes in Aily. When driving or walking, they lose ideas because switching to another app is too slow or unsafe.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</guid>
+      <description>&lt;h1 id=&#34;ideation-audio-notes-with-cactus&#34;&gt;Ideation: Audio Notes with Cactus&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Date:&lt;/strong&gt; 2026-03-27&lt;br&gt;&#xA;&lt;strong&gt;Status:&lt;/strong&gt; Draft | Ready for PRD&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;problem&#34;&gt;Problem&lt;/h2&gt;&#xA;&lt;h3 id=&#34;what-problem-are-we-solving&#34;&gt;What problem are we solving?&lt;/h3&gt;&#xA;&lt;p&gt;Users can&amp;rsquo;t record audio notes in Aily. When walking with a dog or in other mobile/distracted situations, they want to quickly capture precious ideas by speaking instead of typing. The focus shift to manual typing is slow even though typing itself is fine when undistracted.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</guid>
+      <description>&lt;h1 id=&#34;ideation-audio-notes-with-cactus-sdk&#34;&gt;Ideation: Audio Notes with Cactus SDK&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Date:&lt;/strong&gt; 2026-03-27&#xA;&lt;strong&gt;Status:&lt;/strong&gt; Draft | Ready for PRD&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;problem&#34;&gt;Problem&lt;/h2&gt;&#xA;&lt;h3 id=&#34;what-problem-are-we-solving&#34;&gt;What problem are we solving?&lt;/h3&gt;&#xA;&lt;p&gt;Users can&amp;rsquo;t capture notes while on-the-go (e.g., walking) because typing isn&amp;rsquo;t feasible. They need to speak their thoughts quickly and refine them later.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</guid>
+      <description>&lt;h1 id=&#34;ideation-audio-notes&#34;&gt;Ideation: Audio Notes&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Date:&lt;/strong&gt; 2026-03-26&#xA;&lt;strong&gt;Status:&lt;/strong&gt; Draft | Ready for PRD&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;problem&#34;&gt;Problem&lt;/h2&gt;&#xA;&lt;h3 id=&#34;what-problem-are-we-solving&#34;&gt;What problem are we solving?&lt;/h3&gt;&#xA;&lt;p&gt;Typing is slow. When I&amp;rsquo;m on a walk with my dog, I can&amp;rsquo;t capture ideas in Aily fast enough. I need a hands-free way to quickly record thoughts that become searchable, editable notes.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</guid>
+      <description>&lt;h1 id=&#34;ideation-audio-notes-with-cactus&#34;&gt;Ideation: Audio Notes with Cactus&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Date:&lt;/strong&gt; 2026-03-27&#xA;&lt;strong&gt;Status:&lt;/strong&gt; Draft | Ready for PRD&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;problem&#34;&gt;Problem&lt;/h2&gt;&#xA;&lt;h3 id=&#34;what-problem-are-we-solving&#34;&gt;What problem are we solving?&lt;/h3&gt;&#xA;&lt;p&gt;Capturing notes on the go when people can&amp;rsquo;t type, and for people who prefer speaking over typing.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</guid>
+      <description>&lt;h1 id=&#34;ideation-audio-notes-with-transcription&#34;&gt;Ideation: Audio Notes with Transcription&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Date:&lt;/strong&gt; 2026-03-27&lt;br&gt;&#xA;&lt;strong&gt;Status:&lt;/strong&gt; Draft | Ready for PRD&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;problem&#34;&gt;Problem&lt;/h2&gt;&#xA;&lt;h3 id=&#34;what-problem-are-we-solving&#34;&gt;What problem are we solving?&lt;/h3&gt;&#xA;&lt;p&gt;Users lose ideas when they can&amp;rsquo;t type quickly enough to capture them. They need to record audio on the go, transcribe it to text, and turn it into a note without losing the idea in the moment.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</guid>
+      <description>&lt;h1 id=&#34;ideation-audio-notes-with-transcription&#34;&gt;Ideation: Audio Notes with Transcription&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Date:&lt;/strong&gt; 2026-03-27&#xA;&lt;strong&gt;Status:&lt;/strong&gt; Draft | Ready for PRD&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;problem&#34;&gt;Problem&lt;/h2&gt;&#xA;&lt;h3 id=&#34;what-problem-are-we-solving&#34;&gt;What problem are we solving?&lt;/h3&gt;&#xA;&lt;p&gt;Users lose ideas while walking because they can&amp;rsquo;t type, and currently have no way to record audio notes that automatically transcribe to text within Aily.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title></title>
+      <link>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/guides/local-ai/03-experiments/ideation-skill-experiment/</guid>
+      <description>&lt;h1 id=&#34;ideation-audio-notes-with-on-device-transcription&#34;&gt;Ideation: Audio Notes with On-Device Transcription&lt;/h1&gt;&#xA;&lt;p&gt;&lt;strong&gt;Date:&lt;/strong&gt; 2026-03-27&#xA;&lt;strong&gt;Status:&lt;/strong&gt; Ready for PRD&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;problem&#34;&gt;Problem&lt;/h2&gt;&#xA;&lt;h3 id=&#34;what-problem-are-we-solving&#34;&gt;What problem are we solving?&lt;/h3&gt;&#xA;&lt;p&gt;Users lose ideas when they&amp;rsquo;re on the go and can&amp;rsquo;t type quickly. They need a fast way to capture voice ideas that get converted to searchable text notes.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

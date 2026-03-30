@@ -1,0 +1,1055 @@
+<!doctype html>
+<html lang="en-US" data-bs-theme="auto">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<script 
+  src="/js/color-mode.5c1949ea57ce2075eb442a32bb404b638413499fe06b4610198b84697a0d2a89.js"
+  integrity="sha256-XBlJ6lfOIHXrRCoyu0BLY4QTSZ/ga0YQGYuEaXoNKok=">
+</script>
+
+
+<link rel="stylesheet" href="/main.19600983e5ae8fa82236e066dd225cbc20862127d09947c2a69f305203133d4c51fc56ee9735bdcca8bea86ab5836a50ffe065769406fd24e47c2347f1e7d2db.css" integrity="sha512-GWAJg&#43;Wuj6giNuBm3SJcvCCGISfQmUfCpp8wUgMTPUxR/FbulzW9zKi&#43;qGq1g2pQ/&#43;BldpQG/STkfCNH8efS2w==" crossorigin="anonymous">
+
+<noscript><style>img.lazyload { display: none; }</style></noscript><base href="http://localhost:1313/docs/guides/local-ai/03-experiments/10-ideation-skill-experiment-testing-local-models-on-feature-ideation/">
+
+  <link rel="canonical" href="http://localhost:1313/docs/guides/local-ai/03-experiments/10-ideation-skill-experiment-testing-local-models-on-feature-ideation/">
+<link rel="alternate" type="text/markdown" href="http://localhost:1313/docs/guides/local-ai/03-experiments/10-ideation-skill-experiment-testing-local-models-on-feature-ideation/index.md" title="10 - Ideation Skill Experiment: Testing Local Models on Feature Ideation | onyszko.pl">
+
+<title>10 - Ideation Skill Experiment: Testing Local Models on Feature Ideation | onyszko.pl</title>
+<meta name="description" content="I tested 8 quantization variants of Qwen 3.5 across Dense and MoE architectures on a structured ideation task. Here is what worked, what failed, and how the skill needs to change.">
+
+
+    
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    
+      <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    
+      <link
+        rel="apple-touch-icon"
+        href="/apple-touch-icon.png"
+        sizes="180x180"
+        type="image/png"
+      >
+      <link
+        rel="icon"
+        href="/favicon-192x192.png"
+        sizes="192x192"
+        type="image/png"
+      >
+      <link
+        rel="icon"
+        href="/favicon-512x512.png"
+        sizes="512x512"
+        type="image/png"
+      >
+<link rel="manifest" href="/manifest.webmanifest">
+
+<meta property="og:url" content="http://localhost:1313/docs/guides/local-ai/03-experiments/10-ideation-skill-experiment-testing-local-models-on-feature-ideation/">
+  <meta property="og:site_name" content="onyszko.pl">
+  <meta property="og:title" content="10 - Ideation Skill Experiment: Testing Local Models on Feature Ideation">
+  <meta property="og:description" content="I tested 8 quantization variants of Qwen 3.5 across Dense and MoE architectures on a structured ideation task. Here is what worked, what failed, and how the skill needs to change.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2026-03-27T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-03-27T00:00:00+00:00">
+    <meta property="og:image" content="http://localhost:1313/cover.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/cover.png">
+  <meta name="twitter:title" content="10 - Ideation Skill Experiment: Testing Local Models on Feature Ideation">
+  <meta name="twitter:description" content="I tested 8 quantization variants of Qwen 3.5 across Dense and MoE architectures on a structured ideation task. Here is what worked, what failed, and how the skill needs to change.">
+      <meta name="twitter:site" content="@MrOnyszko">
+
+    
+    
+    
+    <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/",
+       "name": "Hi, I'm Sławomir",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/docs/",
+       "name": "Documentation",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/docs/guides/",
+       "name": "Local Llm Guide",
+       "position": 3
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/docs/guides/local-ai/03-experiments/",
+       "name": "Experiments",
+       "position": 4
+     },
+     {
+       "@type": "ListItem",
+       "name": "10 Ideation Skill Experiment Testing Local Models on Feature Ideation",
+       "position": 5
+     }
+   ]
+ }
+</script>
+
+
+
+
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-VRE5KD7DFL"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-VRE5KD7DFL');
+        }
+      </script>
+
+
+</head>
+
+  
+  <body class="single section docs" data-bs-spy="scroll" data-bs-target="#toc" data-bs-root-margin="0px 0px -60%" data-bs-smooth-scroll="true" tabindex="0">
+    <div class="sticky-top">
+<header class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+  
+    <a class="navbar-brand me-auto me-lg-3" href="/">onyszko.pl</a>
+
+    
+    
+    
+    <button class="btn btn-link d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavSection" aria-controls="offcanvasNavSection" aria-label="Open section navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+        <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+        <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+      </svg>
+    </button>
+    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNavSection" aria-labelledby="offcanvasNavSectionLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavSectionLabel">Docs</h5>
+        <button type="button" class="btn btn-link nav-link p-0 ms-auto" data-bs-dismiss="offcanvas" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M18 6l-12 12"></path>
+            <path d="M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="offcanvas-body">
+        <aside class="doks-sidebar mt-n3">
+          <nav id="doks-docs-nav" aria-label="Tertiary navigation">
+            
+  
+    
+<nav class="section-nav docs-links">
+  <ul class="list-unstyled">
+
+  <li>
+    <details open>
+      <summary>Local LLM Guide</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+    <details open>
+      <summary>Setup</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/01-local-ai-introduction/">01 - Local AI Introduction</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/02-getting-started-with-local-ai/">02 - Getting Started with Local AI</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/03-choosing-your-first-local-model/">03 - Choosing Your First Local Model</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/04-understanding-llama.cpp/">04 - Understanding llama.cpp</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+    <details open>
+      <summary>OpenCode Environment</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/05-installing-opencode-and-connecting-it-to-lm-studio/">05 - Installing OpenCode and Connecting it to LM Studio</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/06-how-opencode-actually-works/">06 - How OpenCode Actually Works</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/07-configuring-opencode-for-real-work/">07 - Configuring OpenCode for Real Work</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/08-your-first-real-task-with-opencode/">08 - Your First Real Task with OpenCode</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+    <details open>
+      <summary>Experiments</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/10-experiments-planning-my-local-ai-workflow-experiments/">10 - Experiments: Planning My Local AI Workflow Experiments</a>
+  </li>
+
+  <li class="active" >
+      <a aria-current="page" href="/docs/guides/local-ai/03-experiments/10-ideation-skill-experiment-testing-local-models-on-feature-ideation/">10 - Ideation Skill Experiment: Testing Local Models on Feature Ideation</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/04-agents-and-skills/">Agents &amp; Skills</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/05-workflow/">Workflow</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/06-assesment/">Assessment</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+  </ul>
+</nav>
+
+  
+
+          </nav>
+        </aside>
+      </div>
+    </div>
+    
+    <button class="btn btn-link nav-link mx-2 order-3 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavMain" aria-controls="offcanvasNavMain" aria-label="Open main navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <line x1="4" y1="8" x2="20" y2="8"></line>
+        <line x1="4" y1="16" x2="20" y2="16"></line>
+      </svg>
+    </button>
+
+    
+    <div class="offcanvas offcanvas-end h-auto" tabindex="-1" id="offcanvasNavMain" aria-labelledby="offcanvasNavMainLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavMainLabel">onyszko.pl</h5>
+        <button type="button" class="btn btn-link nav-link p-0 ms-auto" data-bs-dismiss="offcanvas" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M18 6l-12 12"></path>
+            <path d="M6 6l12 12"></path>
+         </svg>
+        </button>
+      </div>
+      
+      <div class="offcanvas-body d-flex flex-column flex-lg-row justify-content-between">
+        <ul class="navbar-nav flex-grow-1"><li class="nav-item">
+                <a class="nav-link" href="http://localhost:1313/docs/guides/local-ai/01-setup/01-local-ai-introduction/">Guides</a>
+              </li>
+            </ul>
+
+        
+        
+        
+        
+        
+        <button id="buttonColorMode" class="btn btn-link nav-link mt-3 mt-lg-0 p-0 ms-lg-2 me-lg-1" type="button" aria-label="Toggle theme">
+          <svg data-bs-theme-value="dark" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+          </svg>
+          <svg data-bs-theme-value="light" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0m-5 0h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path>
+          </svg>
+        </button>
+        
+        <ul id="socialMenu" class="nav flex-row order-lg-4">
+          <li class="nav-item">
+              <a class="nav-link social-link" href="https://github.com/MrOnyszko"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path></svg><small class="ms-2 visually-hidden">GitHub</small></a>
+            </li>
+          <li class="nav-item">
+              <a class="nav-link social-link" href="https://www.youtube.com/@mronyszko"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-youtube" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M2 8a4 4 0 0 1 4 -4h12a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-12a4 4 0 0 1 -4 -4v-8z"></path><path d="M10 9l5 3l-5 3z"></path></svg><small class="ms-2 visually-hidden">YouTube</small></a>
+            </li>
+          </ul>
+        
+        </div>
+    </div>
+
+    
+    </div>
+</header>
+</div>
+
+
+    <div class="wrap container-fluid" role="document">
+      <div class="content">
+      
+        
+	<div class="row flex-xl-nowrap">
+		<div class="col-lg-5 col-xl-4 docs-sidebar d-none d-lg-block">
+			
+  
+    
+<nav class="section-nav docs-links">
+  <ul class="list-unstyled">
+
+  <li>
+    <details open>
+      <summary>Local LLM Guide</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+    <details open>
+      <summary>Setup</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/01-local-ai-introduction/">01 - Local AI Introduction</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/02-getting-started-with-local-ai/">02 - Getting Started with Local AI</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/03-choosing-your-first-local-model/">03 - Choosing Your First Local Model</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/04-understanding-llama.cpp/">04 - Understanding llama.cpp</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+    <details open>
+      <summary>OpenCode Environment</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/05-installing-opencode-and-connecting-it-to-lm-studio/">05 - Installing OpenCode and Connecting it to LM Studio</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/06-how-opencode-actually-works/">06 - How OpenCode Actually Works</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/07-configuring-opencode-for-real-work/">07 - Configuring OpenCode for Real Work</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/08-your-first-real-task-with-opencode/">08 - Your First Real Task with OpenCode</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+    <details open>
+      <summary>Experiments</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/10-experiments-planning-my-local-ai-workflow-experiments/">10 - Experiments: Planning My Local AI Workflow Experiments</a>
+  </li>
+
+  <li class="active" >
+      <a aria-current="page" href="/docs/guides/local-ai/03-experiments/10-ideation-skill-experiment-testing-local-models-on-feature-ideation/">10 - Ideation Skill Experiment: Testing Local Models on Feature Ideation</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/04-agents-and-skills/">Agents &amp; Skills</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/05-workflow/">Workflow</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/06-assesment/">Assessment</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+  </ul>
+</nav>
+
+  
+
+		</div>
+		
+			<div class="col container-fw d-lg-flex flex-lg-row justify-content-center mx-auto">
+		
+		<nav class="docs-toc d-none d-xl-block col-xl-3" aria-label="Secondary navigation">
+			<div class="page-links">
+  <h3>On this page</h3>
+    <nav id="toc">
+  <ul>
+    <li><a href="#why-test-ideation-first">Why Test Ideation First</a></li>
+    <li><a href="#the-skill-structure">The Skill Structure</a></li>
+    <li><a href="#qwen-35-27b-results-dense">Qwen 3.5 27B Results (Dense)</a></li>
+    <li><a href="#qwen-35-35b-a3b-results-moe">Qwen 3.5 35B A3B Results (MoE)</a></li>
+    <li><a href="#dense-vs-moe-the-architecture-gap">Dense vs MoE: The Architecture Gap</a></li>
+    <li><a href="#how-to-improve-the-skill">How to Improve the Skill</a>
+      <ul>
+        <li><a href="#1-vivid-language-is-lost-during-qa-not-just-at-write-time">1. Vivid language is lost during Q&amp;A, not just at write time</a></li>
+        <li><a href="#2-no-guard-against-hallucinated-content">2. No guard against hallucinated content</a></li>
+        <li><a href="#3-contradiction-detection-is-too-passive">3. Contradiction detection is too passive</a></li>
+        <li><a href="#4-round-themes-bleed-into-each-other">4. Round themes bleed into each other</a></li>
+        <li><a href="#5-i-dont-know-is-accepted-as-final">5. &ldquo;I don&rsquo;t know&rdquo; is accepted as final</a></li>
+        <li><a href="#6-stop-detection-is-fragile">6. Stop detection is fragile</a></li>
+        <li><a href="#7-moe-models-struggle-with-structural-rules">7. MoE models struggle with structural rules</a></li>
+        <li><a href="#8-models-change-users-stated-metrics">8. Models change user&rsquo;s stated metrics</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-points">Key Points</a></li>
+  </ul>
+</nav>
+</div>
+
+		</nav>
+		<main class="docs-content col-lg-11 col-xl-9 mx-xl-auto">
+		<nav class="toc-mobile toc-mobile-sticky d-xl-none" aria-label="Quaternary navigation">
+				<details>
+    <summary>On this page</summary>
+    <div class="page-links">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-test-ideation-first">Why Test Ideation First</a></li>
+    <li><a href="#the-skill-structure">The Skill Structure</a></li>
+    <li><a href="#qwen-35-27b-results-dense">Qwen 3.5 27B Results (Dense)</a></li>
+    <li><a href="#qwen-35-35b-a3b-results-moe">Qwen 3.5 35B A3B Results (MoE)</a></li>
+    <li><a href="#dense-vs-moe-the-architecture-gap">Dense vs MoE: The Architecture Gap</a></li>
+    <li><a href="#how-to-improve-the-skill">How to Improve the Skill</a>
+      <ul>
+        <li><a href="#1-vivid-language-is-lost-during-qa-not-just-at-write-time">1. Vivid language is lost during Q&amp;A, not just at write time</a></li>
+        <li><a href="#2-no-guard-against-hallucinated-content">2. No guard against hallucinated content</a></li>
+        <li><a href="#3-contradiction-detection-is-too-passive">3. Contradiction detection is too passive</a></li>
+        <li><a href="#4-round-themes-bleed-into-each-other">4. Round themes bleed into each other</a></li>
+        <li><a href="#5-i-dont-know-is-accepted-as-final">5. &ldquo;I don&rsquo;t know&rdquo; is accepted as final</a></li>
+        <li><a href="#6-stop-detection-is-fragile">6. Stop detection is fragile</a></li>
+        <li><a href="#7-moe-models-struggle-with-structural-rules">7. MoE models struggle with structural rules</a></li>
+        <li><a href="#8-models-change-users-stated-metrics">8. Models change user&rsquo;s stated metrics</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-points">Key Points</a></li>
+  </ul>
+</nav>
+    </div>
+  </details>
+
+			</nav>
+			
+			<div class="page-header d-flex flex-row justify-content-between align-items-start">
+				<div>
+					<h1>10 - Ideation Skill Experiment: Testing Local Models on Feature Ideation</h1>
+					
+				</div>
+				<div>
+					<div id="ai-dropdown" class="dropdown">
+  <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M18 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li>
+      <a class="dropdown-item" href="https://chatgpt.com/?hints=search&q=Read+http%3A%2F%2Flocalhost%3A1313%2Fdocs%2Fguides%2Flocal-ai%2F03-experiments%2F10-ideation-skill-experiment-testing-local-models-on-feature-ideation%2F%2C+I+want+to+ask+questions+about+it." target="_blank">
+        <svg fill="currentColor" fill-rule="evenodd" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg" class="mb-1 me-1"><title>OpenAI</title><path d="M21.55 10.004a5.416 5.416 0 00-.478-4.501c-1.217-2.09-3.662-3.166-6.05-2.66A5.59 5.59 0 0010.831 1C8.39.995 6.224 2.546 5.473 4.838A5.553 5.553 0 001.76 7.496a5.487 5.487 0 00.691 6.5 5.416 5.416 0 00.477 4.502c1.217 2.09 3.662 3.165 6.05 2.66A5.586 5.586 0 0013.168 23c2.443.006 4.61-1.546 5.361-3.84a5.553 5.553 0 003.715-2.66 5.488 5.488 0 00-.693-6.497v.001zm-8.381 11.558a4.199 4.199 0 01-2.675-.954c.034-.018.093-.05.132-.074l4.44-2.53a.71.71 0 00.364-.623v-6.176l1.877 1.069c.02.01.033.029.036.05v5.115c-.003 2.274-1.87 4.118-4.174 4.123zM4.192 17.78a4.059 4.059 0 01-.498-2.763c.032.02.09.055.131.078l4.44 2.53c.225.13.504.13.73 0l5.42-3.088v2.138a.068.068 0 01-.027.057L9.9 19.288c-1.999 1.136-4.552.46-5.707-1.51h-.001zM3.023 8.216A4.15 4.15 0 015.198 6.41l-.002.151v5.06a.711.711 0 00.364.624l5.42 3.087-1.876 1.07a.067.067 0 01-.063.005l-4.489-2.559c-1.995-1.14-2.679-3.658-1.53-5.63h.001zm15.417 3.54l-5.42-3.088L14.896 7.6a.067.067 0 01.063-.006l4.489 2.557c1.998 1.14 2.683 3.662 1.529 5.633a4.163 4.163 0 01-2.174 1.807V12.38a.71.71 0 00-.363-.623zm1.867-2.773a6.04 6.04 0 00-.132-.078l-4.44-2.53a.731.731 0 00-.729 0l-5.42 3.088V7.325a.068.068 0 01.027-.057L14.1 4.713c2-1.137 4.555-.46 5.707 1.513.487.833.664 1.809.499 2.757h.001zm-11.741 3.81l-1.877-1.068a.065.065 0 01-.036-.051V6.559c.001-2.277 1.873-4.122 4.181-4.12.976 0 1.92.338 2.671.954-.034.018-.092.05-.131.073l-4.44 2.53a.71.71 0 00-.365.623l-.003 6.173v.002zm1.02-2.168L12 9.25l2.414 1.375v2.75L12 14.75l-2.415-1.375v-2.75z"></path></svg>
+        Open in ChatGPT
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item" href="https://claude.ai/new?q=Read+http%3A%2F%2Flocalhost%3A1313%2Fdocs%2Fguides%2Flocal-ai%2F03-experiments%2F10-ideation-skill-experiment-testing-local-models-on-feature-ideation%2F%2C+I+want+to+ask+questions+about+it." target="_blank">
+        <svg fill="currentColor" fill-rule="evenodd" height="16" viewBox="0 0 256 257" width="16" xmlns="http://www.w3.org/2000/svg" class="mb-1 me-1" preserveAspectRatio="xMidYMid"><title>Anthropic</title><path d="m50.228 170.321 50.357-28.257.843-2.463-.843-1.361h-2.462l-8.426-.518-28.775-.778-24.952-1.037-24.175-1.296-6.092-1.297L0 125.796l.583-3.759 5.12-3.434 7.324.648 16.202 1.101 24.304 1.685 17.629 1.037 26.118 2.722h4.148l.583-1.685-1.426-1.037-1.101-1.037-25.147-17.045-27.22-18.017-14.258-10.37-7.713-5.25-3.888-4.925-1.685-10.758 7-7.713 9.397.649 2.398.648 9.527 7.323 20.35 15.75L94.817 91.9l3.889 3.24 1.555-1.102.195-.777-1.75-2.917-14.453-26.118-15.425-26.572-6.87-11.018-1.814-6.61c-.648-2.723-1.102-4.991-1.102-7.778l7.972-10.823L71.42 0 82.05 1.426l4.472 3.888 6.61 15.101 10.694 23.786 16.591 32.34 4.861 9.592 2.592 8.879.973 2.722h1.685v-1.556l1.36-18.211 2.528-22.36 2.463-28.776.843-8.1 4.018-9.722 7.971-5.25 6.222 2.981 5.12 7.324-.713 4.73-3.046 19.768-5.962 30.98-3.889 20.739h2.268l2.593-2.593 10.499-13.934 17.628-22.036 7.778-8.749 9.073-9.657 5.833-4.601h11.018l8.1 12.055-3.628 12.443-11.342 14.388-9.398 12.184-13.48 18.147-8.426 14.518.778 1.166 2.01-.194 30.46-6.481 16.462-2.982 19.637-3.37 8.88 4.148.971 4.213-3.5 8.62-20.998 5.184-24.628 4.926-36.682 8.685-.454.324.519.648 16.526 1.555 7.065.389h17.304l32.21 2.398 8.426 5.574 5.055 6.805-.843 5.184-12.962 6.611-17.498-4.148-40.83-9.721-14-3.5h-1.944v1.167l11.666 11.406 21.387 19.314 26.767 24.887 1.36 6.157-3.434 4.86-3.63-.518-23.526-17.693-9.073-7.972-20.545-17.304h-1.36v1.814l4.73 6.935 25.017 37.59 1.296 11.536-1.814 3.76-6.481 2.268-7.13-1.297-14.647-20.544-15.1-23.138-12.185-20.739-1.49.843-7.194 77.448-3.37 3.953-7.778 2.981-6.48-4.925-3.436-7.972 3.435-15.749 4.148-20.544 3.37-16.333 3.046-20.285 1.815-6.74-.13-.454-1.49.194-15.295 20.999-23.267 31.433-18.406 19.702-4.407 1.75-7.648-3.954.713-7.064 4.277-6.286 25.47-32.405 15.36-20.092 9.917-11.6-.065-1.686h-.583L44.07 198.125l-12.055 1.555-5.185-4.86.648-7.972 2.463-2.593 20.35-13.999-.064.065Z"></path></svg>
+        Open in Claude
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item" href="https://www.perplexity.ai/search/?q=Read+http%3A%2F%2Flocalhost%3A1313%2Fdocs%2Fguides%2Flocal-ai%2F03-experiments%2F10-ideation-skill-experiment-testing-local-models-on-feature-ideation%2F%2C+I+want+to+ask+questions+about+it." target="_blank">
+        <svg fill="currentColor" height="16" viewBox="0 0 34 38" width="16" xmlns="http://www.w3.org/2000/svg" class="mb-1 me-1"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.12114 0.0400391L15.919 9.98864V9.98636V0.062995H18.0209V10.0332L28.8671 0.0400391V11.3829H33.3202V27.744H28.8808V37.8442L18.0209 28.303V37.9538H15.919V28.4604L5.13338 37.96V27.744H0.680176V11.3829H5.12114V0.0400391ZM14.3344 13.4592H2.78208V25.6677H5.13074V21.8167L14.3344 13.4592ZM7.23518 22.7379V33.3271L15.919 25.6786V14.8506L7.23518 22.7379ZM18.0814 25.5775V14.8404L26.7677 22.7282V27.744H26.7789V33.219L18.0814 25.5775ZM28.8808 25.6677H31.2183V13.4592H19.752L28.8808 21.7302V25.6677ZM26.7652 11.3829V4.81584L19.6374 11.3829H26.7652ZM14.3507 11.3829H7.22306V4.81584L14.3507 11.3829Z" fill="currentColor"></path></svg>
+        Open in Perplexity
+      </a>
+    </li>
+    <li><hr class="dropdown-divider"></li>
+    <li>
+      <a id="copy-markdown" class="dropdown-item" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg>
+        Copy Markdown
+      </a>
+    </li>
+  </ul>
+</div>
+
+				</div>
+				</div>
+			<p>I ran 8 different Qwen 3.5 model quantizations through an ideation skill to see which configuration produces the best structured feature ideation session for my Aily app.</p>
+<h2 id="why-test-ideation-first">Why Test Ideation First<a href="#why-test-ideation-first" class="anchor" aria-hidden="true">#</a> </h2>
+<p>Ideation is the first step in my feature workflow. Before I write a PRD or plan tasks, I need to sharpen an idea — pressure-test assumptions, find contradictions, capture the user&rsquo;s actual words. If a local model can handle this, it can save real time on every new feature I build.</p>
+<p>The problem is that ideation is not just Q&amp;A. It requires strict round structure, contradiction detection, and vivid language preservation. These are hard rules to follow — and a perfect test for reasoning quality.</p>
+<p>I tested two model families: 
+
+<a class="link link--text" href="https://huggingface.co/unsloth/Qwen3.5-27B-GGUF" rel="external">Qwen 3.5 27B</a> (Dense architecture) and 
+
+<a class="link link--text" href="https://huggingface.co/unsloth/Qwen3.5-35B-A3B-GGUF" rel="external">Qwen 3.5 35B A3B</a> (MoE architecture, 35B total, 3B active). Each family got 4 quantization variants. Same task, same skill, different models.</p>
+<p>
+
+<img
+  src="/docs/guides/local-ai/03-experiments/ideation-experiment/Qwen%203.5%2027B%20UD%20Q4_K_XL/Screenshot%202026-03-27%20at%2012.15.43_hu_33ce06b05405263e.webp"
+  width="3148"
+  height="2122"
+  decoding="async"
+  fetchpriority="auto"
+  loading="lazy"
+  alt="Screenshot from the 27B UD Q4_K_XL session"
+  id="h-rh-i-0"
+></p>
+<hr>
+<h2 id="the-skill-structure">The Skill Structure<a href="#the-skill-structure" class="anchor" aria-hidden="true">#</a> </h2>
+<p>The ideation skill lives in <code>Skill/ideation/</code> and follows a strict 6-step flow:</p>
+<ol>
+<li><strong>Scan Workspace</strong> — read <code>README.md</code>, glob <code>docs/**/*.md</code>, extract project context</li>
+<li><strong>Open Session</strong> — introduce the interviewer role, ask what the user wants to build</li>
+<li><strong>Question Rounds</strong> — 4+ rounds with assigned themes: Problem → Users → Constraints → Value → Follow-up</li>
+<li><strong>Detect Stop</strong> — wait for explicit stop signal before writing</li>
+<li><strong>Write Ideation Document</strong> — fill the 
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/">template</a> using the user&rsquo;s own words</li>
+<li><strong>Handoff</strong> — hand off to the <code>create-prd</code> skill</li>
+</ol>
+<p>The skill has reference files:</p>
+<ul>
+<li>
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/"><code>ideation-template.md</code></a> — document structure with Problem, Solution, Value, Open Questions, and Next Steps</li>
+<li>
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/"><code>questions-extended.md</code></a> — extra questions for round 5+</li>
+</ul>
+<p>Key rules: do not propose solutions, do not skip to writing, do not accept &ldquo;it depends&rdquo;, name contradictions when you spot them, and never sanitise vivid language.</p>
+<hr>
+<h2 id="qwen-35-27b-results-dense">Qwen 3.5 27B Results (Dense)<a href="#qwen-35-27b-results-dense" class="anchor" aria-hidden="true">#</a> </h2>
+<p>I ran all 4 quantization variants on the same task: ideation for &ldquo;Add audio notes using Cactus SDK&rdquo; in my Aily app. Full evaluation: 
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/">Qwen 3.5 27B Quantization Comparison</a>.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Rank</th>
+          <th>Model</th>
+          <th>Score</th>
+          <th>Session Time</th>
+          <th>Key Strength</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>UD Q8_K_XL</td>
+          <td>43/50</td>
+          <td>16 min</td>
+          <td>Contradiction detection, quantified benchmarks</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Q8_0</td>
+          <td>41/50</td>
+          <td>67 min</td>
+          <td>Best question quality, vivid language capture</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>UD Q4_K_XL</td>
+          <td>35/50</td>
+          <td>21 min</td>
+          <td>Workspace context usage, technical grounding</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Q4_K_M</td>
+          <td>29/50</td>
+          <td>10 min</td>
+          <td>Clean flow, no skipped steps</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Q8_K_XL won.</strong> It caught the Cactus offline contradiction — the user wanted offline-first but mentioned sending audio to servers. Only this variant named it directly. It also produced quantified success criteria (95% accuracy, &lt;30s for 5-min recording) and separated MVP from v2 cleanly.</p>
+<p><strong>Q8_0 was the creative one.</strong> It preserved &ldquo;walking with my dog&rdquo; and &ldquo;precious ideas&rdquo; — phrases the other variants sanitised. But it took 67 minutes for 4 rounds. Too slow for daily use.</p>
+<p><strong>Q4 variants struggled.</strong> Q4_K_M hallucinated open questions — added &ldquo;notification when transcription completes&rdquo; and &ldquo;audio format support&rdquo; that were never discussed. Q4_K_XL was better but still missed contradiction detection.</p>
+<blockquote>
+<p>Higher quantization = better reasoning. Q8 variants scored 41-43. Q4 variants scored 29-35. The gap is real.</p>
+</blockquote>
+<p>You can read the full session transcripts for each model:</p>
+<ul>
+<li>
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/">Qwen 3.5 27B Q4_K_M session</a></li>
+<li>
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/">Qwen 3.5 27B Q8_0 session</a></li>
+<li>
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/">Qwen 3.5 27B UD Q4_K_XL session</a></li>
+<li>
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/">Qwen 3.5 27B UD Q8_K_XL session</a></li>
+</ul>
+<hr>
+<h2 id="qwen-35-35b-a3b-results-moe">Qwen 3.5 35B A3B Results (MoE)<a href="#qwen-35-35b-a3b-results-moe" class="anchor" aria-hidden="true">#</a> </h2>
+<p>Same task, MoE architecture. Full evaluation: 
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/">Qwen 3.5 35B A3B Quantization Comparison</a>.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Rank</th>
+          <th>Model</th>
+          <th>Score</th>
+          <th>Session Time</th>
+          <th>Key Strength</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>UD Q8_K_XL</td>
+          <td>34/50</td>
+          <td>11 min</td>
+          <td>Deepest workspace context, cleanest round theming</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>UD Q4_K_XL</td>
+          <td>31/50</td>
+          <td>18 min</td>
+          <td>Most open questions (10), most risks (5)</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Q8_0</td>
+          <td>30/50</td>
+          <td>11 min</td>
+          <td>6 rounds, comprehensive MVP, good pushback</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Q4_K_M</td>
+          <td>22/50</td>
+          <td>8 min</td>
+          <td>Fastest session</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>The MoE models are faster.</strong> All 35B sessions finished in 18 minutes or less. But speed comes at a cost.</p>
+<p><strong>Round theme bleeding is the main problem.</strong> Q4_K_M asked constraint questions (&ldquo;What would make this a bad idea?&rdquo;) in round 1 — that is a round 3 topic. Q4_K_XL repeated &ldquo;What have you tried before&rdquo; across both round 1 and round 2. The sparse activation pattern of MoE makes it harder to maintain strict conditional logic.</p>
+<p><strong>Accuracy failures are worse.</strong> Q4_K_M hallucinated workspace context — claimed to know Aily&rsquo;s architecture without reading <code>app_overview.md</code>. UD Q4_K_XL changed the user&rsquo;s stated 45% success metric to 20% in the ideation doc. These are not minor issues.</p>
+<p><strong>UD Q8_K_XL was the best of the group.</strong> It read <code>pubspec.yaml</code> for dependency details — the deepest workspace scan of any 35B model. It matched session metrics exactly in the ideation doc (95% accuracy, 45% adoption). But even it accepted vague &ldquo;Yes&rdquo; answers to non-yes/no questions.</p>
+<p>You can read the full session transcripts:</p>
+<ul>
+<li>
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/">Qwen 3.5 35B A3B Q4_K_M session</a></li>
+<li>
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/">Qwen 3.5 35B A3B Q8_0 session</a></li>
+<li>
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/">Qwen 3.5 35B A3B UD Q4_K_XL session</a></li>
+<li>
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/">Qwen 3.5 35B A3B UD Q8_K_XL session</a></li>
+</ul>
+<hr>
+<h2 id="dense-vs-moe-the-architecture-gap">Dense vs MoE: The Architecture Gap<a href="#dense-vs-moe-the-architecture-gap" class="anchor" aria-hidden="true">#</a> </h2>
+<p>Full comparison: 
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/">Dense vs MoE Comparison</a>.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Criterion</th>
+          <th>27B Dense Avg</th>
+          <th>35B MoE Avg</th>
+          <th>Delta</th>
+          <th>Winner</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Skill Flow Adherence</td>
+          <td>4.25</td>
+          <td>3.50</td>
+          <td>+0.75</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Question Quality</td>
+          <td>4.00</td>
+          <td>3.25</td>
+          <td>+0.75</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Round Thematic Rigor</td>
+          <td>4.00</td>
+          <td>2.75</td>
+          <td>+1.25</td>
+          <td><strong>Dense</strong></td>
+      </tr>
+      <tr>
+          <td>Contradiction Detection</td>
+          <td>3.50</td>
+          <td>2.75</td>
+          <td>+0.75</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Vivid Language Capture</td>
+          <td>3.50</td>
+          <td>3.00</td>
+          <td>+0.50</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Workspace Context Usage</td>
+          <td>4.50</td>
+          <td>3.75</td>
+          <td>+0.75</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Doc Completeness</td>
+          <td>4.50</td>
+          <td>4.25</td>
+          <td>+0.25</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Doc Accuracy</td>
+          <td>4.25</td>
+          <td>3.50</td>
+          <td>+0.75</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Document Polish</td>
+          <td>4.25</td>
+          <td>3.50</td>
+          <td>+0.75</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Session Pacing</td>
+          <td>4.00</td>
+          <td>3.50</td>
+          <td>+0.50</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td><strong>Average Total</strong></td>
+          <td><strong>36.50</strong></td>
+          <td><strong>31.75</strong></td>
+          <td><strong>+4.75</strong></td>
+          <td><strong>Dense</strong></td>
+      </tr>
+  </tbody>
+</table>
+<p>Dense wins on every criterion. The largest gap is <strong>Round Thematic Rigor</strong> (+1.25). Dense models keep round boundaries clean — Problem questions stay in round 1, Constraint questions stay in round 3. MoE models bleed themes across rounds.</p>
+<p><strong>Where MoE is competitive:</strong></p>
+<ul>
+<li><strong>Session Pacing</strong> — MoE is faster. All 35B sessions ≤18 min. Dense ranged 10-67 min.</li>
+<li><strong>Doc Completeness</strong> — MoE UD Q4_K_XL produced the most comprehensive doc (10 open questions, 5 risks).</li>
+</ul>
+<p><strong>Quantization matters more than architecture at Q4.</strong> The 35B MoE Q8_K_XL (34) beats the 27B Dense Q4_K_M (29) by 5 points. Upgrading quantization has a bigger impact than switching architectures.</p>
+<blockquote>
+<p>Best Dense: 27B UD Q8_K_XL (43/50). Best MoE: 35B UD Q8_K_XL (34/50). The gap is 9 points. For structured conversational tasks, Dense is the better architecture.</p>
+</blockquote>
+<hr>
+<h2 id="how-to-improve-the-skill">How to Improve the Skill<a href="#how-to-improve-the-skill" class="anchor" aria-hidden="true">#</a> </h2>
+<p>The evaluation revealed 18 specific failure modes. Full list: 
+
+<a class="link link--text" href="/docs/guides/local-ai/03-experiments/">Skill Improvements</a>.</p>
+<p>Here are the most impactful ones:</p>
+<h3 id="1-vivid-language-is-lost-during-qa-not-just-at-write-time">1. Vivid language is lost during Q&amp;A, not just at write time<a href="#1-vivid-language-is-lost-during-qa-not-just-at-write-time" class="anchor" aria-hidden="true">#</a> </h3>
+<p>The rule &ldquo;do not sanitise vivid language&rdquo; only appears in Step 5. By then, models paraphrase user answers for 4-5 rounds. Phrases like &ldquo;I lost my 1 mln dollar idea&rdquo; are gone from context.</p>
+<p><strong>Fix:</strong> Add to Step 3: <em>&ldquo;When reflecting user answers, quote their exact words in quotes. Do not paraphrase vivid or emotional language.&rdquo;</em></p>
+<h3 id="2-no-guard-against-hallucinated-content">2. No guard against hallucinated content<a href="#2-no-guard-against-hallucinated-content" class="anchor" aria-hidden="true">#</a> </h3>
+<p>Q4_K_M added &ldquo;notification when transcription completes&rdquo; — never discussed. Nothing in the skill prevents this.</p>
+<p><strong>Fix:</strong> Add to Step 5: <em>&ldquo;Every item in the ideation doc must trace to something the user said. If you can&rsquo;t point to a specific user answer, do not include it.&rdquo;</em></p>
+<h3 id="3-contradiction-detection-is-too-passive">3. Contradiction detection is too passive<a href="#3-contradiction-detection-is-too-passive" class="anchor" aria-hidden="true">#</a> </h3>
+<p>&ldquo;Name contradictions when you spot them&rdquo; — only Q8_K_XL did this well. Others accepted &ldquo;I don&rsquo;t know&rdquo; without follow-up.</p>
+<p><strong>Fix:</strong> Add examples: <em>&ldquo;When a user answer conflicts with an earlier answer, say: &lsquo;You said X earlier, but now Y — which is closer to the truth?&rsquo;&rdquo;</em></p>
+<h3 id="4-round-themes-bleed-into-each-other">4. Round themes bleed into each other<a href="#4-round-themes-bleed-into-each-other" class="anchor" aria-hidden="true">#</a> </h3>
+<p>Rounds 2 and 3 had overlapping questions across most models.</p>
+<p><strong>Fix:</strong> Add negative constraints per round: <em>&ldquo;Round 1 — Focus on what&rsquo;s broken. Do NOT ask about solutions or workarounds yet.&rdquo;</em></p>
+<h3 id="5-i-dont-know-is-accepted-as-final">5. &ldquo;I don&rsquo;t know&rdquo; is accepted as final<a href="#5-i-dont-know-is-accepted-as-final" class="anchor" aria-hidden="true">#</a> </h3>
+<p>The skill handles &ldquo;it depends&rdquo; but not &ldquo;I don&rsquo;t know&rdquo;. Q4_K_M accepted it and moved on.</p>
+<p><strong>Fix:</strong> <em>&ldquo;Never accept &lsquo;I don&rsquo;t know&rsquo; as final. Respond: &lsquo;What&rsquo;s your best guess?&rsquo; or &lsquo;What would need to be true for you to have an opinion?&rsquo;&rdquo;</em></p>
+<h3 id="6-stop-detection-is-fragile">6. Stop detection is fragile<a href="#6-stop-detection-is-fragile" class="anchor" aria-hidden="true">#</a> </h3>
+<p>Some models asked &ldquo;Ready to write this up?&rdquo; even when new threads existed. Others skipped straight to writing when the user said one sentence.</p>
+<p><strong>Fix:</strong> <em>&ldquo;Do NOT detect stop unless the user uses explicit stop language: &lsquo;wrap it up&rsquo;, &rsquo;that&rsquo;s enough&rsquo;, &rsquo;let&rsquo;s write this up&rsquo;, &lsquo;ready for PRD&rsquo;. A short answer is not a stop signal.&rdquo;</em></p>
+<h3 id="7-moe-models-struggle-with-structural-rules">7. MoE models struggle with structural rules<a href="#7-moe-models-struggle-with-structural-rules" class="anchor" aria-hidden="true">#</a> </h3>
+<p>Round thematic rigor averaged 2.75/5 for MoE vs. 4.0/5 for Dense. This is likely an architecture limitation, not fixable via instructions alone. Adding explicit <strong>&ldquo;FORBIDDEN in this round&rdquo;</strong> lists per round with specific question examples helps.</p>
+<h3 id="8-models-change-users-stated-metrics">8. Models change user&rsquo;s stated metrics<a href="#8-models-change-users-stated-metrics" class="anchor" aria-hidden="true">#</a> </h3>
+<p>35B A3B UD Q4_K_XL wrote &ldquo;20% of the time&rdquo; when the user said &ldquo;45%&rdquo;.</p>
+<p><strong>Fix:</strong> <em>&ldquo;Success criteria and metrics must use the exact numbers the user provided. Never adjust user-stated targets.&rdquo;</em></p>
+<hr>
+<h2 id="key-points">Key Points<a href="#key-points" class="anchor" aria-hidden="true">#</a> </h2>
+<ol>
+<li><strong>Dense architecture outperforms MoE on structured conversational tasks</strong> — 4.75 point average gap across all criteria</li>
+<li><strong>Q8_K_XL is the best quantization for both architectures</strong> — higher bit-width preserves reasoning quality</li>
+<li><strong>Quantization matters more than architecture at Q4</strong> — upgrading from Q4 to Q8 has a bigger impact than switching from MoE to Dense</li>
+<li><strong>The best model is Qwen 3.5 27B UD Q8_K_XL at 43/50</strong> — it catches contradictions, produces quantified benchmarks, and finishes in 16 minutes</li>
+<li><strong>MoE is faster but less rigorous</strong> — all MoE sessions ≤18 min but round themes bleed and contradictions go unnamed</li>
+<li><strong>The skill needs 18 improvements</strong> — most are guardrails against hallucination, theme bleeding, and language sanitisation</li>
+<li><strong>Vivid language needs protection from round 1</strong> — not just in the document writing step</li>
+<li><strong>Structural rules need negative constraints</strong> — tell models what NOT to ask in each round, not just what to ask</li>
+</ol>
+
+			<div class="page-footer-meta d-flex flex-column flex-md-row justify-content-between">
+				</div>
+			<div class="page-nav d-flex flex-column flex-sm-row">
+	
+	<div class="card w-100">
+			<div class="card-body d-flex">
+				<div class="d-flex flex-column justify-content-center">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-left" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+						<path d="M5 12l14 0"></path>
+						<path d="M5 12l6 6"></path>
+						<path d="M5 12l6 -6"></path>
+				 	</svg>
+				</div>
+				<div class="d-flex flex-column">
+					<div class="text-body-secondary">Prev</div>
+					<a href="/docs/guides/local-ai/03-experiments/10-experiments-planning-my-local-ai-workflow-experiments/" class="stretched-link text-reset text-decoration-none">10 - Experiments: Planning My Local AI Workflow Experiments</a>
+				</div>
+			</div>
+		</div>
+	<div class="m-2"></div>
+	<div class="card text-end w-100">
+			<div class="card-body d-flex justify-content-end">
+				<div class="d-flex flex-column">
+					<div class="text-body-secondary">Next</div>
+					<a href="/docs/guides/local-ai/02-opencode-environment/05-installing-opencode-and-connecting-it-to-lm-studio/" class="stretched-link text-reset text-decoration-none">05 - Installing OpenCode and Connecting it to LM Studio</a>
+				</div>
+				<div class="d-flex flex-column justify-content-center">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-right" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+						<path d="M5 12l14 0"></path>
+						<path d="M13 18l6 -6"></path>
+						<path d="M13 6l6 6"></path>
+					</svg>
+				</div>
+			</div>
+		</div>
+	</div>
+
+			
+		</main>
+		
+			</div>
+		
+	</div>
+
+      
+      </div>
+    </div>
+    
+    
+    <footer class="footer text-muted">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-8 text-lg-start">
+        <ul class="list-inline">
+          <li class="list-inline-item"><a class="text-muted" href="/privacy/">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-8 text-lg-end">
+        <ul class="list-inline">
+          <li class="list-inline-item">Brought to you by <a class="text-muted" href="https://onyszko.pl/">onyszko.pl</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    
+
+<script async
+  src="/js/app.dabdef501f012d9cc214cfd80465c50079f359096a2793f56bb5fae90d005889.js"
+  integrity="sha256-2r3vUB8BLZzCFM/YBGXFAHnzWQlqJ5P1a7X66Q0AWIk=">
+</script>
+
+
+
+
+
+
+
+    
+  </body>
+</html>
