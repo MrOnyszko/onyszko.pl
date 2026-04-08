@@ -98,20 +98,20 @@ issues, you'll still need to test manually and provide feedback.
 **Best practices for collaboration:**
 
 1. **Be specific about what you want**
-   - Good: "Add validation for the email field in the user registration form in @lib/screens/register_screen.dart"
-   - Bad: "Fix the registration form"
+    - Good: "Add validation for the email field in the user registration form in @lib/screens/register_screen.dart"
+    - Bad: "Fix the registration form"
 
 2. **Provide examples when possible**
-   - Include before/after code snippets from your Flutter project
-   - Share screenshots of desired UI behavior (drag images into the terminal)
+    - Include before/after code snippets from your Flutter project
+    - Share screenshots of desired UI behavior (drag images into the terminal)
 
 3. **Use Plan mode for complex features**
-   - Review the approach first
-   - Give feedback on the plan before letting it execute
+    - Review the approach first
+    - Give feedback on the plan before letting it execute
 
 4. **Iterate with undo/redo**
-   - If the output isn't right, use `/undo` and refine your prompt
-   - OpenCode learns from your corrections
+    - If the output isn't right, use `/undo` and refine your prompt
+    - OpenCode learns from your corrections
 
 **Common mistakes to avoid:**
 

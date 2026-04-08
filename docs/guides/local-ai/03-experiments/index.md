@@ -1,188 +1,193 @@
 # <no value>
-# Dense vs MoE — Ideation Skill Evaluation Comparison
+# Skill Improvements — Ideation Coach v2
 
-**Date:** 2026-03-27
-**Task:** Run ideation session on "Add audio notes using Cactus SDK" for Aily app
-**Dense model:** unsloth/qwen3.5-27b (4 quantization variants)
-**MoE model:** unsloth/qwen3.5-35b-a3b (4 quantization variants)
+**Date:** 2026-04-04
+**Analysis:** Based on evaluation of 8 model variants (Dense 27B and MoE 35B A3B at 4 quantization levels each)
 
 ---
 
-## Models Tested
+## Summary of Recurring Issues
 
-| Family | Architecture | Variants |
-|--------|-------------|----------|
-| Qwen 3.5 27B | Dense | Q4_K_M, Q8_0, UD Q4_K_XL, UD Q8_K_XL |
-| Qwen 3.5 35B A3B | MoE (35B total, 3B active) | Q4_K_M, Q8_0, UD Q4_K_XL, UD Q8_K_XL |
+### Issue Frequency by Model
 
----
-
-## Evaluation Criteria
-
-Each model scored 1-5 on 10 axes:
-
-| # | Criterion |
-|---|-----------|
-| 1 | Skill Flow Adherence |
-| 2 | Question Quality |
-| 3 | Round Thematic Rigor |
-| 4 | Contradiction Detection |
-| 5 | Vivid Language Capture |
-| 6 | Workspace Context Usage |
-| 7 | Ideation Doc Completeness |
-| 8 | Ideation Doc Accuracy |
-| 9 | Document Polish |
-| 10 | Session Pacing |
+| Issue | Models Affected |
+|-------|-----------------|
+| Accepts "I don't know" without pushback | Q4K_M, Q4K_XL (both architectures) |
+| Missing or shallow stress questions | Q4K_XL (MoE) |
+| Stacked multiple questions per turn | Q4K_M, Q4K_XL |
+| Vivid language sanitization | Q4K_M, Q4K_XL |
+| No success metrics defined | Q4K_XL (Dense), Q4K_XL (MoE) |
+| Session ends prematurely | Q4K_XL (MoE) |
 
 ---
 
-## Full Scoring Matrix
+## N1. Accepting Weak Answers Without Pushback
 
-| Criterion | 27B Q4_K_M | 27B Q8_0 | 27B UD Q4_K_XL | 27B UD Q8_K_XL | 35B Q4_K_M | 35B Q8_0 | 35B UD Q4_K_XL | 35B UD Q8_K_XL |
-|-----------|-----------|---------|---------------|---------------|-----------|---------|---------------|---------------|
-| Skill Flow Adherence | 4 | 4 | 4 | 5 | 3 | 4 | 3 | 4 |
-| Question Quality | 3 | 5 | 4 | 4 | 2 | 4 | 3 | 4 |
-| Round Thematic Rigor | 3 | 4 | 4 | 5 | 2 | 3 | 2 | 4 |
-| Contradiction Detection | 2 | 4 | 3 | 5 | 2 | 3 | 3 | 3 |
-| Vivid Language Capture | 2 | 5 | 3 | 4 | 2 | 3 | 4 | 3 |
-| Workspace Context Usage | 3 | 5 | 5 | 5 | 2 | 4 | 4 | 5 |
-| Doc Completeness | 4 | 5 | 4 | 5 | 3 | 5 | 5 | 4 |
-| Doc Accuracy | 3 | 5 | 4 | 5 | 3 | 4 | 3 | 4 |
-| Document Polish | 3 | 5 | 4 | 5 | 2 | 4 | 4 | 4 |
-| Session Pacing | 3 | 4 | 4 | 5 | 3 | 3 | 4 | 4 |
-| **Total** | **29** | **41** | **35** | **43** | **22** | **30** | **31** | **34** |
+**Affected models:** Q4K_M (both), Q4K_XL (both)
 
----
+When users say "I don't know" or "haven't tested it," models at lower quantizations tend to accept this as a final answer and move on. Higher quantizations (Q80, Q8K_XL) respond with "What's your best guess?" or "What would need to be true?"
 
-## Ranking — All 8 Models
+**Fix:** Add to **Turn rules** section:
 
-| Rank | Model | Family | Arch | Score | Session Time |
-|------|-------|--------|------|-------|-------------|
-| **1** | **27B UD Q8_K_XL** | 27B | Dense | **43** | 16 min |
-| 2 | 27B Q8_0 | 27B | Dense | 41 | 16 min |
-| 3 | 27B UD Q4_K_XL | 27B | Dense | 35 | 21 min |
-| **4** | **35B UD Q8_K_XL** | 35B A3B | MoE | **34** | 11 min |
-| 5 | 35B UD Q4_K_XL | 35B A3B | MoE | 31 | 18 min |
-| 6 | 35B Q8_0 | 35B A3B | MoE | 30 | 11 min |
-| 7 | 27B Q4_K_M | 27B | Dense | 29 | 10 min |
-| 8 | 35B Q4_K_M | 35B A3B | MoE | 22 | 8 min |
+> **"I don't know" handling (MANDATORY):** When user says "I don't know," "haven't tested," or "need to research," you MUST respond with one of:
+> - "What's your best guess?"
+> - "What would need to be true for you to have an opinion?"
+> - "If you had to guess, what would you expect?"
+> 
+> Never accept "I don't know" as a final answer. Treat it as a weak assumption to be marked as ⚠ and explored further.
 
 ---
 
-## Architecture Comparison — Dense vs MoE
+## N2. Missing or Shallow Stress Questions
 
-### Average Scores by Architecture
+**Affected models:** Q4K_XL (MoE), some Q4K_M variants
 
-| Criterion | 27B Dense Avg | 35B MoE Avg | Delta | Winner |
-|-----------|--------------|-------------|-------|--------|
-| Skill Flow Adherence | 4.25 | 3.50 | +0.75 | Dense |
-| Question Quality | 4.00 | 3.25 | +0.75 | Dense |
-| Round Thematic Rigor | 4.00 | 2.75 | +1.25 | **Dense** |
-| Contradiction Detection | 3.50 | 2.75 | +0.75 | Dense |
-| Vivid Language Capture | 3.50 | 3.00 | +0.50 | Dense |
-| Workspace Context Usage | 4.50 | 3.75 | +0.75 | Dense |
-| Doc Completeness | 4.50 | 4.25 | +0.25 | Dense |
-| Doc Accuracy | 4.25 | 3.50 | +0.75 | Dense |
-| Document Polish | 4.25 | 3.50 | +0.75 | Dense |
-| Session Pacing | 4.00 | 3.50 | +0.50 | Dense |
-| **Average Total** | **36.50** | **31.75** | **+4.75** | **Dense** |
+The stress question phase (Reversal, Worst Customer, Second-order, Kill shot) is either skipped entirely or answered with generic responses.
 
-### Quantization Impact by Architecture
+**Fix:** Add to **Phase 3 — Stress questions** section:
 
-| Quant | 27B Dense Avg | 35B MoE Avg |
-|-------|--------------|-------------|
-| Q4_K_M | 29.0 | 22.0 |
-| Q8_0 | 41.0 | 30.0 |
-| UD Q4_K_XL | 35.0 | 31.0 |
-| UD Q8_K_XL | 43.0 | 34.0 |
-
-**Pattern:** Higher quantization improves both architectures, but the gap is wider for Dense (+14 from Q4_K_M to Q8_K_XL) than MoE (+12). Dense benefits more from quantization upgrades.
+> **Stress question enforcement:** After surfacing assumptions, you MUST ask all four questions in order. If user gives one-word answers, follow up with:
+> - "Tell me more about that"
+> - "What would that look like in practice?"
+> 
+> Do NOT proceed to wrap-up until all four lenses are explored. If user pushes back (e.g., "doesn't matter"), mark it as conviction data and note it in the document — do not skip the question.
 
 ---
 
-## Criterion Deep Dive
+## N3. Stacking Multiple Questions
 
-### Where Dense dominates most
+**Affected models:** Q4K_M (both architectures)
 
-**Round Thematic Rigor (Delta: 1.25)**
-The largest gap. Dense models maintain round boundaries cleanly. MoE models consistently mix themes — asking constraint questions in round 1, exploration questions in round 3. The sparse activation pattern of MoE may weaken the ability to maintain strict conditional logic.
+Lower-quantized models sometimes ask 2-3 questions in one turn, violating the "one question per turn" rule.
 
-**Contradiction Detection (Delta: 0.75)**
-Only the Dense Q8_K_XL actively challenged user assumptions (Cactus offline capability). No MoE model named a contradiction. Dense models had higher ceiling on this hardest skill rule.
+**Fix:** Add to **Turn rules** section:
 
-**Doc Accuracy (Delta: 0.75)**
-MoE UD Q4_K_XL changed the user's 45% success metric to 20%. MoE Q4_K_M hallucinated workspace context without reading docs. Dense models were more faithful to source material.
-
-### Where MoE is competitive
-
-**Session Pacing (Delta: 0.50)**
-MoE models are faster. All 35B sessions completed in ≤18 min. Dense sessions ranged from 10-67 min. For speed-sensitive workflows, MoE has an advantage.
-
-**Doc Completeness (Delta: 0.25)**
-MoE UD Q4_K_XL produced the most comprehensive doc (10 open questions, 5 risks). MoE models can generate thorough documents despite weaker sessions.
-
-**Vivid Language Capture (Delta: 0.50)**
-The gap is modest. Both architectures struggle with preserving user phrasing. MoE UD Q4_K_XL captured vivid language well in-session (though didn't carry it to the doc).
+> **One question per turn (ENFORCED):** If you find yourself asking multiple questions in one turn, you are failing this rule. Split into separate turns. Example of FAILURE:
+> > "What do you think about X? And how does Y affect Z? Also, do you have evidence for W?"
+> 
+> This must be three separate turns. After user answers, then ask the next question.
 
 ---
 
-## Quantization Impact — Cross-Architecture
+## N4. Vivid Language Sanitization
 
-### Q8 variants outperform Q4 in both architectures
+**Affected models:** Q4K_M (both), Q4K_XL (Dense)
 
-| Metric | Q4 avg (both) | Q8 avg (both) | Delta |
-|--------|--------------|---------------|-------|
-| Total score | 26.5 | 37.0 | +10.5 |
-| Contradiction detection | 2.0 | 3.5 | +1.5 |
-| Doc accuracy | 3.0 | 4.5 | +1.5 |
+User's vivid phrases like "walking with my dog," "hold a leash," "1 million dollar idea" are sanitized to generic language in the verbatim bank.
 
-Q8 quantization consistently improves reasoning-heavy criteria (contradiction detection, doc accuracy) more than structural criteria.
+**Fix:** Add to **Phase 4 — Verbatim capture** section:
 
-### UD (Unsloth Dynamic) variants
-
-| Variant | Avg improvement over non-UD |
-|---------|---------------------------|
-| 27B UD Q4_K_XL vs Q4_K_M | +6 points |
-| 27B UD Q8_K_XL vs Q8_0 | +2 points |
-| 35B UD Q4_K_XL vs Q4_K_M | +9 points |
-| 35B UD Q8_K_XL vs Q8_0 | +4 points |
-
-UD quantization provides larger gains at Q4 level than Q8 level. At Q8, the base quant is already strong so UD adds less.
+> **Vivid language preservation (MANDATORY):** Use the user's EXACT words in the verbatim bank. Do NOT sanitize. Examples:
+> - ❌ "user wants to capture notes while walking" (sanitized)
+> - ✓ "walking with my dog" (verbatim from user)
+> - ❌ "user has limited time for typing" (sanitized)  
+> - ✓ "hold a leash and I can't type fast with single hand" (verbatim)
+> 
+> If you are tempted to paraphrase the user's words, you are failing this rule. Copy their exact phrasing even if it seems informal.
 
 ---
 
-## Key Findings
+## N5. Missing Success Metrics
 
-### 1. Dense architecture is better for structured conversational tasks
+**Affected models:** Q4K_XL (Dense: 39/50 had no metrics in doc)
 
-The ideation skill requires strict conditional logic (round themes, stop detection, contradiction naming). Dense models maintain these rules more consistently. The 4.75-point average gap is significant.
+Success criteria are often left empty or marked as "Nothing surfaced."
 
-### 2. MoE is faster but less rigorous
+**Fix:** Add to **Phase 2 — Assumption stack** section:
 
-All MoE sessions completed in ≤18 min. Dense sessions ranged 10-67 min. But MoE's speed comes at the cost of structural discipline — round themes bleed, contradictions go unnamed, and metrics get changed.
+> **Success criteria probing:** Before moving to stress questions, you MUST ask:
+> - "What number would tell you this feature is working?"
+> - "What's your target for adoption? (e.g., % of users per week)"
+> - "How fast does transcription need to be?"
+> 
+> If user cannot provide metrics, note it as an untested assumption (⚠) and suggest a reasonable default in the next steps.
 
-### 3. Q8_K_XL is the best quant for both architectures
+---
 
-Within each family, the UD Q8_K_XL variant wins. Higher bit-width preserves reasoning quality, and Unsloth Dynamic quantization adds further gains.
+## N6. Premature Session End
 
-### 4. The Dense→MoE gap is largest on hardest criteria
+**Affected models:** Q4K_XL (MoE: only 22/50, session ended before stress questions)
 
-Round thematic rigor (1.25 delta) and contradiction detection (0.75 delta) are the hardest skill rules. These show the largest Dense advantages. Easier criteria (doc completeness, session pacing) show smaller gaps.
+The session ends after only a few rounds without completing all phases.
 
-### 5. Quantization matters more than architecture at Q4
+**Fix:** Add to **Session pacing** section:
 
-At Q4_K_M, the 27B Dense (29) beats 35B MoE (22) by 7 points. At Q8_K_XL, the gap narrows: 27B Dense (43) vs 35B MoE (34) by 9 points. But the 35B MoE Q8_K_XL (34) still beats the 27B Dense Q4_K_M (29) — quantization is the stronger lever.
+> **Minimum completion check:** Before accepting "wrap it up" or "done" signals, verify:
+> - ✓ Phase 1 (ugly sentence) completed
+> - ✓ At least 5 assumptions surfaced
+> - ✓ All 4 stress questions asked
+> 
+> If any of these are missing, respond: "We haven't covered [X] yet. Can we finish that first?" Do not generate document until minimum phases complete.
+
+---
+
+## N7. Over-Confirming Weak Assumptions
+
+**Affected models:** Q4K_M (MoE: 14 assumptions but all marked confirmed without evidence)
+
+Models at lower quantizations sometimes mark assumptions as ✓ confirmed without verifying evidence, leading to false confidence in unvalidated assumptions.
+
+**Fix:** Add to **Phase 2 — Assumption stack** section:
+
+> **Evidence verification (MANDATORY):** When user confirms an assumption, ask for evidence:
+> - "What's your evidence for that?"
+> - "Did you test it or is this a guess?"
+> - "Who told you that?"
+> 
+> If evidence is weak (personal belief, untested), mark as ⚠ even if user confirms. False confidence in untested assumptions is the primary failure mode.
+
+---
+
+## Prioritized Improvements
+
+| Priority | Issue | Expected Impact |
+|----------|-------|-----------------|
+| 1 | Pushback on "I don't know" | +3-5 points on edge case handling |
+| 2 | Vivid language preservation | +2-3 points on verbatim capture |
+| 3 | Stress question enforcement | +3-4 points on stress coverage |
+| 4 | Minimum completion check | Prevents incomplete sessions |
+| 5 | One question per turn | +1-2 points on turn compliance |
+
+---
+
+## Quantization-Specific Recommendations
+
+### For Q4K_M and Q4K_XL variants:
+These rules need to be MORE specific because lower-quantized models follow complex instructions less reliably. The fixes above add enforcement language that lower-quantized models are more likely to follow.
+
+### For Q80 and Q8K_XL variants:
+These models generally follow the skill rules well. The improvements would primarily help with edge case handling and ensuring no assumptions are missed.
+
+---
+
+## Conclusion
+
+The ideation-coach v2 skill produces good results at Q80+ quantization but degrades significantly at Q4K levels. The primary failure modes are:
+
+1. Accepting weak answers without pushback
+2. Missing or shallow stress questions  
+3. Sanitizing vivid user language
+
+The fixes add **enforcement language** (MANDATORY, NEVER, MUST) that lower-quantized models are more likely to follow, while maintaining the existing skill structure for higher-quantized models that already work well.
+), proper phases | Stacked questions, less pushback |
+| 4 | Qwen 3.5 35B A3B Q4K_XL | 22/50 | Quick execution | Session too short, missing contradictions section |
 
 ---
 
 ## Recommendation
 
-**Best overall: Qwen 3.5 27B UD Q8_K_XL (Dense, 43/50)**
+**Winner: Qwen 3.5 35B A3B Q8K_XL**
 
-For ideation-quality tasks requiring strict skill adherence, the Dense 27B at highest quantization is the clear winner. It combines structural rigor with deep questioning and accurate documentation.
+The Q8K_XL variant produced the most insightful ideation session. It excelled at:
 
-**Best MoE: Qwen 3.5 35B A3B UD Q8_K_XL (34/50)**
+1. **Best insight capture** - "speaking is more natural than typing" - frames feature as primary preference, not just accessibility
+2. **Best stress question execution** - identified specific failure modes (slow transcripts, low quality, shy users)
+3. **Best root cause hypothesis** - captured the real problem (typing is friction, speaking is natural)
+4. **Clean assumption stack** - 5 well-explored assumptions vs 14 shallow ones
+5. **Best verbatim capture** - preserved user's framing
 
-The MoE architecture can be competitive if speed is prioritized over rigor. At 11 min for 6 rounds with decent doc accuracy, it's viable for faster iteration cycles — but expect round theme bleeding and weaker contradiction detection.
+The Q80 variant is close second with strong technical specification capture but slightly less insight depth.
 
-**If constrained to Q4:** Choose Dense 27B (29) over MoE 35B (22). The Dense architecture degrades more gracefully at lower quantization.
+The Q4K_XL variant had a critical failure - session ended before stress questions, leaving major section empty.
+
+**Key Finding:** For the 35B A3B MoE models, the quantization gap is extreme between Q4K_XL (22/50, incomplete) vs Q80+ (43-44/50). The Q4K_M (38/50) is adequate but less insightful.

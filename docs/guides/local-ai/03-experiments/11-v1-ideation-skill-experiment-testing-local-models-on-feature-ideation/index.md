@@ -76,7 +76,8 @@ Small models rarely read skills and reference files on their own. During testing
 `ideation-template.md` or `questions-extended.md` entirely — they loaded the skill but never opened the reference files.
 This breaks the entire flow: no template, no extended questions, no proper document structure.
 
-I had to create a [command (lets-ideate)](https://github.com/MrOnyszko/local-llm-guide/blob/main/aily-ideation-skill-experiment/Command/lets-ideate.md)
+I had to create
+a [command (lets-ideate)](https://github.com/MrOnyszko/local-llm-guide/blob/main/aily-ideation-skill-experiment/Command/lets-ideate.md)
 that explicitly tells the
 model to read the skill and reference files before starting:
 

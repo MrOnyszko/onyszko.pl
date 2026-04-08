@@ -81,7 +81,8 @@ Launch LM Studio, load your model (e.g., Qwen3.5-35B-A3B), then click **Server**
 
 If running LM Studio on a separate machine (e.g., a headless server), enable **Serve on Local Network** in
 **Server Settings**. This binds the server to all network interfaces, allowing connections from other devices on your
-local network. Update the `baseURL` in your config to use the server's local IP address (e.g., `http://192.168.1.100:1234/v1`).
+local network. Update the `baseURL` in your config to use the server's local IP address (e.g.,
+`http://192.168.1.100:1234/v1`).
 
 **Step 3: Run OpenCode**
 

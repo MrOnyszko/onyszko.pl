@@ -33,20 +33,20 @@ You need a computer with sufficient RAM to run local AI models. Three main optio
 > models (4-bit quantization, 128K context, typical prompts):
 
 - **Qwen3.5-35B-A3B** (efficient MoE, ~35B total / ~3B active params):
-    - MacBook M1 Pro 32GB (MLX):
-        - ~19–44 tokens/sec (4-bit MLX),
-        - ~11–18 tokens/sec (llama.cpp Q4_K_L).
-    - Minisforum MS-S1 Max 128GB (Strix Halo, Vulkan):
-        - ~32–48 tokens/sec (Q4_K_M),
-        - ~29–43 tokens/sec (Q8_0).
-    - Qwen3-Coder-Next (specialized for code):
-        - ~27–43 tokens/sec on Strix Halo.
+  - MacBook M1 Pro 32GB (MLX):
+    - ~19–44 tokens/sec (4-bit MLX),
+    - ~11–18 tokens/sec (llama.cpp Q4_K_L).
+  - Minisforum MS-S1 Max 128GB (Strix Halo, Vulkan):
+    - ~32–48 tokens/sec (Q4_K_M),
+    - ~29–43 tokens/sec (Q8_0).
+  - Qwen3-Coder-Next (specialized for code):
+    - ~27–43 tokens/sec on Strix Halo.
 
 - **Qwen3.5-27B** (dense variant):
-    - Strix Halo 128GB: ~8–12 tokens/sec (Q4_K_M), ~6–8 tokens/sec (Q8_0).
+  - Strix Halo 128GB: ~8–12 tokens/sec (Q4_K_M), ~6–8 tokens/sec (Q8_0).
 
 - **Qwen3.5-122B-A10B** (large MoE, ~122B total / ~10B active):
-    - Strix Halo 128GB: ~5–13 tokens/sec (Q4_K_S).
+  - Strix Halo 128GB: ~5–13 tokens/sec (Q4_K_S).
 
 The M1 Pro results use MLX (Apple's optimized framework) — llama.cpp via LM Studio runs slower (~11–18 t/s) on the same
 hardware. On the Strix Halo, llama.cpp with Vulkan delivers the best results shown above. A higher context fill ratio (

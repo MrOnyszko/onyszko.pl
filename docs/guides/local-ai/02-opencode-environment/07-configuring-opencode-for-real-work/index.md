@@ -22,7 +22,7 @@ As the context window fills up, your generation speed drops. On my Minisforum MS
 benchmark data shows this clearly:
 
 | Model                 | TPS @ 5% Fill | TPS @ 75% Fill | Retention |
-| --------------------- | ------------- | -------------- | --------- |
+|-----------------------|---------------|----------------|-----------|
 | qwen3-coder-next Q4   | ~43           | ~30            | 70%       |
 | qwen3.5-35b-a3b (MoE) | ~48           | ~34            | 71%       |
 | qwen3.5-27b (Dense)   | ~12           | ~9             | 74%       |
@@ -36,7 +36,7 @@ model.
 This is the real performance killer. Your Time to First Token (TTFT) scales sharply as you fill the context window:
 
 | Model         | TTFT @ 5% (6k tokens) | TTFT @ 75% (98k tokens) |
-| ------------- | --------------------- | ----------------------- |
+|---------------|-----------------------|-------------------------|
 | 35B-A3B Q4    | ~8s                   | ~86s                    |
 | Coder-Next Q4 | ~10s                  | ~101s                   |
 
@@ -52,7 +52,7 @@ responsive workflow:
 **Recommended context lengths for 35B-A3B Q4:**
 
 | Performance Tier | Context Limit | Resulting TTFT |
-| ---------------- | ------------- | -------------- |
+|------------------|---------------|----------------|
 | Comfortable      | ~30K tokens   | ~30s           |
 | Usable           | ~65K tokens   | ~66s           |
 | Marginal         | ~131K tokens  | ~85s\*         |
@@ -154,7 +154,8 @@ Use this when working with state management in Flutter apps.
 - Emit new states instead of mutating existing ones
 ```
 
-The agent loads skills via the native `skill` tool when needed. This keeps your context clean—the skill content only gets
+The agent loads skills via the native `skill` tool when needed. This keeps your context clean—the skill content only
+gets
 added when explicitly invoked.
 
 ### 6. Define Custom Commands
@@ -205,7 +206,8 @@ OpenCode reads `AGENTS.md` for project-specific instructions. Run `/init` to aut
 - Always write tests for new features
 ```
 
-Global rules live in `~/.config/opencode/AGENTS.md`. OpenCode also supports Claude Code compatibility—`CLAUDE.md` works as
+Global rules live in `~/.config/opencode/AGENTS.md`. OpenCode also supports Claude Code compatibility—`CLAUDE.md` works
+as
 a fallback if `AGENTS.md` doesn't exist.
 
 ---
@@ -219,7 +221,8 @@ a fallback if `AGENTS.md` doesn't exist.
    71%
    speed retention.
 3. **TTFT scales sharply** — Moving from 5% to 75% context fill can increase your wait time from 8s to over 80s.
-4. **Target 30K for speed, 65K for depth** — Keep context at 30K for quick iterations and only push to 65K when the model
+4. **Target 30K for speed, 65K for depth** — Keep context at 30K for quick iterations and only push to 65K when the
+   model
    needs to "see" a large portion of the codebase.
 5. **Set inference in LM Studio** — Use Temperature 0.6 and Top_P 0.95, as OpenCode won't override these.
 6. **Always include AGENTS.md** — This is the model's map; without it, the LLM is flying blind in your directory
@@ -228,5 +231,6 @@ a fallback if `AGENTS.md` doesn't exist.
 8. **Instructions are commands** — When prompting OpenCode, use direct imperative verbs to get better results.
 9. **Agents handle different workflows** — Use Build for full development, Plan for read-only analysis.
 10. **Skills load on-demand** — Keep reusable instructions in `.opencode/skills/` and load them only when needed.
-11. **Commands automate repetitive prompts** — Create `/test` or `/review` commands in `.opencode/commands/` for common tasks.
+11. **Commands automate repetitive prompts** — Create `/test` or `/review` commands in `.opencode/commands/` for common
+    tasks.
 12. **Rules cascade** — Project `AGENTS.md` overrides global rules, which override Claude Code compatibility.

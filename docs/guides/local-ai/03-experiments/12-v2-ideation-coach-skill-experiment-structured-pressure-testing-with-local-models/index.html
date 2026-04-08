@@ -1,0 +1,1048 @@
+<!doctype html>
+<html lang="en-US" data-bs-theme="auto">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="http://localhost:1313/fonts/vendor/jost/jost-v4-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+<script 
+  src="/js/color-mode.5c1949ea57ce2075eb442a32bb404b638413499fe06b4610198b84697a0d2a89.js"
+  integrity="sha256-XBlJ6lfOIHXrRCoyu0BLY4QTSZ/ga0YQGYuEaXoNKok=">
+</script>
+
+
+<link rel="stylesheet" href="/main.19600983e5ae8fa82236e066dd225cbc20862127d09947c2a69f305203133d4c51fc56ee9735bdcca8bea86ab5836a50ffe065769406fd24e47c2347f1e7d2db.css" integrity="sha512-GWAJg&#43;Wuj6giNuBm3SJcvCCGISfQmUfCpp8wUgMTPUxR/FbulzW9zKi&#43;qGq1g2pQ/&#43;BldpQG/STkfCNH8efS2w==" crossorigin="anonymous">
+
+<noscript><style>img.lazyload { display: none; }</style></noscript><base href="http://localhost:1313/docs/guides/local-ai/03-experiments/12-v2-ideation-coach-skill-experiment-structured-pressure-testing-with-local-models/">
+
+  <link rel="canonical" href="http://localhost:1313/docs/guides/local-ai/03-experiments/12-v2-ideation-coach-skill-experiment-structured-pressure-testing-with-local-models/">
+<link rel="alternate" type="text/markdown" href="http://localhost:1313/docs/guides/local-ai/03-experiments/12-v2-ideation-coach-skill-experiment-structured-pressure-testing-with-local-models/index.md" title="12 - V2 Ideation Coach Skill Experiment: Structured Pressure Testing with Local Models | onyszko.pl">
+
+<title>12 - V2 Ideation Coach Skill Experiment: Structured Pressure Testing with Local Models | onyszko.pl</title>
+<meta name="description" content="I tested the improved ideation-coach skill with 8 model variants. Here are the results, what changed from v1, and why the skill structure matters more than model size.">
+
+
+    
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
+    
+      <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    
+      <link
+        rel="apple-touch-icon"
+        href="/apple-touch-icon.png"
+        sizes="180x180"
+        type="image/png"
+      >
+      <link
+        rel="icon"
+        href="/favicon-192x192.png"
+        sizes="192x192"
+        type="image/png"
+      >
+      <link
+        rel="icon"
+        href="/favicon-512x512.png"
+        sizes="512x512"
+        type="image/png"
+      >
+<link rel="manifest" href="/manifest.webmanifest">
+
+<meta property="og:url" content="http://localhost:1313/docs/guides/local-ai/03-experiments/12-v2-ideation-coach-skill-experiment-structured-pressure-testing-with-local-models/">
+  <meta property="og:site_name" content="onyszko.pl">
+  <meta property="og:title" content="12 - V2 Ideation Coach Skill Experiment: Structured Pressure Testing with Local Models">
+  <meta property="og:description" content="I tested the improved ideation-coach skill with 8 model variants. Here are the results, what changed from v1, and why the skill structure matters more than model size.">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+    <meta property="article:published_time" content="2026-04-04T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-04-04T00:00:00+00:00">
+    <meta property="og:image" content="http://localhost:1313/cover.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/cover.png">
+  <meta name="twitter:title" content="12 - V2 Ideation Coach Skill Experiment: Structured Pressure Testing with Local Models">
+  <meta name="twitter:description" content="I tested the improved ideation-coach skill with 8 model variants. Here are the results, what changed from v1, and why the skill structure matters more than model size.">
+      <meta name="twitter:site" content="@MrOnyszko">
+
+    
+    
+    
+    <script type="application/ld+json">
+  {
+   "@context": "https://schema.org",
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/",
+       "name": "Hi, I'm Sławomir",
+       "position": 1
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/docs/",
+       "name": "Documentation",
+       "position": 2
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/docs/guides/",
+       "name": "Local Llm Guide",
+       "position": 3
+     },
+     {
+       "@type": "ListItem",
+       "item": "http://localhost:1313/docs/guides/local-ai/03-experiments/",
+       "name": "Experiments",
+       "position": 4
+     },
+     {
+       "@type": "ListItem",
+       "name": "12 V2 Ideation Coach Skill Experiment Structured Pressure Testing With Local Models",
+       "position": 5
+     }
+   ]
+ }
+</script>
+
+
+
+
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-VRE5KD7DFL"></script>
+      <script>
+        var doNotTrack = false;
+        if ( true ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-VRE5KD7DFL');
+        }
+      </script>
+
+
+</head>
+
+  
+  <body class="single section docs" data-bs-spy="scroll" data-bs-target="#toc" data-bs-root-margin="0px 0px -60%" data-bs-smooth-scroll="true" tabindex="0">
+    <div class="sticky-top">
+<header class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+  
+    <a class="navbar-brand me-auto me-lg-3" href="/">onyszko.pl</a>
+
+    
+    
+    
+    <button class="btn btn-link d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavSection" aria-controls="offcanvasNavSection" aria-label="Open section navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-dots-vertical" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+        <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+        <path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"></path>
+      </svg>
+    </button>
+    <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNavSection" aria-labelledby="offcanvasNavSectionLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavSectionLabel">Docs</h5>
+        <button type="button" class="btn btn-link nav-link p-0 ms-auto" data-bs-dismiss="offcanvas" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M18 6l-12 12"></path>
+            <path d="M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="offcanvas-body">
+        <aside class="doks-sidebar mt-n3">
+          <nav id="doks-docs-nav" aria-label="Tertiary navigation">
+            
+  
+    
+<nav class="section-nav docs-links">
+  <ul class="list-unstyled">
+
+  <li>
+    <details open>
+      <summary>Local LLM Guide</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+    <details open>
+      <summary>Setup</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/01-local-ai-introduction/">01 - Local AI Introduction</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/02-getting-started-with-local-ai/">02 - Getting Started with Local AI</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/03-choosing-your-first-local-model/">03 - Choosing Your First Local Model</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/04-understanding-llama.cpp/">04 - Understanding llama.cpp</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+    <details open>
+      <summary>OpenCode Environment</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/05-installing-opencode-and-connecting-it-to-lm-studio/">05 - Installing OpenCode and Connecting it to LM Studio</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/06-how-opencode-actually-works/">06 - How OpenCode Actually Works</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/07-configuring-opencode-for-real-work/">07 - Configuring OpenCode for Real Work</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/08-your-first-real-task-with-opencode/">08 - Your First Real Task with OpenCode</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+    <details open>
+      <summary>Experiments</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li class="active" >
+      <a aria-current="page" href="/docs/guides/local-ai/03-experiments/12-v2-ideation-coach-skill-experiment-structured-pressure-testing-with-local-models/">12 - V2 Ideation Coach Skill Experiment: Structured Pressure Testing with Local Models</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/10-experiments-planning-my-local-ai-workflow-experiments/">10 - Experiments: Planning My Local AI Workflow Experiments</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/11-v1-ideation-skill-experiment-testing-local-models-on-feature-ideation/">11 - V1 Ideation Skill Experiment: Testing Local Models on Feature Ideation</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/04-workflow/">Workflow</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/05-assesment/">Assessment</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+  </ul>
+</nav>
+
+  
+
+          </nav>
+        </aside>
+      </div>
+    </div>
+    
+    <button class="btn btn-link nav-link mx-2 order-3 d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavMain" aria-controls="offcanvasNavMain" aria-label="Open main navigation menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <line x1="4" y1="8" x2="20" y2="8"></line>
+        <line x1="4" y1="16" x2="20" y2="16"></line>
+      </svg>
+    </button>
+
+    
+    <div class="offcanvas offcanvas-end h-auto" tabindex="-1" id="offcanvasNavMain" aria-labelledby="offcanvasNavMainLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasNavMainLabel">onyszko.pl</h5>
+        <button type="button" class="btn btn-link nav-link p-0 ms-auto" data-bs-dismiss="offcanvas" aria-label="Close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M18 6l-12 12"></path>
+            <path d="M6 6l12 12"></path>
+         </svg>
+        </button>
+      </div>
+      
+      <div class="offcanvas-body d-flex flex-column flex-lg-row justify-content-between">
+        <ul class="navbar-nav flex-grow-1"><li class="nav-item">
+                <a class="nav-link" href="http://localhost:1313/docs/guides/local-ai/01-setup/01-local-ai-introduction/">Guides</a>
+              </li>
+            </ul>
+
+        
+        
+        
+        
+        
+        <button id="buttonColorMode" class="btn btn-link nav-link mt-3 mt-lg-0 p-0 ms-lg-2 me-lg-1" type="button" aria-label="Toggle theme">
+          <svg data-bs-theme-value="dark" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+          </svg>
+          <svg data-bs-theme-value="light" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-sun" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0m-5 0h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"></path>
+          </svg>
+        </button>
+        
+        <ul id="socialMenu" class="nav flex-row order-lg-4">
+          <li class="nav-item">
+              <a class="nav-link social-link" href="https://github.com/MrOnyszko"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path></svg><small class="ms-2 visually-hidden">GitHub</small></a>
+            </li>
+          <li class="nav-item">
+              <a class="nav-link social-link" href="https://www.youtube.com/@mronyszko"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-youtube" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M2 8a4 4 0 0 1 4 -4h12a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-12a4 4 0 0 1 -4 -4v-8z"></path><path d="M10 9l5 3l-5 3z"></path></svg><small class="ms-2 visually-hidden">YouTube</small></a>
+            </li>
+          </ul>
+        
+        </div>
+    </div>
+
+    
+    </div>
+</header>
+</div>
+
+
+    <div class="wrap container-fluid" role="document">
+      <div class="content">
+      
+        
+	<div class="row flex-xl-nowrap">
+		<div class="col-lg-5 col-xl-4 docs-sidebar d-none d-lg-block">
+			
+  
+    
+<nav class="section-nav docs-links">
+  <ul class="list-unstyled">
+
+  <li>
+    <details open>
+      <summary>Local LLM Guide</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+    <details open>
+      <summary>Setup</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/01-local-ai-introduction/">01 - Local AI Introduction</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/02-getting-started-with-local-ai/">02 - Getting Started with Local AI</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/03-choosing-your-first-local-model/">03 - Choosing Your First Local Model</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/01-setup/04-understanding-llama.cpp/">04 - Understanding llama.cpp</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+    <details open>
+      <summary>OpenCode Environment</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/05-installing-opencode-and-connecting-it-to-lm-studio/">05 - Installing OpenCode and Connecting it to LM Studio</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/06-how-opencode-actually-works/">06 - How OpenCode Actually Works</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/07-configuring-opencode-for-real-work/">07 - Configuring OpenCode for Real Work</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/02-opencode-environment/08-your-first-real-task-with-opencode/">08 - Your First Real Task with OpenCode</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+    <details open>
+      <summary>Experiments</summary>
+      <ul class="list-unstyled list-nested">
+
+  <li class="active" >
+      <a aria-current="page" href="/docs/guides/local-ai/03-experiments/12-v2-ideation-coach-skill-experiment-structured-pressure-testing-with-local-models/">12 - V2 Ideation Coach Skill Experiment: Structured Pressure Testing with Local Models</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/10-experiments-planning-my-local-ai-workflow-experiments/">10 - Experiments: Planning My Local AI Workflow Experiments</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/11-v1-ideation-skill-experiment-testing-local-models-on-feature-ideation/">11 - V1 Ideation Skill Experiment: Testing Local Models on Feature Ideation</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/03-experiments/"></a>
+  </li>
+      </ul>
+    </details>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/04-workflow/">Workflow</a>
+  </li>
+
+  <li>
+      <a href="/docs/guides/local-ai/05-assesment/">Assessment</a>
+  </li>
+      </ul>
+    </details>
+  </li>
+  </ul>
+</nav>
+
+  
+
+		</div>
+		
+			<div class="col container-fw d-lg-flex flex-lg-row justify-content-center mx-auto">
+		
+		<nav class="docs-toc d-none d-xl-block col-xl-3" aria-label="Secondary navigation">
+			<div class="page-links">
+  <h3>On this page</h3>
+    <nav id="toc">
+  <ul>
+    <li><a href="#why-test-v2">Why Test v2</a></li>
+    <li><a href="#test-setup">Test Setup</a></li>
+    <li><a href="#the-v2-skill-structure">The v2 Skill Structure</a>
+      <ul>
+        <li><a href="#key-v2-rules-added">Key v2 Rules Added</a></li>
+        <li><a href="#what-changed-from-v1">What Changed from v1</a></li>
+      </ul>
+    </li>
+    <li><a href="#qwen-35-27b-results-dense">Qwen 3.5 27B Results (Dense)</a></li>
+    <li><a href="#qwen-35-35b-a3b-results-moe">Qwen 3.5 35B A3B Results (MoE)</a></li>
+    <li><a href="#dense-vs-moe-v2-results">Dense vs MoE: v2 Results</a>
+      <ul>
+        <li><a href="#quantization-sensitivity-comparison">Quantization Sensitivity Comparison</a></li>
+      </ul>
+    </li>
+    <li><a href="#v1-vs-v2-what-the-skill-changes-fixed">v1 vs v2: What the Skill Changes Fixed</a></li>
+    <li><a href="#what-i-think-about-the-results">What I Think About the Results</a></li>
+    <li><a href="#key-points">Key Points</a></li>
+  </ul>
+</nav>
+</div>
+
+		</nav>
+		<main class="docs-content col-lg-11 col-xl-9 mx-xl-auto">
+		<nav class="toc-mobile toc-mobile-sticky d-xl-none" aria-label="Quaternary navigation">
+				<details>
+    <summary>On this page</summary>
+    <div class="page-links">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#why-test-v2">Why Test v2</a></li>
+    <li><a href="#test-setup">Test Setup</a></li>
+    <li><a href="#the-v2-skill-structure">The v2 Skill Structure</a>
+      <ul>
+        <li><a href="#key-v2-rules-added">Key v2 Rules Added</a></li>
+        <li><a href="#what-changed-from-v1">What Changed from v1</a></li>
+      </ul>
+    </li>
+    <li><a href="#qwen-35-27b-results-dense">Qwen 3.5 27B Results (Dense)</a></li>
+    <li><a href="#qwen-35-35b-a3b-results-moe">Qwen 3.5 35B A3B Results (MoE)</a></li>
+    <li><a href="#dense-vs-moe-v2-results">Dense vs MoE: v2 Results</a>
+      <ul>
+        <li><a href="#quantization-sensitivity-comparison">Quantization Sensitivity Comparison</a></li>
+      </ul>
+    </li>
+    <li><a href="#v1-vs-v2-what-the-skill-changes-fixed">v1 vs v2: What the Skill Changes Fixed</a></li>
+    <li><a href="#what-i-think-about-the-results">What I Think About the Results</a></li>
+    <li><a href="#key-points">Key Points</a></li>
+  </ul>
+</nav>
+    </div>
+  </details>
+
+			</nav>
+			
+			<div class="page-header d-flex flex-row justify-content-between align-items-start">
+				<div>
+					<h1>12 - V2 Ideation Coach Skill Experiment: Structured Pressure Testing with Local Models</h1>
+					
+				</div>
+				<div>
+					<div id="ai-dropdown" class="dropdown">
+  <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-dots"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M11 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M18 12a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li>
+      <a class="dropdown-item" href="https://chatgpt.com/?hints=search&q=Read+http%3A%2F%2Flocalhost%3A1313%2Fdocs%2Fguides%2Flocal-ai%2F03-experiments%2F12-v2-ideation-coach-skill-experiment-structured-pressure-testing-with-local-models%2F%2C+I+want+to+ask+questions+about+it." target="_blank">
+        <svg fill="currentColor" fill-rule="evenodd" height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg" class="mb-1 me-1"><title>OpenAI</title><path d="M21.55 10.004a5.416 5.416 0 00-.478-4.501c-1.217-2.09-3.662-3.166-6.05-2.66A5.59 5.59 0 0010.831 1C8.39.995 6.224 2.546 5.473 4.838A5.553 5.553 0 001.76 7.496a5.487 5.487 0 00.691 6.5 5.416 5.416 0 00.477 4.502c1.217 2.09 3.662 3.165 6.05 2.66A5.586 5.586 0 0013.168 23c2.443.006 4.61-1.546 5.361-3.84a5.553 5.553 0 003.715-2.66 5.488 5.488 0 00-.693-6.497v.001zm-8.381 11.558a4.199 4.199 0 01-2.675-.954c.034-.018.093-.05.132-.074l4.44-2.53a.71.71 0 00.364-.623v-6.176l1.877 1.069c.02.01.033.029.036.05v5.115c-.003 2.274-1.87 4.118-4.174 4.123zM4.192 17.78a4.059 4.059 0 01-.498-2.763c.032.02.09.055.131.078l4.44 2.53c.225.13.504.13.73 0l5.42-3.088v2.138a.068.068 0 01-.027.057L9.9 19.288c-1.999 1.136-4.552.46-5.707-1.51h-.001zM3.023 8.216A4.15 4.15 0 015.198 6.41l-.002.151v5.06a.711.711 0 00.364.624l5.42 3.087-1.876 1.07a.067.067 0 01-.063.005l-4.489-2.559c-1.995-1.14-2.679-3.658-1.53-5.63h.001zm15.417 3.54l-5.42-3.088L14.896 7.6a.067.067 0 01.063-.006l4.489 2.557c1.998 1.14 2.683 3.662 1.529 5.633a4.163 4.163 0 01-2.174 1.807V12.38a.71.71 0 00-.363-.623zm1.867-2.773a6.04 6.04 0 00-.132-.078l-4.44-2.53a.731.731 0 00-.729 0l-5.42 3.088V7.325a.068.068 0 01.027-.057L14.1 4.713c2-1.137 4.555-.46 5.707 1.513.487.833.664 1.809.499 2.757h.001zm-11.741 3.81l-1.877-1.068a.065.065 0 01-.036-.051V6.559c.001-2.277 1.873-4.122 4.181-4.12.976 0 1.92.338 2.671.954-.034.018-.092.05-.131.073l-4.44 2.53a.71.71 0 00-.365.623l-.003 6.173v.002zm1.02-2.168L12 9.25l2.414 1.375v2.75L12 14.75l-2.415-1.375v-2.75z"></path></svg>
+        Open in ChatGPT
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item" href="https://claude.ai/new?q=Read+http%3A%2F%2Flocalhost%3A1313%2Fdocs%2Fguides%2Flocal-ai%2F03-experiments%2F12-v2-ideation-coach-skill-experiment-structured-pressure-testing-with-local-models%2F%2C+I+want+to+ask+questions+about+it." target="_blank">
+        <svg fill="currentColor" fill-rule="evenodd" height="16" viewBox="0 0 256 257" width="16" xmlns="http://www.w3.org/2000/svg" class="mb-1 me-1" preserveAspectRatio="xMidYMid"><title>Anthropic</title><path d="m50.228 170.321 50.357-28.257.843-2.463-.843-1.361h-2.462l-8.426-.518-28.775-.778-24.952-1.037-24.175-1.296-6.092-1.297L0 125.796l.583-3.759 5.12-3.434 7.324.648 16.202 1.101 24.304 1.685 17.629 1.037 26.118 2.722h4.148l.583-1.685-1.426-1.037-1.101-1.037-25.147-17.045-27.22-18.017-14.258-10.37-7.713-5.25-3.888-4.925-1.685-10.758 7-7.713 9.397.649 2.398.648 9.527 7.323 20.35 15.75L94.817 91.9l3.889 3.24 1.555-1.102.195-.777-1.75-2.917-14.453-26.118-15.425-26.572-6.87-11.018-1.814-6.61c-.648-2.723-1.102-4.991-1.102-7.778l7.972-10.823L71.42 0 82.05 1.426l4.472 3.888 6.61 15.101 10.694 23.786 16.591 32.34 4.861 9.592 2.592 8.879.973 2.722h1.685v-1.556l1.36-18.211 2.528-22.36 2.463-28.776.843-8.1 4.018-9.722 7.971-5.25 6.222 2.981 5.12 7.324-.713 4.73-3.046 19.768-5.962 30.98-3.889 20.739h2.268l2.593-2.593 10.499-13.934 17.628-22.036 7.778-8.749 9.073-9.657 5.833-4.601h11.018l8.1 12.055-3.628 12.443-11.342 14.388-9.398 12.184-13.48 18.147-8.426 14.518.778 1.166 2.01-.194 30.46-6.481 16.462-2.982 19.637-3.37 8.88 4.148.971 4.213-3.5 8.62-20.998 5.184-24.628 4.926-36.682 8.685-.454.324.519.648 16.526 1.555 7.065.389h17.304l32.21 2.398 8.426 5.574 5.055 6.805-.843 5.184-12.962 6.611-17.498-4.148-40.83-9.721-14-3.5h-1.944v1.167l11.666 11.406 21.387 19.314 26.767 24.887 1.36 6.157-3.434 4.86-3.63-.518-23.526-17.693-9.073-7.972-20.545-17.304h-1.36v1.814l4.73 6.935 25.017 37.59 1.296 11.536-1.814 3.76-6.481 2.268-7.13-1.297-14.647-20.544-15.1-23.138-12.185-20.739-1.49.843-7.194 77.448-3.37 3.953-7.778 2.981-6.48-4.925-3.436-7.972 3.435-15.749 4.148-20.544 3.37-16.333 3.046-20.285 1.815-6.74-.13-.454-1.49.194-15.295 20.999-23.267 31.433-18.406 19.702-4.407 1.75-7.648-3.954.713-7.064 4.277-6.286 25.47-32.405 15.36-20.092 9.917-11.6-.065-1.686h-.583L44.07 198.125l-12.055 1.555-5.185-4.86.648-7.972 2.463-2.593 20.35-13.999-.064.065Z"></path></svg>
+        Open in Claude
+      </a>
+    </li>
+    <li>
+      <a class="dropdown-item" href="https://www.perplexity.ai/search/?q=Read+http%3A%2F%2Flocalhost%3A1313%2Fdocs%2Fguides%2Flocal-ai%2F03-experiments%2F12-v2-ideation-coach-skill-experiment-structured-pressure-testing-with-local-models%2F%2C+I+want+to+ask+questions+about+it." target="_blank">
+        <svg fill="currentColor" height="16" viewBox="0 0 34 38" width="16" xmlns="http://www.w3.org/2000/svg" class="mb-1 me-1"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.12114 0.0400391L15.919 9.98864V9.98636V0.062995H18.0209V10.0332L28.8671 0.0400391V11.3829H33.3202V27.744H28.8808V37.8442L18.0209 28.303V37.9538H15.919V28.4604L5.13338 37.96V27.744H0.680176V11.3829H5.12114V0.0400391ZM14.3344 13.4592H2.78208V25.6677H5.13074V21.8167L14.3344 13.4592ZM7.23518 22.7379V33.3271L15.919 25.6786V14.8506L7.23518 22.7379ZM18.0814 25.5775V14.8404L26.7677 22.7282V27.744H26.7789V33.219L18.0814 25.5775ZM28.8808 25.6677H31.2183V13.4592H19.752L28.8808 21.7302V25.6677ZM26.7652 11.3829V4.81584L19.6374 11.3829H26.7652ZM14.3507 11.3829H7.22306V4.81584L14.3507 11.3829Z" fill="currentColor"></path></svg>
+        Open in Perplexity
+      </a>
+    </li>
+    <li><hr class="dropdown-divider"></li>
+    <li>
+      <a id="copy-markdown" class="dropdown-item" href="#">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-1 me-1"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" /><path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" /></svg>
+        Copy Markdown
+      </a>
+    </li>
+  </ul>
+</div>
+
+				</div>
+				</div>
+			<p>I ran the improved ideation-coach skill (v2) through 8 model variants to see if the skill redesign fixed the 18 failure modes from v1.</p>
+<h2 id="why-test-v2">Why Test v2<a href="#why-test-v2" class="anchor" aria-hidden="true">#</a> </h2>
+<p>The v1 ideation skill had 18 identified failure modes. The main problems were:</p>
+<ul>
+<li>Vivid language sanitized during Q&amp;A, not just at write time</li>
+<li>Contradiction detection too passive</li>
+<li>Round themes bleeding across rounds</li>
+<li>&ldquo;I don&rsquo;t know&rdquo; accepted as final</li>
+<li>Stop detection too fragile</li>
+</ul>
+<p>I redesigned the skill around a new structure: instead of rounds, it uses phases with explicit constraints. The v2 skill replaced &ldquo;rounds&rdquo; with &ldquo;phases&rdquo; such as Phase 1 gets the &ldquo;ugly sentence,&rdquo; Phase 2 builds an assumption stack, Phase 3 runs stress questions, Phase 4 captures verbatim quotes, Phase 5 wraps up.</p>
+<p>The key difference: v2 tells the model what NOT to do in each phase, not just what to do.</p>
+<hr>
+<h2 id="test-setup">Test Setup<a href="#test-setup" class="anchor" aria-hidden="true">#</a> </h2>
+<p>Same hardware, same task, same evaluation criteria as v1:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Parameter</th>
+          <th>Value</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Context Length</td>
+          <td>262144</td>
+      </tr>
+      <tr>
+          <td>GPU Offload</td>
+          <td>Full</td>
+      </tr>
+      <tr>
+          <td>CPU Thread Pool Size</td>
+          <td>16</td>
+      </tr>
+      <tr>
+          <td>Evaluation Batch Size</td>
+          <td>8192</td>
+      </tr>
+      <tr>
+          <td>Thinking</td>
+          <td>Enabled</td>
+      </tr>
+      <tr>
+          <td>Temperature</td>
+          <td>0.6</td>
+      </tr>
+  </tbody>
+</table>
+<p>Task: Ideation session for &ldquo;Add audio notes using Cactus SDK&rdquo; in Aily app.</p>
+<p>Evaluated by MiniMax M2.5 Free in OpenCode Zen.</p>
+<hr>
+<h2 id="the-v2-skill-structure">The v2 Skill Structure<a href="#the-v2-skill-structure" class="anchor" aria-hidden="true">#</a> </h2>
+<p>The ideation-coach v2 skill lives in <code>Skill/ideation-coach/</code> with these phases:</p>
+<ol>
+<li>Phase 0 Scan: read workspace context (README.md, docs/)</li>
+<li>Phase 1 Ugly Sentence: get complete &ldquo;for X so they can Y instead of Z&rdquo; frame</li>
+<li>Phase 2 Assumption Stack: surface 5-7 testable assumptions with evidence status (✓ confirmed, ⚠ untested)</li>
+<li>Phase 3 Stress Questions: run all 4 lenses: Reversal, Worst Customer, Second-order, Kill shot</li>
+<li>Phase 4 Verbatim Capture: preserve user&rsquo;s exact phrases</li>
+<li>Phase 5 Wrap-up: write ideation doc, handoff to create-prd</li>
+</ol>
+<h3 id="key-v2-rules-added">Key v2 Rules Added<a href="#key-v2-rules-added" class="anchor" aria-hidden="true">#</a> </h3>
+<ul>
+<li><strong>Turn rules:</strong> One question per turn, quote user first, mark assumptions when surfaced, stay short</li>
+<li>&ldquo;I don&rsquo;t know&rdquo; handling: Never accept as final. Respond with &ldquo;What&rsquo;s your best guess?&rdquo; or &ldquo;What would need to be true?&rdquo;</li>
+<li><strong>Vivid language preservation:</strong> Use EXACT user words, never sanitize</li>
+<li><strong>Stress question enforcement:</strong> All 4 lenses must be explored before wrap-up</li>
+<li><strong>Minimum completion check:</strong> Verify Phase 1, 5+ assumptions, all 4 stress questions before writing doc</li>
+</ul>
+<h3 id="what-changed-from-v1">What Changed from v1<a href="#what-changed-from-v1" class="anchor" aria-hidden="true">#</a> </h3>
+<table>
+  <thead>
+      <tr>
+          <th>v1 (Ideation Skill)</th>
+          <th>v2 (Ideation Coach)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Round-based (Problem → Users → Constraints)</td>
+          <td>Phase-based with explicit constraints</td>
+      </tr>
+      <tr>
+          <td>&ldquo;Name contradictions&rdquo; (passive)</td>
+          <td>Contradictions surfaced as questions</td>
+      </tr>
+      <tr>
+          <td>&ldquo;Do not sanitise vivid language&rdquo; (Step 5 only)</td>
+          <td>&ldquo;Use EXACT words&rdquo; (enforced from Phase 1)</td>
+      </tr>
+      <tr>
+          <td>&ldquo;I don&rsquo;t know&rdquo; handling missing</td>
+          <td>MANDATORY pushback language</td>
+      </tr>
+      <tr>
+          <td>Round theme bleeding common</td>
+          <td>&ldquo;FORBIDDEN in this phase&rdquo; per phase</td>
+      </tr>
+      <tr>
+          <td>No success metrics probing</td>
+          <td>Explicit metrics questions added</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="qwen-35-27b-results-dense">Qwen 3.5 27B Results (Dense)<a href="#qwen-35-27b-results-dense" class="anchor" aria-hidden="true">#</a> </h2>
+<p>Full evaluation: 
+
+<a class="link link--text" href="https://github.com/MrOnyszko/local-llm-guide/tree/main/aily-ideation-skill-v2-experiment/Evaluation/Qwen%203.5%2027B%20Quantization%20Comparison%20Evaluation.md" rel="external">Qwen 3.5 27B Quantization Comparison</a>.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Rank</th>
+          <th>Model</th>
+          <th>Score</th>
+          <th>Session Time</th>
+          <th>Key Strength</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Q8K_XL</td>
+          <td>48/50</td>
+          <td>70 min</td>
+          <td>Most assumptions (14), best verbatim capture</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Q80</td>
+          <td>44/50</td>
+          <td>30 min</td>
+          <td>Thorough assumption stack (8), vivid language</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Q4K_XL</td>
+          <td>39/50</td>
+          <td>17 min</td>
+          <td>Good assumption probing, clean sessions</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Q4K_M</td>
+          <td>37/50</td>
+          <td>20 min</td>
+          <td>Clean phase progression</td>
+      </tr>
+  </tbody>
+</table>
+<p>Q8K_XL won again. It produced 14 assumptions, the most detailed stack of any model. It pushed back on &ldquo;I haven&rsquo;t tested&rdquo; multiple times, caught the privacy/offline contradiction (user wanted on-device but mentioned cloud), and preserved &ldquo;hold a leash and I can&rsquo;t type fast with single hand.&rdquo;</p>
+<p>Q80 was the efficiency winner. At 30 minutes, it produced 44/50, nearly as good as Q8K_XL but less than half the time. The verbatim capture was nearly as good: &ldquo;walking with my dog,&rdquo; &ldquo;precious ideas&rdquo; preserved.</p>
+<p>Q4 variants improved. The v1 Q4K_M scored 29/50. The v2 Q4K_M scored 37/50, an 8-point improvement from better skill instructions alone. The gap between Q4 and Q8 narrowed.</p>
+<blockquote>
+<p>v1 Q4K_M: 29/50 → v2 Q4K_M: 37/50. The skill improvements added 8 points without model changes.</p>
+</blockquote>
+<hr>
+<h2 id="qwen-35-35b-a3b-results-moe">Qwen 3.5 35B A3B Results (MoE)<a href="#qwen-35-35b-a3b-results-moe" class="anchor" aria-hidden="true">#</a> </h2>
+<p>Full evaluation: 
+
+<a class="link link--text" href="https://github.com/MrOnyszko/local-llm-guide/tree/main/aily-ideation-skill-v2-experiment/Evaluation/Qwen%203.5%2035B%20A3B%20Quantization%20Comparison%20Evaluation.md" rel="external">Qwen 3.5 35B A3B Quantization Comparison</a>.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Rank</th>
+          <th>Model</th>
+          <th>Score</th>
+          <th>Session Time</th>
+          <th>Key Strength</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>Q8K_XL</td>
+          <td>44/50</td>
+          <td>21 min</td>
+          <td>Best insight capture, clean assumption stack</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Q80</td>
+          <td>43/50</td>
+          <td>20 min</td>
+          <td>Best real-time transcription probing</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Q4K_M</td>
+          <td>38/50</td>
+          <td>21 min</td>
+          <td>Good assumption count (14), proper phases</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Q4K_XL</td>
+          <td>22/50</td>
+          <td>11 min</td>
+          <td>Session ended before stress questions</td>
+      </tr>
+  </tbody>
+</table>
+<p>Q8K_XL captured the best insight: &ldquo;speaking is more natural than typing&rdquo;, this frames audio notes as a primary preference, not just an accessibility feature. It also identified specific failure modes in stress questions (slow transcripts, shy users, low quality).</p>
+<p>Q4K_XL still fails. At 22/50, it produced an incomplete session that ended before stress questions, and left contradictions section empty. This is the same failure mode as v1. The MoE architecture at Q4 quantization cannot handle structured phase transitions.</p>
+<p><strong>Q80 is viable on MoE.</strong> At 43/50, the Q80 MoE variant is close to Q8K_XL. Unlike v1, the v2 skill produces acceptable MoE results at Q80.</p>
+<blockquote>
+<p>MoE at Q80 works now. v1 MoE Q8_0 scored 30/50. v2 MoE Q80 scores 43/50. That&rsquo;s a 13-point improvement.</p>
+</blockquote>
+<hr>
+<h2 id="dense-vs-moe-v2-results">Dense vs MoE: v2 Results<a href="#dense-vs-moe-v2-results" class="anchor" aria-hidden="true">#</a> </h2>
+<p>Full comparison: 
+
+<a class="link link--text" href="https://github.com/MrOnyszko/local-llm-guide/tree/main/aily-ideation-skill-v2-experiment/Evaluation/Dense%20vs%20MoE%20Comparison.md" rel="external">Dense vs MoE Comparison</a>.</p>
+<table>
+  <thead>
+      <tr>
+          <th>Criterion</th>
+          <th>27B Dense Avg</th>
+          <th>35B MoE Avg</th>
+          <th>Delta</th>
+          <th>Winner</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Skill Flow Adherence</td>
+          <td>4.50</td>
+          <td>4.00</td>
+          <td>+0.50</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Ugly Sentence Quality</td>
+          <td>4.75</td>
+          <td>4.25</td>
+          <td>+0.50</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Assumption Stack</td>
+          <td>4.50</td>
+          <td>4.00</td>
+          <td>+0.50</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Stress Question Coverage</td>
+          <td>4.75</td>
+          <td>4.00</td>
+          <td>+0.75</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Turn Rule Compliance</td>
+          <td>4.00</td>
+          <td>3.50</td>
+          <td>+0.50</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Edge Case Handling</td>
+          <td>4.25</td>
+          <td>3.50</td>
+          <td>+0.75</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Verbatim Capture</td>
+          <td>4.50</td>
+          <td>4.50</td>
+          <td>0</td>
+          <td>Tie</td>
+      </tr>
+      <tr>
+          <td>Doc Completeness</td>
+          <td>4.50</td>
+          <td>4.00</td>
+          <td>+0.50</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Doc Accuracy</td>
+          <td>4.50</td>
+          <td>4.25</td>
+          <td>+0.25</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td>Session Pacing</td>
+          <td>4.25</td>
+          <td>3.75</td>
+          <td>+0.50</td>
+          <td>Dense</td>
+      </tr>
+      <tr>
+          <td><strong>Average Total</strong></td>
+          <td><strong>42.00</strong></td>
+          <td><strong>38.75</strong></td>
+          <td><strong>+3.25</strong></td>
+          <td><strong>Dense</strong></td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Dense still wins</strong>, but the gap narrowed from v1 (+4.75 → +3.25). The v2 skill structure helps MoE models perform closer to their potential.</p>
+<p><strong>Key finding: MoE at Q80 is now usable.</strong> In v1, MoE Q8_0 scored 30/50. In v2, MoE Q80 scores 43/50. The skill improvements had a bigger impact on MoE than Dense.</p>
+<h3 id="quantization-sensitivity-comparison">Quantization Sensitivity Comparison<a href="#quantization-sensitivity-comparison" class="anchor" aria-hidden="true">#</a> </h3>
+<table>
+  <thead>
+      <tr>
+          <th>Quant Level</th>
+          <th>v1 Dense Avg</th>
+          <th>v2 Dense Avg</th>
+          <th>v1 MoE Avg</th>
+          <th>v2 MoE Avg</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Q8K_XL</td>
+          <td>43</td>
+          <td>48</td>
+          <td>34</td>
+          <td>44</td>
+      </tr>
+      <tr>
+          <td>Q80</td>
+          <td>41</td>
+          <td>44</td>
+          <td>30</td>
+          <td>43</td>
+      </tr>
+      <tr>
+          <td>Q4K_XL</td>
+          <td>35</td>
+          <td>39</td>
+          <td>31</td>
+          <td>22</td>
+      </tr>
+      <tr>
+          <td>Q4K_M</td>
+          <td>29</td>
+          <td>37</td>
+          <td>22</td>
+          <td>38</td>
+      </tr>
+  </tbody>
+</table>
+<p>The v2 skill improved Dense by +4.5 points average, and MoE by +7.5 points average. The biggest gains: Q4K_M Dense (+8) and Q4K_M MoE (+16).</p>
+<blockquote>
+<p>The v2 skill improvements helped lower quantizations more than higher ones. Q4K_M MoE improved by 16 points, from unusable (22) to adequate (38).</p>
+</blockquote>
+<hr>
+<h2 id="v1-vs-v2-what-the-skill-changes-fixed">v1 vs v2: What the Skill Changes Fixed<a href="#v1-vs-v2-what-the-skill-changes-fixed" class="anchor" aria-hidden="true">#</a> </h2>
+<p>The v2 skill addressed 6 of the 8 original failure modes:</p>
+<table>
+  <thead>
+      <tr>
+          <th>v1 Failure Mode</th>
+          <th>v2 Fix</th>
+          <th>Result</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Vivid language lost during Q&amp;A</td>
+          <td>&ldquo;Use EXACT words&rdquo; enforced from Phase 1</td>
+          <td>Q4K_M improved 8 pts</td>
+      </tr>
+      <tr>
+          <td>No guard against hallucination</td>
+          <td>&ldquo;Every item must trace to session&rdquo;</td>
+          <td>Doc accuracy improved</td>
+      </tr>
+      <tr>
+          <td>Contradiction detection passive</td>
+          <td>Contradictions surfaced as questions</td>
+          <td>Better edge case handling</td>
+      </tr>
+      <tr>
+          <td>Round themes bleed</td>
+          <td>Phase-based with &ldquo;FORBIDDEN&rdquo; rules</td>
+          <td>Clean phase transitions</td>
+      </tr>
+      <tr>
+          <td>&ldquo;I don&rsquo;t know&rdquo; accepted</td>
+          <td>MANDATORY pushback language</td>
+          <td>+3-5 pts edge handling</td>
+      </tr>
+      <tr>
+          <td>Stop detection fragile</td>
+          <td>Minimum completion check</td>
+          <td>Prevents incomplete sessions</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>What still fails at Q4:</strong> The &ldquo;I don&rsquo;t know&rdquo; pushback still requires Q80 or higher to work reliably. Q4K_XL MoE still produces incomplete sessions.</p>
+<hr>
+<h2 id="what-i-think-about-the-results">What I Think About the Results<a href="#what-i-think-about-the-results" class="anchor" aria-hidden="true">#</a> </h2>
+<p>The v2 skill delivers what v1 promised: usable ideation sessions at lower quantizations. The Q4K_M improvement (29 → 37 for Dense, 22 → 38 for MoE) is the clearest win. It means I can run the skill on hardware-constrained devices without sacrificing quality.</p>
+<p>MoE at Q80 is now viable. In v1, I wrote off MoE entirely. In v2, MoE Q80 scores 43/50, only 1 point behind Dense Q80. If I need the speed advantage (21 min vs 30 min for comparable quality), I can use MoE at Q80.</p>
+<p>The insight quality from MoE Q8K_XL is worth the compute cost. &ldquo;Speaking is more natural than typing&rdquo; is a better capture than Dense&rsquo;s &ldquo;hold a leash&rdquo;, it tells me the root cause, not just the use case. For early-stage ideation, that insight quality matters.</p>
+<p>The 48/50 score from Dense Q8K_XL is the ceiling for this task. I&rsquo;ve pushed the skill as far as it can go with the current structure. Further improvements need either:</p>
+<ol>
+<li>Better reference files (more examples, more templates)</li>
+<li>Multi-model orchestration (use Q8K_XL for insight, Q4K_XL for speed)</li>
+<li>Different evaluation criteria (maybe ideation doesn&rsquo;t need perfect verbatim capture)</li>
+</ol>
+<hr>
+<h2 id="key-points">Key Points<a href="#key-points" class="anchor" aria-hidden="true">#</a> </h2>
+<ol>
+<li>Dense Q8K_XL remains best: 48/50, most assumptions (14), best verbatim capture</li>
+<li>v2 skill improves all models: average +4.5 pts for Dense, +7.5 pts for MoE</li>
+<li>Q4K_M is now usable: v1 was 29/50, v2 is 37/50, an 8-point gain from skill alone</li>
+<li>MoE at Q80 works: v1 was 30/50, v2 is 43/50, a 13-point gain, now viable</li>
+<li>MoE still fails at Q4K_XL: 22/50, incomplete session, same failure as v1</li>
+<li>Quantization gap narrowed: v1 had 14-pt gap Q4 to Q8, v2 has 11-pt gap</li>
+<li>Best insight from MoE: &ldquo;speaking is more natural than typing&rdquo; beats Dense&rsquo;s use case details</li>
+<li>Skill structure matters more than model size: the phase-based approach with explicit constraints outperforms round-based at equivalent model quality</li>
+</ol>
+
+			<div class="page-footer-meta d-flex flex-column flex-md-row justify-content-between">
+				</div>
+			<div class="page-nav d-flex flex-column flex-sm-row">
+	
+	<div class="card text-end w-100">
+			<div class="card-body d-flex justify-content-end">
+				<div class="d-flex flex-column">
+					<div class="text-body-secondary">Next</div>
+					<a href="/docs/guides/local-ai/03-experiments/10-experiments-planning-my-local-ai-workflow-experiments/" class="stretched-link text-reset text-decoration-none">10 - Experiments: Planning My Local AI Workflow Experiments</a>
+				</div>
+				<div class="d-flex flex-column justify-content-center">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-arrow-right" width="20" height="20" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+						<path d="M5 12l14 0"></path>
+						<path d="M13 18l6 -6"></path>
+						<path d="M13 6l6 6"></path>
+					</svg>
+				</div>
+			</div>
+		</div>
+	</div>
+
+			
+		</main>
+		
+			</div>
+		
+	</div>
+
+      
+      </div>
+    </div>
+    
+    
+    <footer class="footer text-muted">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-8 text-lg-start">
+        <ul class="list-inline">
+          <li class="list-inline-item"><a class="text-muted" href="/privacy/">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-8 text-lg-end">
+        <ul class="list-inline">
+          <li class="list-inline-item">Brought to you by <a class="text-muted" href="https://onyszko.pl/">onyszko.pl</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    
+
+<script async
+  src="/js/app.dabdef501f012d9cc214cfd80465c50079f359096a2793f56bb5fae90d005889.js"
+  integrity="sha256-2r3vUB8BLZzCFM/YBGXFAHnzWQlqJ5P1a7X66Q0AWIk=">
+</script>
+
+
+
+
+
+
+
+    
+  </body>
+</html>
